@@ -13,7 +13,6 @@ public class Note {
         this.duration = duration;
     }
 
-
     public String getPitchNote() {
         return pitchNote;
     }
