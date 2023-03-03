@@ -20,7 +20,7 @@ public class Melody {
     }
 
     public ArrayList<Note> melodyRepr2Notes(){
-        System.out.println("Zamienione!");
+        System.out.println("Changed!");
         return new ArrayList<>();
     }
 

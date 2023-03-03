@@ -15,7 +15,7 @@ public class MelodyRepresentationString extends Melody {
 
     @Override
     public ArrayList<Note> melodyRepr2Notes(){
-        System.out.println("Zamienione String na Notes!");
+        System.out.println("Changed String to Notes!");
         return new ArrayList<>();
     }
 
