@@ -1,6 +1,6 @@
 package evolution;
 
-import evolution.algorithm.evolutionaryAlgorithm.Nsga_II;
+import evolution.algorithm.Nsga_II;
 
 public class Application {
 

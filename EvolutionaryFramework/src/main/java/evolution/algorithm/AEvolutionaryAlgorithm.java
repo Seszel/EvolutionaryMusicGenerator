@@ -1,6 +1,6 @@
-package evolution.algorithm.evolutionaryAlgorithm;
+package evolution.algorithm;
 
-abstract class AEvolutionaryAlgorithm implements IEvolutionaryAlgorithm{
+abstract class AEvolutionaryAlgorithm{
     private final int crossoverType;
     private final int mutationType;
     private final int selectionType;

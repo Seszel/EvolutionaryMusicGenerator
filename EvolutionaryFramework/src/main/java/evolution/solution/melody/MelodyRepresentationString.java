@@ -5,7 +5,7 @@ import evolution.solution.Note;
 
 import java.util.ArrayList;
 
-public class MelodyRepresentationString extends Melody {
+public class MelodyRepresentationString extends AMelody {
 
     private MusicRepresentation<String> melodyRepresentation;
 

@@ -1,4 +1,4 @@
-package evolution.algorithm.evolutionaryAlgorithm;
+package evolution.algorithm;
 
 public class Nsga_II extends AEvolutionaryAlgorithm{
 

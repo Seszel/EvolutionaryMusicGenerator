@@ -4,14 +4,14 @@ import evolution.solution.Note;
 
 import java.util.ArrayList;
 
-public class Melody {
+abstract class AMelody {
     private final int id;
     private String representationType;
     private ArrayList<Note> notesOfTheMelody;
     private int fitness1;
     private int fitness2;
 
-    public Melody(int id, String representationType, ArrayList<Note> notesOfTheMelody, int fitness1, int fitness2) {
+    public AMelody(int id, String representationType, ArrayList<Note> notesOfTheMelody, int fitness1, int fitness2) {
         this.id = id;
         this.representationType = representationType;
         this.notesOfTheMelody = notesOfTheMelody;
@@ -19,10 +19,7 @@ public class Melody {
         this.fitness2 = fitness2;
     }
 
-    public ArrayList<Note> melodyRepr2Notes(){
-        System.out.println("Changed!");
-        return new ArrayList<>();
-    }
+    public abstract ArrayList<Note> melodyRepr2Notes();
 
     public int getId() {
         return id;
