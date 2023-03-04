@@ -1,5 +1,6 @@
 package evolution;
 
+import evolution.algorithm.Nsga_II;
 import evolution.music.RepresentationMap;
 
 import java.util.Map;
@@ -8,10 +9,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        RepresentationMap<Map<String, Integer>> representation = new RepresentationMap<>();
-        Map<String, Integer> representationF1 = representation.getRepresentation("f1");
-
-
+        Nsga_II algorithm = new Nsga_II(10, "f1", "onePoint", "simple", "elitist", "distance");
 
     }
 

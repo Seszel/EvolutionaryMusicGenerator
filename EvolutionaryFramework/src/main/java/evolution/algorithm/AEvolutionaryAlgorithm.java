@@ -1,14 +1,17 @@
 package evolution.algorithm;
 
+import java.util.Map;
+
 abstract class AEvolutionaryAlgorithm{
-    private final String popSize;
-    private final String representationType;
+    private final int popSize;
+    protected final String representationType;
     private final String crossoverType;
     private final String mutationType;
     private final String selectionType;
     private final String matingPoolSelectionType;
+    protected Map<String, Integer> representationMap;
 
-    protected AEvolutionaryAlgorithm(String popSize, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
+    protected AEvolutionaryAlgorithm(int popSize, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
         this.popSize = popSize;
         this.representationType = representationType;
         this.crossoverType = crossoverType;
@@ -39,7 +42,12 @@ abstract class AEvolutionaryAlgorithm{
         return representationType;
     }
 
-    public String getPopSize() {
+    public int getPopSize() {
         return popSize;
     }
+
+    public Map<String, Integer> getRepresentationMap() {
+        return representationMap;
+    }
+
 }

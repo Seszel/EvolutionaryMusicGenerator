@@ -1,9 +1,20 @@
 package evolution.algorithm;
 
-public class Nsga_II extends AEvolutionaryAlgorithm{
+import evolution.music.RepresentationMap;
 
-    protected Nsga_II(String popSize, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
+import java.util.Map;
+
+public class Nsga_II extends AEvolutionaryAlgorithm {
+
+    public Nsga_II(int popSize, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
         super(popSize, representationType, crossoverType, mutationType, selectionType, matingPoolSelectionType);
+    }
+
+    public void setRepresentationMap() {
+
+        RepresentationMap representation = new RepresentationMap();
+        this.representationMap = representation.getRepresentation(this.representationType);
+
     }
 
     @Override

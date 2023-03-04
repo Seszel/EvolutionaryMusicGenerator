@@ -16,9 +16,7 @@ public class Population<T> {
         this.population = population;
     }
 
-    public void initializePopulation(){
-
-    }
+    public void initializePopulation(){}
 
     public int getPopulationSize() {
         return populationSize;
