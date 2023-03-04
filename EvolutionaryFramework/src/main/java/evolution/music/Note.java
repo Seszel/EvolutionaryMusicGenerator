@@ -1,4 +1,4 @@
-package evolution.solution;
+package evolution.music;
 
 
 public class Note {

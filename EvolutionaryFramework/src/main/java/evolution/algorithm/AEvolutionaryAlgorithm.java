@@ -1,12 +1,16 @@
 package evolution.algorithm;
 
 abstract class AEvolutionaryAlgorithm{
-    private final int crossoverType;
-    private final int mutationType;
-    private final int selectionType;
-    private final int matingPoolSelectionType;
+    private final String popSize;
+    private final String representationType;
+    private final String crossoverType;
+    private final String mutationType;
+    private final String selectionType;
+    private final String matingPoolSelectionType;
 
-    public AEvolutionaryAlgorithm(int crossoverType, int mutationType, int selectionType, int matingPoolSelectionType) {
+    protected AEvolutionaryAlgorithm(String popSize, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
+        this.popSize = popSize;
+        this.representationType = representationType;
         this.crossoverType = crossoverType;
         this.mutationType = mutationType;
         this.selectionType = selectionType;
@@ -15,19 +19,27 @@ abstract class AEvolutionaryAlgorithm{
 
     public abstract void algorithm();
 
-    public int getCrossoverType() {
+    public String getCrossoverType() {
         return crossoverType;
     }
 
-    public int getMutationType() {
+    public String getMutationType() {
         return mutationType;
     }
 
-    public int getSelectionType() {
+    public String getSelectionType() {
         return selectionType;
     }
 
-    public int getMatingPoolSelectionType() {
+    public String getMatingPoolSelectionType() {
         return matingPoolSelectionType;
+    }
+
+    public String getRepresentationType() {
+        return representationType;
+    }
+
+    public String getPopSize() {
+        return popSize;
     }
 }

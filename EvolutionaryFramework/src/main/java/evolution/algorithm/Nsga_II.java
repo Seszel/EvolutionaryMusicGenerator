@@ -2,8 +2,8 @@ package evolution.algorithm;
 
 public class Nsga_II extends AEvolutionaryAlgorithm{
 
-    public Nsga_II(int crossoverType, int mutationType, int selectionType, int matingPoolSelectionType) {
-        super(crossoverType, mutationType, selectionType, matingPoolSelectionType);
+    protected Nsga_II(String popSize, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
+        super(popSize, representationType, crossoverType, mutationType, selectionType, matingPoolSelectionType);
     }
 
     @Override

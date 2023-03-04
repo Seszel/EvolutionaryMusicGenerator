@@ -1,13 +1,18 @@
 package evolution;
 
-import evolution.algorithm.Nsga_II;
+import evolution.music.RepresentationMap;
+
+import java.util.Map;
 
 public class Application {
 
     public static void main(String[] args) {
-        Nsga_II algorithm = new Nsga_II(1,1,1,1);
-        System.out.println(algorithm.getCrossoverType());
-        algorithm.algorithm();
+
+        RepresentationMap<Map<String, Integer>> representation = new RepresentationMap<>();
+        Map<String, Integer> representationF1 = representation.getRepresentation("f1");
+
+
+
     }
 
 }
