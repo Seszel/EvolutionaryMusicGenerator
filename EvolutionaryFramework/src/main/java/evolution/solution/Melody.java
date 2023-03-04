@@ -1,25 +1,29 @@
-package evolution.solution.melody;
-
-import evolution.solution.Note;
+package evolution.solution;
 
 import java.util.ArrayList;
 
-abstract class AMelody {
+public class Melody<T> {
     private final int id;
-    private String representationType;
+    private final String representationType;
     private ArrayList<Note> notesOfTheMelody;
+    private ArrayList<T> melodyRepresentation;
     private int fitness1;
     private int fitness2;
 
-    public AMelody(int id, String representationType, ArrayList<Note> notesOfTheMelody, int fitness1, int fitness2) {
+    public Melody(int id, String representationType, ArrayList<Note> notesOfTheMelody, ArrayList<T> melodyRepresentation, int fitness1, int fitness2) {
         this.id = id;
         this.representationType = representationType;
         this.notesOfTheMelody = notesOfTheMelody;
+        this.melodyRepresentation = melodyRepresentation;
         this.fitness1 = fitness1;
         this.fitness2 = fitness2;
     }
 
-    public abstract ArrayList<Note> melodyRepr2Notes();
+
+    public ArrayList<Note> melodyRepr2Notes() {
+        return null;
+    }
+
 
     public int getId() {
         return id;
@@ -29,16 +33,20 @@ abstract class AMelody {
         return representationType;
     }
 
-    public void setRepresentationType(String representationType) {
-        this.representationType = representationType;
-    }
-
     public ArrayList<Note> getNotesOfTheMelody() {
         return notesOfTheMelody;
     }
 
     public void setNotesOfTheMelody(ArrayList<Note> notesOfTheMelody) {
         this.notesOfTheMelody = notesOfTheMelody;
+    }
+
+    public ArrayList<T> getMelodyRepresentation() {
+        return melodyRepresentation;
+    }
+
+    public void setMelodyRepresentation(ArrayList<T> melodyRepresentation) {
+        this.melodyRepresentation = melodyRepresentation;
     }
 
     public int getFitness1() {
