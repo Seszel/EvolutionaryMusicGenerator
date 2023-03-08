@@ -2,13 +2,13 @@ package evolution.solution;
 
 import evolution.music.Melody;
 
-public class Individual<T> {
+public class Individual {
     private final int id;
-    private Melody<T> genome;
+    private Melody genome;
     private double fitness1 = 0;
     private double fitness2 = 0;
 
-    public Individual(int id, Melody<T> genome) {
+    public Individual(int id, Melody genome) {
         this.id = id;
         this.genome = genome;
     }
@@ -17,11 +17,11 @@ public class Individual<T> {
         return id;
     }
 
-    public Melody<T> getGenome() {
+    public Melody getGenome() {
         return genome;
     }
 
-    public void setGenome(Melody<T> genome) {
+    public void setGenome(Melody genome) {
         this.genome = genome;
     }
 

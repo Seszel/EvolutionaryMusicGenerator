@@ -3,7 +3,8 @@ package evolution.algorithm;
 import java.util.Map;
 
 abstract class AEvolutionaryAlgorithm{
-    private final int popSize;
+    protected final int popSize;
+    protected final int numberOfBars;
     protected final String representationType;
     private final String crossoverType;
     private final String mutationType;
@@ -11,8 +12,9 @@ abstract class AEvolutionaryAlgorithm{
     private final String matingPoolSelectionType;
     protected Map<String, Integer> representationMap;
 
-    protected AEvolutionaryAlgorithm(int popSize, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
+    protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, String representationType, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType) {
         this.popSize = popSize;
+        this.numberOfBars = numberOfBars;
         this.representationType = representationType;
         this.crossoverType = crossoverType;
         this.mutationType = mutationType;
@@ -20,7 +22,7 @@ abstract class AEvolutionaryAlgorithm{
         this.matingPoolSelectionType = matingPoolSelectionType;
     }
 
-    public abstract void algorithm();
+    public abstract void run();
 
     public String getCrossoverType() {
         return crossoverType;
