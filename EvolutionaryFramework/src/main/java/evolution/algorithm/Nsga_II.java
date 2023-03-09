@@ -2,6 +2,7 @@ package evolution.algorithm;
 
 import evolution.population.Population;
 import evolution.solution.Individual;
+import org.jfugue.player.Player;
 
 public class Nsga_II extends AEvolutionaryAlgorithm {
 
@@ -13,10 +14,10 @@ public class Nsga_II extends AEvolutionaryAlgorithm {
     public void run() {
         Population population = new Population(popSize, representationType, numberOfBars, maxNumberOfNotes);
         population.setPopulation();
-//        for (Individual individual : population.getPopulation()) {
-//
-//        }
-
+        Player player = new Player();
+        for (Individual individual : population.getPopulation()) {
+            player.play(individual.getGenome().getMelodyJFugue());
+        }
         System.out.println("Nsga_II algorithm!");
 
     }

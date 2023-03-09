@@ -31,11 +31,11 @@ public class Population {
         ArrayList<Individual> population = new ArrayList<>();
         ImmutableList<Integer> representation = Representation.getRepresentationInt(representationType);
         BiMap<String, Double> durationMap = Representation.getDurationMap();
-        Melody melody = new Melody(numberOfBars, maxNumberOfNotes, representationType);
         for (int n = 0; n< popSize; n++){
+            Melody melody = new Melody(numberOfBars, maxNumberOfNotes, representationType);
             assert representation != null;
             melody.initializeMelody(representation);
-            melody.setMelodyJFugue(durationMap);
+            melody.setMelodyJFugue(durationMap); //not necessary
             Individual individual = new Individual(n+1,melody);
             population.add(individual);
         }

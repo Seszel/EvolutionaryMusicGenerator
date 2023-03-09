@@ -5,14 +5,13 @@ import com.google.common.collect.ImmutableList;
 import evolution.helper.Helper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Melody {
     private final int numberOfBars;
     private final int maxNumberOfNotes;
     private final String representationType;
     private ArrayList<ArrayList<Integer>> melody;
-    private StringBuilder melodyJFugue;
+    private String melodyJFugue;
 
     public Melody(int numberOfBars, int maxNumberOfNotes, String representationType) {
         this.numberOfBars = numberOfBars;
@@ -56,7 +55,7 @@ public class Melody {
                     }
                 }
             }
-        this.melodyJFugue = pattern;
+        this.melodyJFugue = pattern.toString();
     }
 
     public void changeMelody() {
@@ -91,7 +90,7 @@ public class Melody {
         this.melody = melody;
     }
 
-    public StringBuilder getMelodyJFugue() {
+    public String getMelodyJFugue() {
         return melodyJFugue;
     }
 }
