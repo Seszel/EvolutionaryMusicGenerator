@@ -1,11 +1,13 @@
 package evolution.population;
 
+import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import evolution.music.Melody;
 import evolution.music.Representation;
 import evolution.solution.Individual;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Population {
     private final int popSize;
@@ -28,10 +30,12 @@ public class Population {
     public void setPopulation() {
         ArrayList<Individual> population = new ArrayList<>();
         ImmutableList<Integer> representation = Representation.getRepresentationInt(representationType);
+        BiMap<String, Double> durationMap = Representation.getDurationMap();
         Melody melody = new Melody(numberOfBars, maxNumberOfNotes, representationType);
         for (int n = 0; n< popSize; n++){
             assert representation != null;
             melody.initializeMelody(representation);
+            melody.setMelodyJFugue(durationMap);
             Individual individual = new Individual(n+1,melody);
             population.add(individual);
         }
