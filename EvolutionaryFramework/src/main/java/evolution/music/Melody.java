@@ -1,68 +1,55 @@
 package evolution.music;
 
+import com.google.common.collect.ImmutableList;
 import evolution.helper.Helper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Melody {
     private final int numberOfBars;
+    private final int maxNumberOfNotes;
     private final String representationType;
-    private ArrayList<ArrayList<String>> melody;
+    private ArrayList<ArrayList<Integer>> melody;
 
-    public Melody(int numberOfBars, String representationType) {
+    public Melody(int numberOfBars, int maxNumberOfNotes, String representationType) {
         this.numberOfBars = numberOfBars;
+        this.maxNumberOfNotes = maxNumberOfNotes;
         this.representationType = representationType;
     }
 
-    public ArrayList<ArrayList<String>> getMelody() {
+    public ArrayList<ArrayList<Integer>> getMelody() {
         return melody;
     }
 
-    public void changeMelody(){
+    public void changeMelody() {
         System.out.println("Changed melody!");
     }
-    public void initializeMelody() {
-        ArrayList<ArrayList<String>> melody = new ArrayList<>();
-        switch (representationType){
-            case "Pitch midi numbers and duration letters":
 
-                HashMap<String, Double> duration = new HashMap<>();
-                duration.put("w", 1.0);
-                duration.put("h", 0.5);
-                duration.put("q", 0.25);
-                duration.put("e", 0.125);
-                duration.put("s", 0.0625);
-
-                HashMap<Integer, String> numbersOfDurationKeys = new HashMap<>();
-                numbersOfDurationKeys.put(0, "w");
-                numbersOfDurationKeys.put(1, "h");
-                numbersOfDurationKeys.put(2, "q");
-                numbersOfDurationKeys.put(3, "e");
-                numbersOfDurationKeys.put(4, "s");
-
-
-                Double barDuration = 1.0;
-                Double noteDurationValue;
-                String noteDurationKey;
-                for (int i=0; i<numberOfBars; i++){
-                    ArrayList<String> tempBar = new ArrayList<>();
-                    tempBar.add(String.valueOf(Helper.getRandomNumber(48,84)));
-                    boolean chosen = false;
-                    do {
-                        noteDurationKey = numbersOfDurationKeys.get(Helper.getRandomNumber(0, 4));
-                        noteDurationValue = duration.get(noteDurationKey);
-                        if (barDuration - noteDurationValue >= 0){
-                            tempBar.add(noteDurationKey);
-                            chosen = true;
+    public void initializeMelody(ImmutableList<Integer> representation) {
+        ArrayList<ArrayList<Integer>> melody = new ArrayList<>();
+        int representationSize = representation.size();
+        if ("f1".equals(representationType)) {
+            int notesLeftForBar;
+            int numberOfNotes;
+            for (int i = 0; i < numberOfBars; i++) {
+                notesLeftForBar = maxNumberOfNotes;
+                ArrayList<Integer> tempBar = new ArrayList<>();
+                while (notesLeftForBar > 0) {
+                    tempBar.add(representation.get(Helper.getRandomNumber(0, representationSize)));
+                    notesLeftForBar -= 1;
+                    numberOfNotes = Helper.getRandomNumber(0, notesLeftForBar);
+                    if (numberOfNotes != 0) {
+                        for (int k = 1; k < numberOfNotes; k++) {
+                            tempBar.add(0);
+                            notesLeftForBar -= 1;
                         }
-                    } while (!chosen);
-
-                    melody.add(tempBar);
+                    }
                 }
-                break;
+                melody.add(tempBar);
+            }
+        } else {
+            System.out.println("No melody without representation type");
         }
-
         this.melody = melody;
     }
 }
