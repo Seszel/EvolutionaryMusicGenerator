@@ -19,47 +19,39 @@ public class Melody {
         this.representationType = representationType;
     }
 
-    public ArrayList<ArrayList<Integer>> getMelody() {
-        return melody;
+    public int getMaxNumberOfNotes() {
+        return maxNumberOfNotes;
     }
 
-    public void setMelodyJFugue(BiMap<String, Double> durationMap){
+    public void setMelodyJFugue() {
         StringBuilder pattern = new StringBuilder();
         int count = 1;
         double durationValue;
         ArrayList<Integer> melodyArray = Helper.flattenListOfListsStream(melody);
-        for (int i=0; i<melodyArray.size(); i++) {
-                if (i == 0) {
+        for (int i = 0; i < melodyArray.size(); i++) {
+            if (i == 0) {
+                pattern.append(melodyArray.get(i));
+            } else {
+                if (melodyArray.get(i) == -1) {
+                    durationValue = (double) count / maxNumberOfNotes;
+                    pattern.append("/").append(durationValue).append(" ");
+                    count = 1;
+                    pattern.append("R");
+                } else if (melodyArray.get(i) != 0) {
+                    durationValue = (double) count / maxNumberOfNotes;
+                    pattern.append("/").append(durationValue).append(" ");
+                    count = 1;
                     pattern.append(melodyArray.get(i));
-                }
-                else {
-                    if (melodyArray.get(i) == -1) {
-                        durationValue = (double)count/maxNumberOfNotes;
-//                        pattern.append(durationMap.inverse().get(durationValue));
+                    if (i == melodyArray.size() - 1) {
+                        durationValue = (double) count / maxNumberOfNotes;
                         pattern.append("/").append(durationValue).append(" ");
-                        count = 1;
-                        pattern.append("R");
-                    } else if (melodyArray.get(i) != 0) {
-                        durationValue = (double)count/maxNumberOfNotes;
-//                        pattern.append(durationMap.inverse().get(durationValue));
-                        pattern.append("/").append(durationValue).append(" ");
-                        count = 1;
-                        pattern.append(melodyArray.get(i));
-                        if (i== melodyArray.size()-1){
-                            durationValue = (double)count/maxNumberOfNotes;
-//                            pattern.append(durationMap.inverse().get(durationValue));
-                            pattern.append("/").append(durationValue).append(" ");
-                        }
-                    } else {
-                        count += 1;
                     }
+                } else {
+                    count += 1;
                 }
             }
+        }
         this.melodyJFugue = pattern.toString();
-    }
-
-    public void changeMelody() {
-        System.out.println("Changed melody!");
     }
 
     public void initializeMelody(ImmutableList<Integer> representation) {
@@ -92,5 +84,9 @@ public class Melody {
 
     public String getMelodyJFugue() {
         return melodyJFugue;
+    }
+
+    public ArrayList<ArrayList<Integer>> getMelody(){
+        return melody;
     }
 }
