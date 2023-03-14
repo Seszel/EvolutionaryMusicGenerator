@@ -1,7 +1,6 @@
 package evolution.algorithm;
 
 import com.sun.tools.javac.util.List;
-import evolution.population.Population;
 import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
 import org.jfugue.player.Player;
@@ -20,7 +19,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 //        for (Individual individual : population.getPopulation()) {
 //            player.play(individual.getGenome().getMelodyJFugue());
 //        }
-//        System.out.println("Nsga_II algorithm!");
+        System.out.println("Nsga_II algorithm!");
         population.sortPopulation();
 
     }

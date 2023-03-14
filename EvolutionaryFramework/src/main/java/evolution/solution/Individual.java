@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Individual {
-    private final int id;
     private Melody genome;
     private final ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern;
     private final List<String> chordProgression;
@@ -19,16 +18,11 @@ public class Individual {
     private int frontRank = 0;
     private int crowdingDistance = 1000;
 
-    public Individual(int id, Melody genome, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
-        this.id = id;
+    public Individual(Melody genome, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
         this.genome = genome;
         this.chordProgressionPattern = chordProgressionPattern;
         this.chordProgression = chordProgression;
         this.melodyKeyValue = melodyKeyValue;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public Melody getGenome() {
