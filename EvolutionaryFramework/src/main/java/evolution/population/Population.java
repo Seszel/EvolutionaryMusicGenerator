@@ -55,6 +55,6 @@ public abstract class Population {
         this.population = population;
     }
 
-    public abstract void sortPopulation();
+    public abstract void generateFronts();
 
 }

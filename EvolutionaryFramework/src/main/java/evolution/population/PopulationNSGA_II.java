@@ -3,21 +3,23 @@ package evolution.population;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.sun.tools.javac.util.List;
-import com.sun.tools.javac.util.Pair;
+import evolution.helper.Helper;
 import evolution.solution.Individual;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import java.util.ArrayList;
 
 public class PopulationNSGA_II extends Population {
+
+    private ArrayList<ArrayList<Individual>> fronts;
+    private ArrayList<ArrayList<Double>> crowdingDistances;
 
     public PopulationNSGA_II(int popSize, String representationType, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
         super(popSize, representationType, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
     }
 
     @Override
-    public void sortPopulation() {
-        ArrayList<Individual> sortedPopulation = new ArrayList<>();
-
+    public void generateFronts() {
         BiMap<Integer, Individual> integerIndividualBiMap = HashBiMap.create();
 
         ArrayList<ArrayList<Individual>> solutionsDominated = new ArrayList<>();
@@ -66,6 +68,19 @@ public class PopulationNSGA_II extends Population {
             front = Q;
             if (Q.size() != 0){ fronts.add(Q); }
         }
+        this.fronts = fronts;
+    }
+
+    public void crowdingDistanceAssignment(){
+        ArrayList<ArrayList<Double>> crowdingDistances;
+        ArrayList<Double> frontDistances = new ArrayList<>();
+
+        for (int f=0; f<fronts.size(); f++){
+            for (int i=0; i<fronts.get(i).size(); i++){
+
+            }
+        }
+
     }
 
 
