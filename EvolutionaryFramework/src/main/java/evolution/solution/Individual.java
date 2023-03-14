@@ -16,6 +16,8 @@ public class Individual {
     private final int melodyKeyValue;
     private double fitness1 = 0;
     private double fitness2 = 0;
+    private int frontRank = 0;
+    private int crowdingDistance = 1000;
 
     public Individual(int id, Melody genome, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
         this.id = id;
@@ -41,27 +43,27 @@ public class Individual {
         int count = 1;
         int lastNoteValue = 0;
         int noteValue;
-        for (int i=0; i<melody.size(); i++){
-            for (int j=0; j<genome.getMaxNumberOfNotes(); j++){
+        for (int i = 0; i < melody.size(); i++) {
+            for (int j = 0; j < genome.getMaxNumberOfNotes(); j++) {
                 noteValue = melody.get(i).get(j);
-                if (noteValue != 0 && noteValue != -1){
-                    if (chordProgressionPattern.get(0).get(chordProgression.get(i)).contains((noteValue-melodyKeyValue)%12) ){
+                if (noteValue != 0 && noteValue != -1) {
+                    if (chordProgressionPattern.get(0).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
                         fitness += 30;
-                        if (lastNoteValue != 0){
-                            if (Math.abs(noteValue-lastNoteValue) <= 2){
+                        if (lastNoteValue != 0) {
+                            if (Math.abs(noteValue - lastNoteValue) <= 2) {
                                 fitness += 10;
                             }
                         }
-                    } else if (chordProgressionPattern.get(1).get(chordProgression.get(i)).contains((noteValue-melodyKeyValue)%12)) {
+                    } else if (chordProgressionPattern.get(1).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
                         fitness -= 10;
-                    } else if (chordProgressionPattern.get(2).get(chordProgression.get(i)).contains((noteValue-melodyKeyValue)%12)) {
+                    } else if (chordProgressionPattern.get(2).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
                         fitness -= 20;
                     } else {
                         fitness -= 30;
                     }
                     count = 1;
                     lastNoteValue = noteValue;
-                } else if (noteValue == 0){
+                } else if (noteValue == 0) {
                     count += 1;
                 } else {
                     count = 1;
@@ -71,15 +73,15 @@ public class Individual {
 
         // MOTION
         ArrayList<Integer> melodyArray = Helper.flattenListOfListsStream(melody);
-        melodyArray.removeAll(List.of(-1,0));
+        melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;
         for (int i = 1; i < melodyArray.size(); i++) {
-            if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) <= 4 ) {
+            if (Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)) <= 4) {
                 countStepwise += 1;
             } else {
-                if (countLeap > -1){
-                    if (countStepwise > countLeap){
+                if (countLeap > -1) {
+                    if (countStepwise > countLeap) {
                         countLeap = countStepwise;
                     }
                 } else {
@@ -88,22 +90,22 @@ public class Individual {
                 countStepwise = 0;
             }
         }
-        if (countStepwise == melodyArray.size()){
-            if (melodyArray.get(0) > melodyArray.get(melodyArray.size()-1)){
+        if (countStepwise == melodyArray.size()) {
+            if (melodyArray.get(0) > melodyArray.get(melodyArray.size() - 1)) {
                 fitness += 20;
-            } else if (melodyArray.get(0) < melodyArray.get(melodyArray.size()-1)){
+            } else if (melodyArray.get(0) < melodyArray.get(melodyArray.size() - 1)) {
                 fitness += 15;
             }
-        } else if (countLeap > 1 && Math.abs(melodyArray.get(0) - melodyArray.get(melodyArray.size()-1)) > 0) {
+        } else if (countLeap > 1 && Math.abs(melodyArray.get(0) - melodyArray.get(melodyArray.size() - 1)) > 0) {
             fitness += 20;
         }
 
         //INTERVAL
-        List<Integer> perfectIntervals = List.of(0,12,5,7);
+        List<Integer> perfectIntervals = List.of(0, 12, 5, 7);
         for (int i = 1; i < melodyArray.size(); i++) {
-            if (perfectIntervals.contains(Math.abs(melodyArray.get(i-1) - melodyArray.get(i)))){
+            if (perfectIntervals.contains(Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)))) {
                 fitness += 10;
-            } else if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) > 12){
+            } else if (Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)) > 12) {
                 fitness -= 20;
             }
         }
@@ -124,27 +126,27 @@ public class Individual {
         int count = 1;
         int lastNoteValue = 0;
         int noteValue;
-        for (int i=0; i<melody.size(); i++){
-            for (int j=0; j<genome.getMaxNumberOfNotes(); j++){
+        for (int i = 0; i < melody.size(); i++) {
+            for (int j = 0; j < genome.getMaxNumberOfNotes(); j++) {
                 noteValue = melody.get(i).get(j);
-                if (noteValue != 0 && noteValue != -1){
-                    if (chordProgressionPattern.get(0).get(chordProgression.get(i)).contains((noteValue-melodyKeyValue)%12) ){
+                if (noteValue != 0 && noteValue != -1) {
+                    if (chordProgressionPattern.get(0).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
                         fitness -= 5;
-                        if (lastNoteValue != 0){
-                            if (Math.abs(noteValue-lastNoteValue) <= 2){
+                        if (lastNoteValue != 0) {
+                            if (Math.abs(noteValue - lastNoteValue) <= 2) {
                                 fitness += 30;
                             }
                         }
-                    } else if (chordProgressionPattern.get(1).get(chordProgression.get(i)).contains((noteValue-melodyKeyValue)%12)) {
+                    } else if (chordProgressionPattern.get(1).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
                         fitness += 20;
-                    } else if (chordProgressionPattern.get(2).get(chordProgression.get(i)).contains((noteValue-melodyKeyValue)%12)) {
+                    } else if (chordProgressionPattern.get(2).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
                         fitness += 5;
                     } else {
                         fitness -= 10;
                     }
                     count = 1;
                     lastNoteValue = noteValue;
-                } else if (noteValue == 0){
+                } else if (noteValue == 0) {
                     count += 1;
                 } else {
                     count = 1;
@@ -154,15 +156,15 @@ public class Individual {
 
         // MOTION
         ArrayList<Integer> melodyArray = Helper.flattenListOfListsStream(melody);
-        melodyArray.removeAll(List.of(-1,0));
+        melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;
         for (int i = 1; i < melodyArray.size(); i++) {
-            if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) <= 4 ) {
+            if (Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)) <= 4) {
                 countStepwise += 1;
             } else {
-                if (countLeap > -1){
-                    if (countStepwise > countLeap){
+                if (countLeap > -1) {
+                    if (countStepwise > countLeap) {
                         countLeap = countStepwise;
                     }
                 } else {
@@ -171,22 +173,22 @@ public class Individual {
                 countStepwise = 0;
             }
         }
-        if (countStepwise == melodyArray.size()){
-            if (melodyArray.get(0) > melodyArray.get(melodyArray.size()-1)){
+        if (countStepwise == melodyArray.size()) {
+            if (melodyArray.get(0) > melodyArray.get(melodyArray.size() - 1)) {
                 fitness += 15;
-            } else if (melodyArray.get(0) < melodyArray.get(melodyArray.size()-1)){
+            } else if (melodyArray.get(0) < melodyArray.get(melodyArray.size() - 1)) {
                 fitness += 20;
             }
-        } else if (countLeap > 1 && Math.abs(melodyArray.get(0) - melodyArray.get(melodyArray.size()-1)) > 0) {
+        } else if (countLeap > 1 && Math.abs(melodyArray.get(0) - melodyArray.get(melodyArray.size() - 1)) > 0) {
             fitness += 20;
         }
 
         //INTERVAL
-        List<Integer> perfectIntervals = List.of(0,12,5,7);
+        List<Integer> perfectIntervals = List.of(0, 12, 5, 7);
         for (int i = 1; i < melodyArray.size(); i++) {
-            if (perfectIntervals.contains(Math.abs(melodyArray.get(i-1) - melodyArray.get(i)))){
+            if (perfectIntervals.contains(Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)))) {
                 fitness -= 5;
-            } else if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) > 12){
+            } else if (Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)) > 12) {
                 fitness -= 20;
             }
         }
@@ -195,6 +197,28 @@ public class Individual {
 
     public double getFitness2() {
         return fitness2;
+    }
+
+    public void setFrontRank(int frontRank) {
+        this.frontRank = frontRank;
+    }
+
+    public void setCrowdingDistance(int crowdingDistance) {
+        this.crowdingDistance = crowdingDistance;
+    }
+
+    public boolean dominates(Individual q) {
+        if (fitness1 < q.fitness1 && fitness2 <= q.fitness2) {
+            return true;
+        }
+        return fitness1 <= q.fitness1 && fitness2 < q.fitness2;
+
+//        if (fitness1 < q.fitness1 && fitness2 <= q.fitness2){
+//            return true;
+//        } if (fitness1 <= q.fitness1 && fitness2 < q.fitness2){
+//            return true;
+//        }
+//        return false;
     }
 
 }

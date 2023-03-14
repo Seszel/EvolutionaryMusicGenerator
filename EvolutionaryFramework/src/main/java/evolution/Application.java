@@ -1,7 +1,7 @@
 package evolution;
 
 import com.sun.tools.javac.util.List;
-import evolution.algorithm.Nsga_II;
+import evolution.algorithm.NSGA_II;
 
 
 public class Application {
@@ -20,7 +20,7 @@ public class Application {
         String MATING_POOL_SELECTION_TYPE = "distance";
         List<String> CRITERIA = List.of("stability", "tension");
 
-        Nsga_II algorithm = new Nsga_II(
+        NSGA_II algorithm = new NSGA_II(
                 POP_SIZE,
                 NUMBER_OF_BARS,
                 MAX_NUMBER_OF_NOTES,

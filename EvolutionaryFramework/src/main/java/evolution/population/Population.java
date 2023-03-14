@@ -7,18 +7,20 @@ import com.sun.tools.javac.util.List;
 import evolution.music.Melody;
 import evolution.music.Representation;
 import evolution.solution.Individual;
+import org.checkerframework.checker.units.qual.A;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Population {
-    private final int popSize;
+public abstract class Population {
+    protected final int popSize;
     private final String representationType;
     private final int numberOfBars;
     private final int maxNumberOfNotes;
     private final List<String> chordProgression;
     private final String melodyKey;
-    private ArrayList<Individual> population;
+    protected ArrayList<Individual> population;
 
     public Population(int popSize, String representationType, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey){
         this.popSize = popSize;
@@ -52,4 +54,7 @@ public class Population {
         }
         this.population = population;
     }
+
+    public abstract void sortPopulation();
+
 }
