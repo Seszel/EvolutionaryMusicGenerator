@@ -19,9 +19,9 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 //        for (Individual individual : population.getPopulation()) {
 //            player.play(individual.getGenome().getMelodyJFugue());
 //        }
-        System.out.println("Nsga_II algorithm!");
         population.generateFronts();
-
+        population.crowdingDistanceAssignment();
+        System.out.println("Nsga_II algorithm!");
     }
 
 

@@ -3,11 +3,12 @@ package evolution.population;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.sun.tools.javac.util.List;
-import evolution.helper.Helper;
 import evolution.solution.Individual;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class PopulationNSGA_II extends Population {
 
@@ -54,33 +55,56 @@ public class PopulationNSGA_II extends Population {
             for (int j = 0; j < fronts.get(i).size(); j++) {
                 p = fronts.get(i).get(j);
                 pId = integerIndividualBiMap.inverse().get(p);
-                for (int k = 0; k < solutionsDominated.get(pId).size(); k++){
+                for (int k = 0; k < solutionsDominated.get(pId).size(); k++) {
                     q = solutionsDominated.get(pId).get(k);
                     qId = integerIndividualBiMap.inverse().get(q);
-                    dominationCount.set(qId, dominationCount.get(qId)-1);
-                    if (dominationCount.get(qId) == 0){
-                        q.setFrontRank(i+1+1);
+                    dominationCount.set(qId, dominationCount.get(qId) - 1);
+                    if (dominationCount.get(qId) == 0) {
+                        q.setFrontRank(i + 1 + 1);
                         Q.add(q);
                     }
                 }
             }
             i += 1;
             front = Q;
-            if (Q.size() != 0){ fronts.add(Q); }
+            if (Q.size() != 0) {
+                fronts.add(Q);
+            }
         }
         this.fronts = fronts;
     }
 
-    public void crowdingDistanceAssignment(){
-        ArrayList<ArrayList<Double>> crowdingDistances;
-        ArrayList<Double> frontDistances = new ArrayList<>();
+    public void crowdingDistanceAssignment() {
+        ArrayList<ArrayList<Double>> crowdingDistances = new ArrayList<>();
 
-        for (int f=0; f<fronts.size(); f++){
-            for (int i=0; i<fronts.get(i).size(); i++){
 
+        for (ArrayList<Individual> frontSolutions : fronts) {
+
+            ArrayList<Double> frontDistances = new ArrayList<>(Collections.nCopies(frontSolutions.size(), 0.0));
+            frontDistances.set(0, Double.NEGATIVE_INFINITY);
+            frontDistances.set(frontSolutions.size() - 1, Double.POSITIVE_INFINITY);
+
+            frontSolutions.sort(Comparator.comparing(Individual::getFitness1));
+            double maxMin1 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitness1)).orElseThrow(NoSuchElementException::new).getFitness1()
+                    - frontSolutions.stream().min(Comparator.comparing(Individual::getFitness1)).orElseThrow(NoSuchElementException::new).getFitness1();
+            for (int i = 1; i < frontSolutions.size() - 1; i++) {
+                frontDistances.set(i,
+                        frontDistances.get(i)
+                                + (frontSolutions.get(i + 1).getFitness1() - frontSolutions.get(i - 1).getFitness1())
+                                / maxMin1);
             }
+            frontSolutions.sort(Comparator.comparing(Individual::getFitness2));
+            double maxMin2 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitness2)).orElseThrow(NoSuchElementException::new).getFitness2()
+                    - frontSolutions.stream().min(Comparator.comparing(Individual::getFitness2)).orElseThrow(NoSuchElementException::new).getFitness2();
+            for (int i = 1; i < frontSolutions.size() - 1; i++) {
+                frontDistances.set(i,
+                        frontDistances.get(i)
+                                + (frontSolutions.get(i + 1).getFitness2() - frontSolutions.get(i - 1).getFitness2())
+                                / maxMin2);
+            }
+            crowdingDistances.add(frontDistances);
         }
-
+        this.crowdingDistances = crowdingDistances;
     }
 
 
