@@ -8,7 +8,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        int POP_SIZE = 10;
+        int POP_SIZE = 20;
         int NUMBER_OF_BARS = 4;
         int MAX_NUMBER_OF_NOTES = 16;
         String REPRESENTATION_TYPE = "f1";

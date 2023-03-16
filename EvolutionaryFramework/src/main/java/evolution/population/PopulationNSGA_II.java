@@ -78,7 +78,7 @@ public class PopulationNSGA_II extends Population {
         for (ArrayList<Individual> frontSolutions : fronts) {
 
             ArrayList<Double> frontDistances = new ArrayList<>(Collections.nCopies(frontSolutions.size(), 0.0));
-            frontDistances.set(0, Double.NEGATIVE_INFINITY);
+            frontDistances.set(0, Double.POSITIVE_INFINITY);
             frontDistances.set(frontSolutions.size() - 1, Double.POSITIVE_INFINITY);
 
             frontSolutions.sort(Comparator.comparing(Individual::getFitness1));
@@ -88,7 +88,6 @@ public class PopulationNSGA_II extends Population {
                 double distance1 = frontDistances.get(i)
                         + (frontSolutions.get(i + 1).getFitness1() - frontSolutions.get(i - 1).getFitness1())
                         / maxMin1;
-                frontSolutions.get(i).setCrowdingDistance(distance1);
                 frontDistances.set(i, distance1);
             }
             frontSolutions.sort(Comparator.comparing(Individual::getFitness2));
@@ -98,26 +97,17 @@ public class PopulationNSGA_II extends Population {
                 double distance2 = frontDistances.get(i)
                         + (frontSolutions.get(i + 1).getFitness2() - frontSolutions.get(i - 1).getFitness2())
                         / maxMin2;
-                frontSolutions.get(i).setCrowdingDistance(distance2);
                 frontDistances.set(i, distance2);
+                frontSolutions.get(i).setCrowdingDistance(distance2);
             }
         }
     }
 
     public void crowdedComparisonOperator() {
-        ArrayList<ArrayList<Individual>> fronts = this.fronts;
-
-
-        for (int f=0 ; f<fronts.size(); f++) {
-            ArrayList<Individual> front = fronts.get(f);
+        for (ArrayList<Individual> front : fronts) {
             front.sort(Comparator.comparing(Individual::getCrowdingDistance).reversed());
-            fronts.set(f, front);
         }
-
-        this.fronts = fronts;
-        System.out.println("uu");
     }
-
 
 
 }

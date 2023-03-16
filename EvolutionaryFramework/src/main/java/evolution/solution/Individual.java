@@ -15,8 +15,8 @@ public class Individual {
     private final int melodyKeyValue;
     private double fitness1 = 0;
     private double fitness2 = 0;
-    private int frontRank = 0;
-    private double crowdingDistance = 1000.0;
+    private int frontRank;
+    private double crowdingDistance = Double.POSITIVE_INFINITY;
 
     public Individual(Melody genome, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
         this.genome = genome;
