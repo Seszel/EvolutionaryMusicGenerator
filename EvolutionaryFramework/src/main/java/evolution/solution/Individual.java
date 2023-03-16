@@ -16,7 +16,7 @@ public class Individual {
     private double fitness1 = 0;
     private double fitness2 = 0;
     private int frontRank = 0;
-    private int crowdingDistance = 1000;
+    private double crowdingDistance = 1000.0;
 
     public Individual(Melody genome, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
         this.genome = genome;
@@ -197,7 +197,7 @@ public class Individual {
         this.frontRank = frontRank;
     }
 
-    public void setCrowdingDistance(int crowdingDistance) {
+    public void setCrowdingDistance(double crowdingDistance) {
         this.crowdingDistance = crowdingDistance;
     }
 
@@ -215,4 +215,11 @@ public class Individual {
 //        return false;
     }
 
+    public int getFrontRank() {
+        return frontRank;
+    }
+
+    public double getCrowdingDistance() {
+        return crowdingDistance;
+    }
 }

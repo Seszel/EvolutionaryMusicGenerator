@@ -13,7 +13,6 @@ import java.util.NoSuchElementException;
 public class PopulationNSGA_II extends Population {
 
     private ArrayList<ArrayList<Individual>> fronts;
-    private ArrayList<ArrayList<Double>> crowdingDistances;
 
     public PopulationNSGA_II(int popSize, String representationType, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
         super(popSize, representationType, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
@@ -75,8 +74,6 @@ public class PopulationNSGA_II extends Population {
     }
 
     public void crowdingDistanceAssignment() {
-        ArrayList<ArrayList<Double>> crowdingDistances = new ArrayList<>();
-
 
         for (ArrayList<Individual> frontSolutions : fronts) {
 
@@ -88,24 +85,39 @@ public class PopulationNSGA_II extends Population {
             double maxMin1 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitness1)).orElseThrow(NoSuchElementException::new).getFitness1()
                     - frontSolutions.stream().min(Comparator.comparing(Individual::getFitness1)).orElseThrow(NoSuchElementException::new).getFitness1();
             for (int i = 1; i < frontSolutions.size() - 1; i++) {
-                frontDistances.set(i,
-                        frontDistances.get(i)
-                                + (frontSolutions.get(i + 1).getFitness1() - frontSolutions.get(i - 1).getFitness1())
-                                / maxMin1);
+                double distance1 = frontDistances.get(i)
+                        + (frontSolutions.get(i + 1).getFitness1() - frontSolutions.get(i - 1).getFitness1())
+                        / maxMin1;
+                frontSolutions.get(i).setCrowdingDistance(distance1);
+                frontDistances.set(i, distance1);
             }
             frontSolutions.sort(Comparator.comparing(Individual::getFitness2));
             double maxMin2 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitness2)).orElseThrow(NoSuchElementException::new).getFitness2()
                     - frontSolutions.stream().min(Comparator.comparing(Individual::getFitness2)).orElseThrow(NoSuchElementException::new).getFitness2();
             for (int i = 1; i < frontSolutions.size() - 1; i++) {
-                frontDistances.set(i,
-                        frontDistances.get(i)
-                                + (frontSolutions.get(i + 1).getFitness2() - frontSolutions.get(i - 1).getFitness2())
-                                / maxMin2);
+                double distance2 = frontDistances.get(i)
+                        + (frontSolutions.get(i + 1).getFitness2() - frontSolutions.get(i - 1).getFitness2())
+                        / maxMin2;
+                frontSolutions.get(i).setCrowdingDistance(distance2);
+                frontDistances.set(i, distance2);
             }
-            crowdingDistances.add(frontDistances);
         }
-        this.crowdingDistances = crowdingDistances;
     }
+
+    public void crowdedComparisonOperator() {
+        ArrayList<ArrayList<Individual>> fronts = this.fronts;
+
+
+        for (int f=0 ; f<fronts.size(); f++) {
+            ArrayList<Individual> front = fronts.get(f);
+            front.sort(Comparator.comparing(Individual::getCrowdingDistance).reversed());
+            fronts.set(f, front);
+        }
+
+        this.fronts = fronts;
+        System.out.println("uu");
+    }
+
 
 
 }

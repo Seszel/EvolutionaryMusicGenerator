@@ -21,6 +21,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 //        }
         population.generateFronts();
         population.crowdingDistanceAssignment();
+        population.crowdedComparisonOperator();
         System.out.println("Nsga_II algorithm!");
     }
 
