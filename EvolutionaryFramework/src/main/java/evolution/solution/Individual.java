@@ -10,8 +10,7 @@ import java.util.HashMap;
 
 public class Individual {
     private Melody genome;
-    private double fitness1 = 0;
-    private double fitness2 = 0;
+    private ArrayList<Double> fitness;
     private int frontRank;
     private double crowdingDistance = Double.POSITIVE_INFINITY;
 
@@ -23,7 +22,35 @@ public class Individual {
         return genome;
     }
 
-    public void setFitness1(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
+    public void setFitness(List<String> criteria, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue){
+        ArrayList<Double> fitness = new ArrayList<>();
+        fitness.add(0.0);
+        fitness.add(0.0);
+        for (int c=0; c< criteria.size(); c++) {
+            switch (criteria.get(c)){
+                case "stability":
+                    fitness.set(c,setFitnessStability(chordProgressionPattern, chordProgression, melodyKeyValue));
+                    break;
+                case "tension":
+                    fitness.set(c,setFitnessTension(chordProgressionPattern, chordProgression, melodyKeyValue));
+                    break;
+            }
+        }
+        this.fitness = fitness;
+    }
+
+    public ArrayList<Double> getFitness(){
+        return fitness;
+    }
+    public Double getFitnessStability(){
+        return fitness.get(0);
+    }
+
+    public Double getFitnessTension(){
+        return fitness.get(1);
+    }
+
+    public double setFitnessStability(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
         int fitness = 0;
         ArrayList<ArrayList<Integer>> melody = genome.getMelody();
 
@@ -100,21 +127,17 @@ public class Individual {
         }
 
 
-        // punishment for to much of notes
-        for (Integer integer : melodyArray) {
-            if (integer != 0) {
-                fitness -= 20;
-            }
-        }
+//        // punishment for to much of notes
+//        for (Integer integer : melodyArray) {
+//            if (integer != 0) {
+//                fitness -= 20;
+//            }
+//        }
 
-        this.fitness1 = fitness;
+        return fitness;
     }
 
-    public double getFitness1() {
-        return fitness1;
-    }
-
-    public void setFitness2(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern,List<String> chordProgression, int melodyKeyValue) {
+    public double setFitnessTension(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern,List<String> chordProgression, int melodyKeyValue) {
 
         int fitness = 0;
         ArrayList<ArrayList<Integer>> melody = genome.getMelody();
@@ -191,17 +214,15 @@ public class Individual {
             }
         }
 
-        // punishment for to much of notes
-        for (Integer integer : melodyArray) {
-            if (integer != 0) {
-                fitness -= 20;
-            }
-        }
-        this.fitness2 = fitness;
-    }
+//        // punishment for to much of notes
+//        for (Integer integer : melodyArray) {
+//            if (integer != 0) {
+//                fitness -= 20;
+//            }
+//        }
 
-    public double getFitness2() {
-        return fitness2;
+        return fitness;
+
     }
 
     public void setFrontRank(int frontRank) {
@@ -213,10 +234,10 @@ public class Individual {
     }
 
     public boolean dominates(Individual q) {
-        if (fitness1 > q.fitness1 && fitness2 >= q.fitness2) {
+        if (fitness.get(0) > q.fitness.get(0) && fitness.get(1) >= q.fitness.get(1)) {
             return true;
         }
-        return fitness1 >= q.fitness1 && fitness2 > q.fitness2;
+        return fitness.get(0) >= q.fitness.get(0) && fitness.get(1) > q.fitness.get(1);
 
 //        if (fitness1 < q.fitness1 && fitness2 <= q.fitness2){
 //            return true;

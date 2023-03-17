@@ -20,7 +20,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 
     @Override
     public void run() {
-        PopulationNSGA_II population = new PopulationNSGA_II(popSize, representationType, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
+        PopulationNSGA_II population = new PopulationNSGA_II(popSize, representationType, criteria, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
         ImmutableList<Integer> representation = Representation.getRepresentationInt(representationType);
         Player player = new Player();
 
@@ -28,6 +28,10 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         population.generateFronts();
         population.crowdingDistanceAssignment();
         population.crowdedComparisonOperator();
+
+//        for (Individual individual : population.getPopulation()) {
+//            player.play(individual.getGenome().getMelodyJFugue());
+//        }
 
         for (int n=0; n<numberOfGenerations; n++){
             ArrayList<Pair<Individual, Individual>> matingPool = TournamentMatingPoolSelection.matingPoolSelection(10,popSize,population.getPopulation());
@@ -38,11 +42,11 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             population.crowdingDistanceAssignment();
             population.crowdedComparisonOperator();
             population.setPopulation(new ArrayList<>(Helper.flattenListOfListsStream(population.getFronts()).subList(0, popSize)));
+            Helper.generateJSONFile(population.getPopulation(), n, 0);
         }
-        for (Individual individual : population.getPopulation()) {
-            individual.getGenome().setMelodyJFugue(maxNumberOfNotes);
-            player.play(individual.getGenome().getMelodyJFugue());
-        }
+//        for (Individual individual : population.getPopulation()) {
+//            player.play(individual.getGenome().getMelodyJFugue());
+//        }
         System.out.println("Nsga_II algorithm!");
     }
 

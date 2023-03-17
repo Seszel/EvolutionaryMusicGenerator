@@ -18,8 +18,8 @@ public class PopulationNSGA_II extends Population {
     private ArrayList<ArrayList<Individual>> fronts;
     private ArrayList<Individual> offsprings;
 
-    public PopulationNSGA_II(int popSize, String representationType, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
-        super(popSize, representationType, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
+    public PopulationNSGA_II(int popSize, String representationType, List<String> criteria, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
+        super(popSize, representationType, criteria, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
     }
 
     @Override
@@ -85,21 +85,21 @@ public class PopulationNSGA_II extends Population {
             frontDistances.set(0, Double.POSITIVE_INFINITY);
             frontDistances.set(frontSolutions.size() - 1, Double.POSITIVE_INFINITY);
 
-            frontSolutions.sort(Comparator.comparing(Individual::getFitness1));
-            double maxMin1 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitness1)).orElseThrow(NoSuchElementException::new).getFitness1()
-                    - frontSolutions.stream().min(Comparator.comparing(Individual::getFitness1)).orElseThrow(NoSuchElementException::new).getFitness1();
+            frontSolutions.sort(Comparator.comparing(Individual::getFitnessStability));
+            double maxMin1 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability()
+                    - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability();
             for (int i = 1; i < frontSolutions.size() - 1; i++) {
                 double distance1 = frontDistances.get(i)
-                        + (frontSolutions.get(i + 1).getFitness1() - frontSolutions.get(i - 1).getFitness1())
+                        + (frontSolutions.get(i + 1).getFitnessStability() - frontSolutions.get(i - 1).getFitnessStability())
                         / maxMin1;
                 frontDistances.set(i, distance1);
             }
-            frontSolutions.sort(Comparator.comparing(Individual::getFitness2));
-            double maxMin2 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitness2)).orElseThrow(NoSuchElementException::new).getFitness2()
-                    - frontSolutions.stream().min(Comparator.comparing(Individual::getFitness2)).orElseThrow(NoSuchElementException::new).getFitness2();
+            frontSolutions.sort(Comparator.comparing(Individual::getFitnessTension));
+            double maxMin2 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension()
+                    - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension();
             for (int i = 1; i < frontSolutions.size() - 1; i++) {
                 double distance2 = frontDistances.get(i)
-                        + (frontSolutions.get(i + 1).getFitness2() - frontSolutions.get(i - 1).getFitness2())
+                        + (frontSolutions.get(i + 1).getFitnessTension() - frontSolutions.get(i - 1).getFitnessTension())
                         / maxMin2;
                 frontDistances.set(i, distance2);
                 frontSolutions.get(i).setCrowdingDistance(distance2);
@@ -133,8 +133,7 @@ public class PopulationNSGA_II extends Population {
         int melodyKeyValue = notesMap.get(melodyKey);
         population.addAll(offsprings);
         for (Individual individual:population) {
-            individual.setFitness1(chordProgressionPattern, chordProgression, melodyKeyValue);
-            individual.setFitness2(chordProgressionPattern, chordProgression, melodyKeyValue);
+            individual.setFitness(criteria,chordProgressionPattern, chordProgression, melodyKeyValue);
         }
     }
 

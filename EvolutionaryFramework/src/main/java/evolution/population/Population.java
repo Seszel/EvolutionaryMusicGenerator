@@ -13,15 +13,17 @@ import java.util.HashMap;
 public abstract class Population {
     protected final int popSize;
     protected final String representationType;
+    protected final List<String> criteria;
     protected final int numberOfBars;
     protected final int maxNumberOfNotes;
     protected final List<String> chordProgression;
     protected final String melodyKey;
     protected ArrayList<Individual> population;
 
-    public Population(int popSize, String representationType, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey){
+    public Population(int popSize, String representationType, List<String> criteria, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey){
         this.popSize = popSize;
         this.representationType = representationType;
+        this.criteria = criteria;
         this.numberOfBars = numberOfBars;
         this.maxNumberOfNotes = maxNumberOfNotes;
         this.chordProgression = chordProgression;
@@ -38,10 +40,9 @@ public abstract class Population {
             Melody melody = new Melody();
             assert representation != null;
             melody.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
-//            melody.setMelodyJFugue(maxNumberOfNotes); //not necessary
+            melody.setMelodyJFugue(maxNumberOfNotes); //not necessary
             Individual individual = new Individual(melody);
-            individual.setFitness1(chordProgressionPattern, chordProgression, melodyKeyValue);
-            individual.setFitness2(chordProgressionPattern, chordProgression, melodyKeyValue);
+            individual.setFitness(criteria,chordProgressionPattern, chordProgression, melodyKeyValue);
             population.add(individual);
         }
         this.population = population;
@@ -54,6 +55,9 @@ public abstract class Population {
     }
 
     public void setPopulation(ArrayList<Individual> population){
+        for (Individual individual : population){
+            individual.getGenome().setMelodyJFugue(maxNumberOfNotes);
+        }
         this.population = population;
     }
 
