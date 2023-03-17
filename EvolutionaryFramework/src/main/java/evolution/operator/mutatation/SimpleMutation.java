@@ -7,14 +7,13 @@ import evolution.music.Melody;
 import java.util.SplittableRandom;
 
 public class SimpleMutation implements IMutation {
-    public static Melody mutation(Melody melody, ImmutableList<Integer> representation) {
+    public static Melody mutation(Melody melody, ImmutableList<Integer> representation, int numberOfBars, int maxNumberOfNotes) {
         SplittableRandom random = new SplittableRandom();
-        for (int i = 0; i < melody.getNumberOfBars(); i++) {
-            if (random.nextInt(1, 1001) <= 100) {
-                int idx = Helper.getRandomNumber(0, melody.getMaxNumberOfNotes() - 1);
-                int mutation = representation.get(Helper.getRandomNumber(0, representation.size()));
-                melody.getMelody().get(i).set(idx, mutation);
-            }
+        for (int i = 0; i < numberOfBars; i++) {
+//            random.nextInt(1, 101);
+            int idx = Helper.getRandomNumber(0, maxNumberOfNotes - 1);
+            int mutation = representation.get(Helper.getRandomNumber(0, representation.size()-1));
+            melody.getMelody().get(i).set(idx, mutation);
         }
         return melody;
     }

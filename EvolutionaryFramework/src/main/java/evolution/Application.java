@@ -18,7 +18,7 @@ public class Application {
         String MUTATION_TYPE = "simple";
         String SELECTION_TYPE = "elitist";
         String MATING_POOL_SELECTION_TYPE = "distance";
-        int NUMBER_OF_GENERATIONS = 100000;
+        int NUMBER_OF_GENERATIONS = 1000;
         List<String> CRITERIA = List.of("stability", "tension");
 
         NSGA_II algorithm = new NSGA_II(

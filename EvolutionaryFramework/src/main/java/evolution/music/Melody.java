@@ -1,41 +1,22 @@
 package evolution.music;
 
-import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import evolution.helper.Helper;
 
 import java.util.ArrayList;
 
 public class Melody {
-    private final int numberOfBars;
-    private final int maxNumberOfNotes;
-    private final String representationType;
     private ArrayList<ArrayList<Integer>> melody;
     private String melodyJFugue;
 
-    public Melody(int numberOfBars, int maxNumberOfNotes, String representationType) {
-        this.numberOfBars = numberOfBars;
-        this.maxNumberOfNotes = maxNumberOfNotes;
-        this.representationType = representationType;
-    }
-
-    public int getMaxNumberOfNotes() {
-        return maxNumberOfNotes;
-    }
-
-    public int getNumberOfBars() {
-        return numberOfBars;
-    }
-
-    public String getRepresentationType(){
-        return representationType;
+    public Melody() {
     }
 
     public void setMelody(ArrayList<ArrayList<Integer>> melody) {
         this.melody = melody;
     }
 
-    public void setMelodyJFugue() {
+    public void setMelodyJFugue(int maxNumberOfNotes) {
         StringBuilder pattern = new StringBuilder();
         int count = 1;
         double durationValue;
@@ -66,9 +47,11 @@ public class Melody {
         this.melodyJFugue = pattern.toString();
     }
 
-    public void initializeMelody(ImmutableList<Integer> representation) {
+    public void initializeMelody(ImmutableList<Integer> representation, String representationType, int numberOfBars, int maxNumberOfNotes) {
+
         ArrayList<ArrayList<Integer>> melody = new ArrayList<>();
         int representationSize = representation.size();
+
         if ("f1".equals(representationType)) {
             int notesLeftForBar;
             int numberOfNotes;
@@ -98,7 +81,8 @@ public class Melody {
         return melodyJFugue;
     }
 
-    public ArrayList<ArrayList<Integer>> getMelody(){
+    public ArrayList<ArrayList<Integer>> getMelody() {
         return melody;
     }
+
 }

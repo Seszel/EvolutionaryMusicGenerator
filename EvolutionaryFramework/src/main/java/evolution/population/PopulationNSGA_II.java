@@ -10,9 +10,7 @@ import evolution.music.Representation;
 import evolution.operator.crossover.OnePointCrossover;
 import evolution.operator.mutatation.SimpleMutation;
 import evolution.solution.Individual;
-import org.checkerframework.checker.units.qual.A;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class PopulationNSGA_II extends Population {
@@ -33,14 +31,14 @@ public class PopulationNSGA_II extends Population {
         ArrayList<ArrayList<Individual>> fronts = new ArrayList<>();
 
         fronts.add(new ArrayList<>());
-        for (int i = 0; i < popSize; i++) {
+        for (int i = 0; i < population.size(); i++) {
             integerIndividualBiMap.put(i, population.get(i));
             solutionsDominated.add(new ArrayList<>());
             dominationCount.add(0);
-            for (int j = 0; j < popSize; j++) {
-                if (population.get(i).dominates(population.get(j))) {
-                    solutionsDominated.get(i).add(population.get(j));
-                } else if (population.get(j).dominates(population.get(i))) {
+            for (Individual individual : population) {
+                if (population.get(i).dominates(individual)) {
+                    solutionsDominated.get(i).add(individual);
+                } else if (individual.dominates(population.get(i))) {
                     dominationCount.set(i, dominationCount.get(i) + 1);
                 }
             }
@@ -121,9 +119,9 @@ public class PopulationNSGA_II extends Population {
 
         Pair<Melody, Melody> offspringsCrossover;
         for (Pair<Individual, Individual> individualIndividualPair : matingPool) {
-            offspringsCrossover = OnePointCrossover.crossover(individualIndividualPair.fst, individualIndividualPair.snd);
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.fst, representation)));
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.snd, representation)));
+            offspringsCrossover = OnePointCrossover.crossover(individualIndividualPair, numberOfBars, maxNumberOfNotes);
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.fst, representation, numberOfBars, maxNumberOfNotes)));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.snd, representation, numberOfBars, maxNumberOfNotes)));
         }
 
         this.offsprings = offsprings;
