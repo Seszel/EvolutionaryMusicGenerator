@@ -8,7 +8,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        int POP_SIZE = 20;
+        int POP_SIZE = 100;
         int NUMBER_OF_BARS = 4;
         int MAX_NUMBER_OF_NOTES = 16;
         String REPRESENTATION_TYPE = "f1";
@@ -18,6 +18,7 @@ public class Application {
         String MUTATION_TYPE = "simple";
         String SELECTION_TYPE = "elitist";
         String MATING_POOL_SELECTION_TYPE = "distance";
+        int NUMBER_OF_GENERATIONS = 100000;
         List<String> CRITERIA = List.of("stability", "tension");
 
         NSGA_II algorithm = new NSGA_II(
@@ -31,6 +32,7 @@ public class Application {
                 MUTATION_TYPE,
                 SELECTION_TYPE,
                 MATING_POOL_SELECTION_TYPE,
+                NUMBER_OF_GENERATIONS,
                 CRITERIA);
         algorithm.run();
 

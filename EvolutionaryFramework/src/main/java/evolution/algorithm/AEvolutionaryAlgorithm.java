@@ -14,9 +14,10 @@ abstract class AEvolutionaryAlgorithm{
     private final String mutationType;
     private final String selectionType;
     private final String matingPoolSelectionType;
+    protected final int numberOfGenerations;
     private final List<String> criteria;
 
-    protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes, String representationType, List<String> chordProgression, String melodyKey, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType, List<String> criteria) {
+    protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes, String representationType, List<String> chordProgression, String melodyKey, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType, int numberOfGenerations, List<String> criteria) {
         this.popSize = popSize;
         this.numberOfBars = numberOfBars;
         this.maxNumberOfNotes = maxNumberOfNotes;
@@ -27,6 +28,7 @@ abstract class AEvolutionaryAlgorithm{
         this.mutationType = mutationType;
         this.selectionType = selectionType;
         this.matingPoolSelectionType = matingPoolSelectionType;
+        this.numberOfGenerations = numberOfGenerations;
         this.criteria = criteria;
     }
 
@@ -56,4 +58,7 @@ abstract class AEvolutionaryAlgorithm{
         return popSize;
     }
 
+    public int getNumberOfGenerations() {
+        return numberOfGenerations;
+    }
 }

@@ -2,17 +2,23 @@ package evolution.population;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableList;
 import com.sun.tools.javac.util.List;
+import com.sun.tools.javac.util.Pair;
+import evolution.music.Melody;
+import evolution.music.Representation;
+import evolution.operator.crossover.OnePointCrossover;
+import evolution.operator.mutatation.SimpleMutation;
 import evolution.solution.Individual;
+import org.checkerframework.checker.units.qual.A;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.NoSuchElementException;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class PopulationNSGA_II extends Population {
 
     private ArrayList<ArrayList<Individual>> fronts;
+    private ArrayList<Individual> offsprings;
 
     public PopulationNSGA_II(int popSize, String representationType, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
         super(popSize, representationType, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
@@ -110,4 +116,31 @@ public class PopulationNSGA_II extends Population {
     }
 
 
+    public void createOffsprings(ArrayList<Pair<Individual,Individual>> matingPool, ImmutableList<Integer> representation){
+        ArrayList<Individual> offsprings = new ArrayList<>();
+
+        Pair<Melody, Melody> offspringsCrossover;
+        for (Pair<Individual, Individual> individualIndividualPair : matingPool) {
+            offspringsCrossover = OnePointCrossover.crossover(individualIndividualPair.fst, individualIndividualPair.snd);
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.fst, representation)));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.snd, representation)));
+        }
+
+        this.offsprings = offsprings;
+    }
+
+    public void changePopulation(){
+        ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern = Representation.getChordProgressionMajor();
+        BiMap<String, Integer> notesMap = Representation.getNotesMap();
+        int melodyKeyValue = notesMap.get(melodyKey);
+        population.addAll(offsprings);
+        for (Individual individual:population) {
+            individual.setFitness1(chordProgressionPattern, chordProgression, melodyKeyValue);
+            individual.setFitness2(chordProgressionPattern, chordProgression, melodyKeyValue);
+        }
+    }
+
+    public ArrayList<ArrayList<Individual>> getFronts() {
+        return fronts;
+    }
 }

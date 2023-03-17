@@ -10,26 +10,20 @@ import java.util.HashMap;
 
 public class Individual {
     private Melody genome;
-    private final ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern;
-    private final List<String> chordProgression;
-    private final int melodyKeyValue;
     private double fitness1 = 0;
     private double fitness2 = 0;
     private int frontRank;
     private double crowdingDistance = Double.POSITIVE_INFINITY;
 
-    public Individual(Melody genome, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
+    public Individual(Melody genome) {
         this.genome = genome;
-        this.chordProgressionPattern = chordProgressionPattern;
-        this.chordProgression = chordProgression;
-        this.melodyKeyValue = melodyKeyValue;
     }
 
     public Melody getGenome() {
         return genome;
     }
 
-    public void setFitness1() {
+    public void setFitness1(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
         int fitness = 0;
         ArrayList<ArrayList<Integer>> melody = genome.getMelody();
 
@@ -111,7 +105,7 @@ public class Individual {
         return fitness1;
     }
 
-    public void setFitness2() {
+    public void setFitness2(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern,List<String> chordProgression, int melodyKeyValue) {
 
         int fitness = 0;
         ArrayList<ArrayList<Integer>> melody = genome.getMelody();

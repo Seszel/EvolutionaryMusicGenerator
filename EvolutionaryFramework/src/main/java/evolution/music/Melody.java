@@ -23,6 +23,18 @@ public class Melody {
         return maxNumberOfNotes;
     }
 
+    public int getNumberOfBars() {
+        return numberOfBars;
+    }
+
+    public String getRepresentationType(){
+        return representationType;
+    }
+
+    public void setMelody(ArrayList<ArrayList<Integer>> melody) {
+        this.melody = melody;
+    }
+
     public void setMelodyJFugue() {
         StringBuilder pattern = new StringBuilder();
         int count = 1;

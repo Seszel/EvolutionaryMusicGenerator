@@ -18,8 +18,8 @@ public abstract class Population {
     private final String representationType;
     private final int numberOfBars;
     private final int maxNumberOfNotes;
-    private final List<String> chordProgression;
-    private final String melodyKey;
+    protected final List<String> chordProgression;
+    protected final String melodyKey;
     protected ArrayList<Individual> population;
 
     public Population(int popSize, String representationType, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey){
@@ -35,9 +35,11 @@ public abstract class Population {
         return population;
     }
 
-    public void setPopulation() {
+    public void assignPopulation(ArrayList<Individual> population){
+        this.population = population;
+    }
+    public void setPopulation(ImmutableList<Integer> representation) {
         ArrayList<Individual> population = new ArrayList<>();
-        ImmutableList<Integer> representation = Representation.getRepresentationInt(representationType);
         ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern = Representation.getChordProgressionMajor();
         BiMap<String, Integer> notesMap = Representation.getNotesMap();
         int melodyKeyValue = notesMap.get(melodyKey);
@@ -47,9 +49,9 @@ public abstract class Population {
             assert representation != null;
             melody.initializeMelody(representation);
             melody.setMelodyJFugue(); //not necessary
-            Individual individual = new Individual(melody, chordProgressionPattern, chordProgression, melodyKeyValue);
-            individual.setFitness1();
-            individual.setFitness2();
+            Individual individual = new Individual(melody);
+            individual.setFitness1(chordProgressionPattern, chordProgression, melodyKeyValue);
+            individual.setFitness2(chordProgressionPattern, chordProgression, melodyKeyValue);
             population.add(individual);
         }
         this.population = population;
