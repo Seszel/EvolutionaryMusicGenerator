@@ -1,7 +1,7 @@
 package evolution.operator.crossover;
 
 import com.sun.tools.javac.util.Pair;
-import evolution.helper.Helper;
+import evolution.util.Util;
 import evolution.music.Melody;
 import evolution.solution.Individual;
 
@@ -13,7 +13,7 @@ public class OnePointCrossover implements ICrossover {
         ArrayList<ArrayList<Integer>> offspringMelody1 = new ArrayList<>();
         ArrayList<ArrayList<Integer>> offspringMelody2 = new ArrayList<>();
         for (int i = 0; i < numberOfBars; i++) {
-            idx = Helper.getRandomNumber(0, maxNumberOfNotes);
+            idx = Util.getRandomNumber(0, maxNumberOfNotes);
             ArrayList<Integer> offspring1 = new ArrayList<>(parents.fst.getGenome().getMelody().get(i).subList(0, idx));
             offspring1.addAll(parents.snd.getGenome().getMelody().get(i).subList(idx, maxNumberOfNotes));
 

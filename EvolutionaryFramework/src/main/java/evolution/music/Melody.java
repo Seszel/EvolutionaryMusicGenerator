@@ -1,7 +1,7 @@
 package evolution.music;
 
 import com.google.common.collect.ImmutableList;
-import evolution.helper.Helper;
+import evolution.util.Util;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class Melody {
         StringBuilder pattern = new StringBuilder();
         int count = 1;
         double durationValue;
-        ArrayList<Integer> melodyArray = Helper.flattenListOfListsStream(melody);
+        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         for (int i = 0; i < melodyArray.size(); i++) {
             if (i == 0) {
                 pattern.append(melodyArray.get(i));
@@ -59,9 +59,9 @@ public class Melody {
                 notesLeftForBar = maxNumberOfNotes;
                 ArrayList<Integer> tempBar = new ArrayList<>();
                 while (notesLeftForBar > 0) {
-                    tempBar.add(representation.get(Helper.getRandomNumber(0, representationSize)));
+                    tempBar.add(representation.get(Util.getRandomNumber(0, representationSize)));
                     notesLeftForBar -= 1;
-                    numberOfNotes = Helper.getRandomNumber(0, notesLeftForBar);
+                    numberOfNotes = Util.getRandomNumber(0, notesLeftForBar);
                     if (numberOfNotes != 0) {
                         for (int k = 1; k < numberOfNotes; k++) {
                             tempBar.add(0);

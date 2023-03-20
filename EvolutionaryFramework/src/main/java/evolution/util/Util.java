@@ -1,18 +1,15 @@
-package evolution.helper;
+package evolution.util;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import evolution.solution.Individual;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Helper {
+public class Util {
     public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }

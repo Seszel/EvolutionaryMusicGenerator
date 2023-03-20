@@ -3,7 +3,7 @@ package evolution.algorithm;
 import com.google.common.collect.ImmutableList;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Pair;
-import evolution.helper.Helper;
+import evolution.util.Util;
 import evolution.music.Representation;
 import evolution.operator.matingPoolSelection.TournamentMatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
@@ -26,8 +26,11 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 
         population.generatePopulation(representation);
         population.generateFronts();
-        population.crowdingDistanceAssignment();
-        population.crowdedComparisonOperator();
+        for (ArrayList<Individual> front : population.getFronts()){
+            population.crowdingDistanceAssignment(front);
+        }
+
+        population.crowdedComparisonOperator(population.getFronts());
 
 //        for (Individual individual : population.getPopulation()) {
 //            player.play(individual.getGenome().getMelodyJFugue());
@@ -38,15 +41,23 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             population.createOffsprings(matingPool, representation);
             population.changePopulation();
             population.generateFronts();
-            // poprawic, aby nie sortowac wszystkich tylko az do osiagniecia popsizu
-            population.crowdingDistanceAssignment();
-            population.crowdedComparisonOperator();
-            population.setPopulation(new ArrayList<>(Helper.flattenListOfListsStream(population.getFronts()).subList(0, popSize)));
-            Helper.generateJSONFile(population.getPopulation(), n, 0);
+            ArrayList<ArrayList<Individual>> newPopulation = new ArrayList<>();
+            int newPopulationSize = 0;
+            for (ArrayList<Individual> front : population.getFronts()) {
+                population.crowdingDistanceAssignment(front);
+                newPopulation.add(front);
+                if ((front.size() + newPopulationSize) > popSize){
+                    break;
+                }
+                newPopulationSize += front.size();
+            }
+            population.crowdedComparisonOperator(newPopulation);
+            population.setPopulation(new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize)));
+            Util.generateJSONFile(population.getPopulation(), n, 0);
         }
-//        for (Individual individual : population.getPopulation()) {
-//            player.play(individual.getGenome().getMelodyJFugue());
-//        }
+        for (Individual individual : population.getPopulation()) {
+            player.play(individual.getGenome().getMelodyJFugue());
+        }
         System.out.println("Nsga_II algorithm!");
     }
 

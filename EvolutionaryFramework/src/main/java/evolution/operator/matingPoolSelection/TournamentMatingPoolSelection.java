@@ -2,7 +2,7 @@ package evolution.operator.matingPoolSelection;
 
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Pair;
-import evolution.helper.Helper;
+import evolution.util.Util;
 import evolution.solution.Individual;
 
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ public class TournamentMatingPoolSelection implements IMatingPoolSelection {
 
         int idx1, idx2;
         for (int n = 0; n < numberOfParents; n++) {
-            idx1 = Collections.max(List.of(Helper.getRandomNumber(0, popSize - 1), Helper.getRandomNumber(0, popSize - 1)));
-            idx2 = Collections.max(List.of(Helper.getRandomNumber(0, popSize - 1), Helper.getRandomNumber(0, popSize - 1)));
+            idx1 = Collections.max(List.of(Util.getRandomNumber(0, popSize - 1), Util.getRandomNumber(0, popSize - 1)));
+            idx2 = Collections.max(List.of(Util.getRandomNumber(0, popSize - 1), Util.getRandomNumber(0, popSize - 1)));
             matingPool.add(new Pair<>(population.get(idx1), population.get(idx2)));
         }
         return matingPool;

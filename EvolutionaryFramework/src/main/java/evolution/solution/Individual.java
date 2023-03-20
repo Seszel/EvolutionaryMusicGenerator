@@ -1,8 +1,7 @@
 package evolution.solution;
 
-import com.google.common.collect.BiMap;
 import com.sun.tools.javac.util.List;
-import evolution.helper.Helper;
+import evolution.util.Util;
 import evolution.music.Melody;
 
 import java.util.ArrayList;
@@ -87,7 +86,7 @@ public class Individual {
         }
 
         // MOTION
-        ArrayList<Integer> melodyArray = Helper.flattenListOfListsStream(melody);
+        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;
@@ -175,7 +174,7 @@ public class Individual {
         }
 
         // MOTION
-        ArrayList<Integer> melodyArray = Helper.flattenListOfListsStream(melody);
+        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;
