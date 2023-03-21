@@ -26,15 +26,11 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 
         population.generatePopulation(representation);
         population.generateFronts();
-        for (ArrayList<Individual> front : population.getFronts()){
-            population.crowdingDistanceAssignment(front);
+
+        for (Individual individual : population.getPopulation()) {
+            player.play(individual.getGenome().getMelodyJFugue());
+            break;
         }
-
-        population.crowdedComparisonOperator(population.getFronts());
-
-//        for (Individual individual : population.getPopulation()) {
-//            player.play(individual.getGenome().getMelodyJFugue());
-//        }
 
         for (int n=0; n<numberOfGenerations; n++){
             ArrayList<Pair<Individual, Individual>> matingPool = TournamentMatingPoolSelection.matingPoolSelection(10,popSize,population.getPopulation());

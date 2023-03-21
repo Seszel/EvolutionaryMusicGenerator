@@ -79,28 +79,41 @@ public class PopulationNSGA_II extends Population {
 
     public void crowdingDistanceAssignment(ArrayList<Individual> frontSolutions) {
 
-        ArrayList<Double> frontDistances = new ArrayList<>(Collections.nCopies(frontSolutions.size(), 0.0));
-        frontDistances.set(0, Double.POSITIVE_INFINITY);
-        frontDistances.set(frontSolutions.size() - 1, Double.POSITIVE_INFINITY);
+        double maxMin;
+        double distance;
+        for (String criterion : criteria) {
+            switch (criterion) {
+                case "stability":
+                    frontSolutions.sort(Comparator.comparing(Individual::getFitnessStability));
+                    frontSolutions.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
+                    frontSolutions.get(frontSolutions.size() - 1).setCrowdingDistance(Double.POSITIVE_INFINITY);
 
-        frontSolutions.sort(Comparator.comparing(Individual::getFitnessStability));
-        double maxMin1 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability()
-                - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability();
-        for (int i = 1; i < frontSolutions.size() - 1; i++) {
-            double distance1 = frontDistances.get(i)
-                    + (frontSolutions.get(i + 1).getFitnessStability() - frontSolutions.get(i - 1).getFitnessStability())
-                    / maxMin1;
-            frontDistances.set(i, distance1);
-        }
-        frontSolutions.sort(Comparator.comparing(Individual::getFitnessTension));
-        double maxMin2 = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension()
-                - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension();
-        for (int i = 1; i < frontSolutions.size() - 1; i++) {
-            double distance2 = frontDistances.get(i)
-                    + (frontSolutions.get(i + 1).getFitnessTension() - frontSolutions.get(i - 1).getFitnessTension())
-                    / maxMin2;
-            frontDistances.set(i, distance2);
-            frontSolutions.get(i).setCrowdingDistance(distance2);
+                    maxMin = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability()
+                            - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability();
+
+                    for (int i = 1; i < frontSolutions.size() - 1; i++) {
+                        distance = frontSolutions.get(i).getCrowdingDistance()
+                                + (frontSolutions.get(i + 1).getFitnessStability() - frontSolutions.get(i - 1).getFitnessStability())
+                                / maxMin;
+                        frontSolutions.get(i).setCrowdingDistance(distance);
+                    }
+                    break;
+                case "tension":
+                    frontSolutions.sort(Comparator.comparing(Individual::getFitnessTension));
+                    frontSolutions.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
+                    frontSolutions.get(frontSolutions.size() - 1).setCrowdingDistance(Double.POSITIVE_INFINITY);
+
+                    maxMin = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension()
+                            - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension();
+
+                    for (int i = 1; i < frontSolutions.size() - 1; i++) {
+                        distance = frontSolutions.get(i).getCrowdingDistance()
+                                + (frontSolutions.get(i + 1).getFitnessTension() - frontSolutions.get(i - 1).getFitnessTension())
+                                / maxMin;
+                        frontSolutions.get(i).setCrowdingDistance(distance);
+                    }
+                    break;
+            }
         }
     }
 

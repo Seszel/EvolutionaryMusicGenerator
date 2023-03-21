@@ -40,7 +40,7 @@ public abstract class Population {
             Melody melody = new Melody();
             assert representation != null;
             melody.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
-            melody.setMelodyJFugue(maxNumberOfNotes); //not necessary
+            melody.setMelodyJFugue(maxNumberOfNotes);
             Individual individual = new Individual(melody);
             individual.setFitness(criteria,chordProgressionPattern, chordProgression, melodyKeyValue);
             population.add(individual);

@@ -11,7 +11,7 @@ public class Individual {
     private Melody genome;
     private ArrayList<Double> fitness;
     private int frontRank;
-    private double crowdingDistance = Double.POSITIVE_INFINITY;
+    private double crowdingDistance = 0;
 
     public Individual(Melody genome) {
         this.genome = genome;
@@ -213,7 +213,7 @@ public class Individual {
             }
         }
 
-//        // punishment for to much of notes
+        // punishment for to much of notes
 //        for (Integer integer : melodyArray) {
 //            if (integer != 0) {
 //                fitness -= 20;
@@ -237,13 +237,6 @@ public class Individual {
             return true;
         }
         return fitness.get(0) >= q.fitness.get(0) && fitness.get(1) > q.fitness.get(1);
-
-//        if (fitness1 < q.fitness1 && fitness2 <= q.fitness2){
-//            return true;
-//        } if (fitness1 <= q.fitness1 && fitness2 < q.fitness2){
-//            return true;
-//        }
-//        return false;
     }
 
     public int getFrontRank() {
