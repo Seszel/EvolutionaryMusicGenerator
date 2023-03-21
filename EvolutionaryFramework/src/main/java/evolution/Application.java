@@ -1,7 +1,8 @@
 package evolution;
 
-import com.sun.tools.javac.util.List;
 import evolution.algorithm.NSGA_II;
+
+import java.util.List;
 
 
 public class Application {

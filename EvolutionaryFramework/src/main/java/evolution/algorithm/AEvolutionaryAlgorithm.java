@@ -1,7 +1,9 @@
 package evolution.algorithm;
 
-import com.sun.tools.javac.util.List;
+//import com.sun.tools.javac.util.List;
 
+
+import java.util.List;
 
 abstract class AEvolutionaryAlgorithm {
     protected final int popSize;

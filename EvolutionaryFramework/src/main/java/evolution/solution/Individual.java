@@ -1,11 +1,11 @@
 package evolution.solution;
 
-import com.sun.tools.javac.util.List;
 import evolution.util.Util;
 import evolution.music.Melody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Individual {
     private Melody genome;

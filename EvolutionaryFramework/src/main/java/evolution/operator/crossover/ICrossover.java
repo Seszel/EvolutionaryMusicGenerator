@@ -1,8 +1,7 @@
 package evolution.operator.crossover;
 
-import com.sun.tools.javac.util.Pair;
 import evolution.music.Melody;
-import evolution.solution.Individual;
+import org.apache.commons.lang3.tuple.Pair;
 
 public interface ICrossover {
     static Pair<Melody,Melody> crossover(){

@@ -2,13 +2,13 @@ package evolution.population;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
-import com.sun.tools.javac.util.List;
 import evolution.music.Melody;
 import evolution.music.Representation;
 import evolution.solution.Individual;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class Population {
     protected final int popSize;

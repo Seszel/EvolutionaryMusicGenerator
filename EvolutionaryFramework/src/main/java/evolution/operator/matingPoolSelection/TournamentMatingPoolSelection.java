@@ -1,12 +1,13 @@
 package evolution.operator.matingPoolSelection;
 
-import com.sun.tools.javac.util.List;
-import com.sun.tools.javac.util.Pair;
 import evolution.util.Util;
 import evolution.solution.Individual;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class TournamentMatingPoolSelection implements IMatingPoolSelection {
 
@@ -17,7 +18,7 @@ public class TournamentMatingPoolSelection implements IMatingPoolSelection {
         for (int n = 0; n < numberOfParents; n++) {
             idx1 = Collections.max(List.of(Util.getRandomNumber(0, popSize - 1), Util.getRandomNumber(0, popSize - 1)));
             idx2 = Collections.max(List.of(Util.getRandomNumber(0, popSize - 1), Util.getRandomNumber(0, popSize - 1)));
-            matingPool.add(new Pair<>(population.get(idx1), population.get(idx2)));
+            matingPool.add(new MutablePair<>(population.get(idx1), population.get(idx2)));
         }
         return matingPool;
     }

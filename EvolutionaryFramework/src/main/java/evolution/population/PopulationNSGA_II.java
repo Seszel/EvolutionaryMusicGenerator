@@ -3,13 +3,12 @@ package evolution.population;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
-import com.sun.tools.javac.util.List;
-import com.sun.tools.javac.util.Pair;
 import evolution.music.Melody;
 import evolution.music.Representation;
 import evolution.operator.crossover.OnePointCrossover;
 import evolution.operator.mutatation.SimpleMutation;
 import evolution.solution.Individual;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
@@ -130,8 +129,8 @@ public class PopulationNSGA_II extends Population {
         Pair<Melody, Melody> offspringsCrossover;
         for (Pair<Individual, Individual> individualIndividualPair : matingPool) {
             offspringsCrossover = OnePointCrossover.crossover(individualIndividualPair, numberOfBars, maxNumberOfNotes);
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.fst, representation, numberOfBars, maxNumberOfNotes)));
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.snd, representation, numberOfBars, maxNumberOfNotes)));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes)));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes)));
         }
 
         this.offsprings = offsprings;

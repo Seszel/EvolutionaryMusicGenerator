@@ -1,6 +1,5 @@
 package evolution.util;
 
-import com.sun.tools.javac.util.List;
 import evolution.solution.Individual;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Util {

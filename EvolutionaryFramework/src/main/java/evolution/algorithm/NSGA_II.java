@@ -1,19 +1,19 @@
 package evolution.algorithm;
 
 import com.google.common.collect.ImmutableList;
-import com.sun.tools.javac.util.List;
-import com.sun.tools.javac.util.Pair;
 import evolution.music.Representation;
 import evolution.operator.matingPoolSelection.TournamentMatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.player.Player;
 import org.json.simple.JSONObject;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NSGA_II extends AEvolutionaryAlgorithm {
 
