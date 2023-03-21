@@ -25,6 +25,7 @@ public class Util {
                 .collect(Collectors.toList());
     }
 
+    @SuppressWarnings("unchecked")
     public static JSONObject generateJSONObject(ArrayList<Individual> population, List<String> criteria) {
 
         JSONObject frontsList = new JSONObject();

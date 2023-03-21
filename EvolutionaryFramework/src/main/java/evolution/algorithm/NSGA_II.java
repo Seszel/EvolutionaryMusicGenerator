@@ -21,6 +21,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey, crossoverType, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIterations, criteria);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void run() {
         PopulationNSGA_II population = new PopulationNSGA_II(popSize, representationType, criteria, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
