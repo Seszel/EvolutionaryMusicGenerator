@@ -1,14 +1,14 @@
 package evolution.operator.crossover;
 
 import com.sun.tools.javac.util.Pair;
-import evolution.util.Util;
 import evolution.music.Melody;
 import evolution.solution.Individual;
+import evolution.util.Util;
 
 import java.util.ArrayList;
 
 public class OnePointCrossover implements ICrossover {
-    public static Pair<Melody,Melody> crossover(Pair<Individual, Individual> parents, int numberOfBars, int maxNumberOfNotes) {
+    public static Pair<Melody, Melody> crossover(Pair<Individual, Individual> parents, int numberOfBars, int maxNumberOfNotes) {
         int idx;
         ArrayList<ArrayList<Integer>> offspringMelody1 = new ArrayList<>();
         ArrayList<ArrayList<Integer>> offspringMelody2 = new ArrayList<>();

@@ -14,7 +14,7 @@ public class Representation {
     public static ImmutableList<Integer> getRepresentationInt(String representationType) {
         ImmutableList<Integer> representationInt;
         if ("f1".equals(representationType)) {
-            System.out.println("Representation f1");
+//            System.out.println("Representation f1");
             ArrayList<Integer> reprList = new ArrayList<>();
             // C4 - C7
             for (int i = 48; i < 85; i++) {

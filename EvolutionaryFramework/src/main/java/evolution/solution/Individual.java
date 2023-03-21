@@ -126,12 +126,14 @@ public class Individual {
         }
 
 
-//        // punishment for to much of notes
-//        for (Integer integer : melodyArray) {
-//            if (integer != 0) {
-//                fitness -= 20;
-//            }
-//        }
+        // punishment for to much of notes
+        for (Integer integer : melodyArray) {
+            if (integer != 0) {
+                fitness -= 15;
+            } else {
+                fitness += 5;
+            }
+        }
 
         return fitness;
     }
@@ -213,12 +215,14 @@ public class Individual {
             }
         }
 
-        // punishment for to much of notes
-//        for (Integer integer : melodyArray) {
-//            if (integer != 0) {
-//                fitness -= 20;
-//            }
-//        }
+//         punishment for to much of notes
+        for (Integer integer : melodyArray) {
+            if (integer != 0) {
+                fitness -= 15;
+            } else {
+                fitness += 5;
+            }
+        }
 
         return fitness;
 

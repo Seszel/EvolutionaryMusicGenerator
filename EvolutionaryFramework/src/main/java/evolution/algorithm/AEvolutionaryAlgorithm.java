@@ -3,7 +3,7 @@ package evolution.algorithm;
 import com.sun.tools.javac.util.List;
 
 
-abstract class AEvolutionaryAlgorithm{
+abstract class AEvolutionaryAlgorithm {
     protected final int popSize;
     protected final int numberOfBars;
     protected final int maxNumberOfNotes;
@@ -15,9 +15,10 @@ abstract class AEvolutionaryAlgorithm{
     private final String selectionType;
     private final String matingPoolSelectionType;
     protected final int numberOfGenerations;
+    protected final int numberOfIterations;
     protected final List<String> criteria;
 
-    protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes, String representationType, List<String> chordProgression, String melodyKey, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType, int numberOfGenerations, List<String> criteria) {
+    protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes, String representationType, List<String> chordProgression, String melodyKey, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType, int numberOfGenerations, int numberOfIterations, List<String> criteria) {
         this.popSize = popSize;
         this.numberOfBars = numberOfBars;
         this.maxNumberOfNotes = maxNumberOfNotes;
@@ -29,6 +30,7 @@ abstract class AEvolutionaryAlgorithm{
         this.selectionType = selectionType;
         this.matingPoolSelectionType = matingPoolSelectionType;
         this.numberOfGenerations = numberOfGenerations;
+        this.numberOfIterations = numberOfIterations;
         this.criteria = criteria;
     }
 

@@ -1,13 +1,18 @@
 package evolution.util;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
-
+import com.sun.tools.javac.util.List;
 import evolution.solution.Individual;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class Util {
     public static int getRandomNumber(int min, int max) {
@@ -20,51 +25,79 @@ public class Util {
                 .collect(Collectors.toList());
     }
 
-    public static void generateJSONFile(ArrayList<Individual> population, int numberOfGeneration, int numberOfIteration){
-        JSONArray populationList = new JSONArray();
+    public static JSONObject generateJSONObject(ArrayList<Individual> population, List<String> criteria) {
+
         JSONObject frontsList = new JSONObject();
         JSONArray frontIndividuals = new JSONArray();
         JSONObject individualDetails;
+        JSONObject fitness;
         int rank = 1;
 
-        for (int i=0; i<population.size(); i++) {
+        for (int i = 0; i < population.size(); i++) {
             if (population.get(i).getFrontRank() != rank) {
                 frontsList.put("front_" + rank, frontIndividuals);
-                populationList.add(frontsList);
                 rank = population.get(i).getFrontRank();
-                frontsList = new JSONObject();
                 frontIndividuals = new JSONArray();
-                if (i == population.size()-1){
+                if (i == population.size() - 1) {
                     individualDetails = new JSONObject();
-                    individualDetails.put("genome" ,population.get(i).getGenome().getMelodyJFugue());
-                    individualDetails.put("fitness", population.get(i).getFitness());
+                    individualDetails.put("genome", population.get(i).getGenome().getMelodyJFugue());
+                    fitness = new JSONObject();
+                    for (int j = 0; j < criteria.size(); j++) {
+                        fitness.put(criteria.get(j), population.get(i).getFitness().get(j));
+                    }
+                    individualDetails.put("fitness", fitness);
 
                     frontIndividuals.add(individualDetails);
                     frontsList.put("front_" + rank, frontIndividuals);
-                    populationList.add(frontsList);
                     break;
                 }
             }
 
             individualDetails = new JSONObject();
-            individualDetails.put("genome" ,population.get(i).getGenome().getMelodyJFugue());
-            individualDetails.put("fitness", population.get(i).getFitness());
+            individualDetails.put("genome", population.get(i).getGenome().getMelodyJFugue());
+            fitness = new JSONObject();
+            for (int j = 0; j < criteria.size(); j++) {
+                fitness.put(criteria.get(j), population.get(i).getFitness().get(j));
+            }
+            individualDetails.put("fitness", fitness);
 
             frontIndividuals.add(individualDetails);
 
-            if (i == population.size()-1){
+            if (i == population.size() - 1) {
                 frontsList.put("front_" + rank, frontIndividuals);
-                populationList.add(frontsList);
             }
 
         }
-        try (FileWriter file = new FileWriter("results/population" + "_" + numberOfIteration + "_" + numberOfGeneration + ".json")) {
+        return frontsList;
+
+    }
+
+    public static void writeJSONFile(JSONObject iterationJSON, int numberOfIteration, String folderName) {
+        try (FileWriter file = new FileWriter("results/" + folderName + "/result" + "_" + numberOfIteration + ".json")) {
             //We can write any JSONArray or JSONObject instance to the file
-            file.write(populationList.toJSONString());
+            file.write(iterationJSON.toJSONString());
             file.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+    public static void createDirectory(String folderName) {
+        try {
+
+            Path path = Paths.get("results/" + folderName);
+
+            Files.createDirectories(path);
+
+            System.out.println("Directory is created!");
+
+        } catch (IOException e) {
+
+            System.err.println("Failed to create directory!" + e.getMessage());
+
+        }
+    }
+
 }
