@@ -4,6 +4,8 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import evolution.music.Melody;
 import evolution.music.Representation;
+import evolution.objective.StabilityObjective;
+import evolution.objective.TensionObjective;
 import evolution.solution.Individual;
 
 import java.util.ArrayList;
@@ -41,8 +43,11 @@ public abstract class Population {
             assert representation != null;
             melody.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
             melody.setMelodyJFugue(maxNumberOfNotes);
-            Individual individual = new Individual(melody);
-            individual.setFitness(criteria, chordProgressionPattern, chordProgression, melodyKeyValue);
+            Individual individual = new Individual(melody)
+                    .addCriterion(new StabilityObjective("S", true, chordProgressionPattern, chordProgression, melodyKeyValue))
+                    .addCriterion(new TensionObjective("TENSION", true, chordProgressionPattern, chordProgression, melodyKeyValue));
+
+            individual.setFitness();
             population.add(individual);
         }
         this.population = population;

@@ -142,7 +142,7 @@ public class PopulationNSGA_II extends Population {
         int melodyKeyValue = notesMap.get(melodyKey);
         population.addAll(offsprings);
         for (Individual individual : population) {
-            individual.setFitness(criteria, chordProgressionPattern, chordProgression, melodyKeyValue);
+            individual.setFitness();
         }
     }
 

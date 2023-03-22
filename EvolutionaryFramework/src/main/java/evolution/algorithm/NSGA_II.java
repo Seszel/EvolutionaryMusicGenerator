@@ -71,9 +71,9 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             algorithmJSONObject.put("NSGA-II", iterationJSONObject);
             Util.writeJSONFile(algorithmJSONObject, i, folderName);
         }
-//        for (Individual individual : population.getPopulation()) {
-//            player.play(individual.getGenome().getMelodyJFugue());
-//        }
+        for (Individual individual : population.getPopulation()) {
+            player.play(individual.getGenome().getMelodyJFugue());
+        }
         System.out.println("Nsga_II algorithm ended work!");
     }
 
