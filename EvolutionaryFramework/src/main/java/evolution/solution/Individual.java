@@ -10,7 +10,7 @@ import java.util.List;
 public class Individual {
     private Melody genome;
     private ArrayList<Double> fitness;
-    private ArrayList<Double> bestFitnessSoFar; // for MOEA/D ONLY
+//    private ArrayList<Double> bestFitnessSoFar; // for MOEA/D ONLY
     private int frontRank;
     private double crowdingDistance = 0;
 
@@ -253,17 +253,28 @@ public class Individual {
     }
 
 
-    /**
-     * for moea/d only
-     */
-    public ArrayList<Double> getBestFitnessSoFar() {
-        return bestFitnessSoFar;
-    }
-
-    /**
-     * for moea/d only
-     */
-    public void setBestFitnessSoFar(ArrayList<Double> bestFitnessSoFar) {
-        this.bestFitnessSoFar = bestFitnessSoFar;
-    }
+//    /**
+//     * for moea/d only
+//     */
+//    public ArrayList<Double> getBestFitnessSoFar() {
+//        return bestFitnessSoFar;
+//    }
+//
+//    /**
+//     * for moea/d only
+//     */
+//    public void setBestFitnessSoFar(ArrayList<Double> bestFitnessSoFar) {
+//        this.bestFitnessSoFar = bestFitnessSoFar;
+//    }
+//
+//    /**
+//     * for moea/d only
+//     */
+//    public void updateFitnessSoFar(){
+//        for (int i=0; i<fitness.size(); i++){
+//            if (fitness.get(i) > bestFitnessSoFar.get(i)){
+//                bestFitnessSoFar.set(i,fitness.get(i));
+//            }
+//        }
+//    }
 }

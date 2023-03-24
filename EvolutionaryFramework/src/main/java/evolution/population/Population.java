@@ -43,12 +43,11 @@ public abstract class Population {
             melody.setMelodyJFugue(maxNumberOfNotes);
             Individual individual = new Individual(melody);
             individual.setFitness(criteria, chordProgressionPattern, chordProgression, melodyKeyValue);
-            individual.setBestFitnessSoFar(individual.getFitness()); // for MOEA/D only
+//            individual.setBestFitnessSoFar(individual.getFitness()); // for MOEA/D only
             population.add(individual);
         }
         this.population = population;
     }
-
 
     public ArrayList<Individual> getPopulation() {
         return population;
