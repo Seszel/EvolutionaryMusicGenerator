@@ -19,6 +19,14 @@ public class Util {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
+    public static double getEuclideanDistance(List<Double> element1, List<Double> element2){
+        double distance=0;
+        for (int i=0; i<element1.size(); i++){
+            distance += Math.pow((element1.get(i)-element2.get(i)),2);
+        }
+        return distance;
+    }
+
     public static <T> ArrayList<T> flattenListOfListsStream(ArrayList<ArrayList<T>> list) {
         return (ArrayList<T>) list.stream()
                 .flatMap(Collection::stream)

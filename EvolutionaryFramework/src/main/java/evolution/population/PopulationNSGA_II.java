@@ -21,7 +21,6 @@ public class PopulationNSGA_II extends Population {
         super(popSize, representationType, criteria, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
     }
 
-    @Override
     public void generateFronts() {
         BiMap<Integer, Individual> integerIndividualBiMap = HashBiMap.create();
 

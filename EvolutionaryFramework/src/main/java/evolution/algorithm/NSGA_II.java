@@ -50,7 +50,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 //                if (n % 10 == 0){
 //                    System.out.println(n);
 //                }
-                ArrayList<Pair<Individual, Individual>> matingPool = TournamentMatingPoolSelection.matingPoolSelection(10, popSize, population.getPopulation());
+                ArrayList<Pair<Individual, Individual>> matingPool = TournamentMatingPoolSelection.matingPoolSelection(10, popSize, population);
                 population.createOffsprings(matingPool, representation);
                 population.changePopulation();
                 population.generateFronts();
