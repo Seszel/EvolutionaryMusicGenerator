@@ -2,30 +2,26 @@ package evolution.objective;
 
 import evolution.solution.Individual;
 import evolution.util.Util;
+import lombok.var;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TensionObjective extends Objective<Double>{
+public class TensionObjective extends Objective{
 
-    public final ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern;
-    public final List<String> chordProgression;
-    public final int melodyKeyValue;
+    final String name = "TENSION";
 
-    public TensionObjective(String name, boolean maximize,
-                            ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern,
-                            List<String> chordProgression, int melodyKeyValue
-    ) {
-        super(name, maximize);
-        this.chordProgressionPattern = chordProgressionPattern;
-        this.chordProgression = chordProgression;
-        this.melodyKeyValue = melodyKeyValue;
-    }
+    public static Double evaluate(Individual individual, EvaluationParameters pack) {
 
-    @Override
-    public Double evaluate(Individual individual) {
-
+        @SuppressWarnings("unchecked")
+        var chProgPattern = (ArrayList<HashMap<String, List<Integer>>>) pack.parameters
+                .get(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN);
+        @SuppressWarnings("unchecked")
+        var chProg = (List<String>) pack.parameters
+                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
+        var melodyKeyVal = (Integer) pack.parameters
+                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
         double fitness = 0;
         ArrayList<ArrayList<Integer>> melody = individual.getGenome().getMelody();
 
@@ -37,16 +33,16 @@ public class TensionObjective extends Objective<Double>{
             for (int j = 0; j < melody.get(i).size(); j++) {
                 noteValue = melody.get(i).get(j);
                 if (noteValue != 0 && noteValue != -1) {
-                    if (chordProgressionPattern.get(0).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
+                    if (chProgPattern.get(0).get(chProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
                         fitness -= 5;
                         if (lastNoteValue != 0) {
                             if (Math.abs(noteValue - lastNoteValue) <= 2) {
                                 fitness += 30;
                             }
                         }
-                    } else if (chordProgressionPattern.get(1).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
+                    } else if (chProgPattern.get(1).get(chProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
                         fitness += 20;
-                    } else if (chordProgressionPattern.get(2).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
+                    } else if (chProgPattern.get(2).get(chProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
                         fitness += 5;
                     } else {
                         fitness -= 10;

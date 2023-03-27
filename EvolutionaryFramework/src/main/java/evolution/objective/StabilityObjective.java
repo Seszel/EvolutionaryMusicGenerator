@@ -1,34 +1,33 @@
 package evolution.objective;
 
+import com.google.j2objc.annotations.ReflectionSupport;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import lombok.var;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StabilityObjective extends Objective<Double>{
+public class StabilityObjective extends Objective{
 
-    public final ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern;
-    public final List<String> chordProgression;
-    public final int melodyKeyValue;
+    final String name = "STABILITY";
 
-    public StabilityObjective(String name, boolean maximize,
-                              ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern,
-                              List<String> chordProgression, int melodyKeyValue
-    ) {
-        super(name, maximize);
-        this.chordProgressionPattern = chordProgressionPattern;
-        this.chordProgression = chordProgression;
-        this.melodyKeyValue = melodyKeyValue;
-    }
-
-    @Override
-    public Double evaluate(Individual individual) {
+    public static Double evaluate(Individual individual, EvaluationParameters pack) {
 
         double fitness = 0;
+
+
         ArrayList<ArrayList<Integer>> melody = individual.getGenome().getMelody();
 
+        @SuppressWarnings("unchecked")
+        var chrProgPattern = (ArrayList<HashMap<String, List<Integer>>>) pack.parameters
+                .get(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN);
+        @SuppressWarnings("unchecked")
+        var chrProg = (List<String>) pack.parameters
+                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
+        var melodyKeyVal = (Integer) pack.parameters
+                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
         //CHORD NOTES
         int count = 1;
         int lastNoteValue = 0;
@@ -37,16 +36,16 @@ public class StabilityObjective extends Objective<Double>{
             for (int j = 0; j < melody.get(i).size(); j++) {
                 noteValue = melody.get(i).get(j);
                 if (noteValue != 0 && noteValue != -1) {
-                    if (chordProgressionPattern.get(0).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
+                    if (chrProgPattern.get(0).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
                         fitness += 30;
                         if (lastNoteValue != 0) {
                             if (Math.abs(noteValue - lastNoteValue) <= 2) {
                                 fitness += 10;
                             }
                         }
-                    } else if (chordProgressionPattern.get(1).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
+                    } else if (chrProgPattern.get(1).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
                         fitness -= 10;
-                    } else if (chordProgressionPattern.get(2).get(chordProgression.get(i)).contains((noteValue - melodyKeyValue) % 12)) {
+                    } else if (chrProgPattern.get(2).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
                         fitness -= 20;
                     } else {
                         fitness -= 30;

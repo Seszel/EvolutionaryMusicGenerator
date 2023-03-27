@@ -1,55 +1,48 @@
 package evolution.solution;
 
-import evolution.objective.Objective;
-import evolution.util.Util;
+import evolution.objective.EvaluationParameters;
+import evolution.objective.Evaluator;
 import evolution.music.Melody;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Individual {
     private Melody genome;
-    private ArrayList<Double> fitness;
-    private ArrayList<Objective<Double>> objectives;
+    private HashMap<String, Double> fitness;
     private int frontRank;
     private double crowdingDistance = 0;
 
     public Individual(Melody genome) {
         this.genome = genome;
-        this.fitness = new ArrayList<>();
-        this.objectives = new ArrayList<>();
     }
 
-    public Individual addCriterion(Objective<Double> objective) {
-        this.objectives.add(objective);
-        this.fitness.add(0.0);
-
+    public Individual addCriterion(String name) {
+        this.fitness.put(name, 0.0);
         return this;
     }
     public void removeObjective(String name) {
-        // TODO: 22.03.2023  
+        this.fitness.remove(name);
     }
     public Melody getGenome() {
         return genome;
     }
 
-    public void setFitness(){
+    public void setFitness(EvaluationParameters evalParams){
 
-        for(int i = 0; i < objectives.size(); i ++){
-            this.fitness.set(i, this.objectives.get(i).evaluate(this));
-        }
+        this.fitness.forEach((criterion, val) -> {
+            Evaluator.evaluate(this, criterion, evalParams);
+        });
     }
 
-    public ArrayList<Double> getFitness(){
+    public HashMap<String, Double> getFitness(){
         return fitness;
     }
-    public Double getFitnessStability(){
-        return fitness.get(0);
-    }
 
-    public Double getFitnessTension(){
-        return fitness.get(1);
+     public Double getFitnessByName(String name) {
+
+        return fitness.get(name);
     }
 
     public void setFrontRank(int frontRank) {
@@ -61,10 +54,16 @@ public class Individual {
     }
 
     public boolean dominates(Individual q) {
-        if (fitness.get(0) > q.fitness.get(0) && fitness.get(1) >= q.fitness.get(1)) {
-            return true;
+        boolean strictlyBetter = false;
+        for(Map.Entry<String, Double> c : fitness.entrySet()){
+            if(c.getValue() < q.getFitnessByName(c.getKey())){
+                return false;
+            }
+            if(c.getValue() > q.getFitnessByName(c.getKey())){
+                strictlyBetter = true;
+            }
         }
-        return fitness.get(0) >= q.fitness.get(0) && fitness.get(1) > q.fitness.get(1);
+        return strictlyBetter;
     }
 
     public int getFrontRank() {

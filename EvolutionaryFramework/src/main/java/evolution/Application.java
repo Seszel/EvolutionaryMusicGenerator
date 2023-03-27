@@ -19,7 +19,7 @@ public class Application {
     private static final String MATING_POOL_SELECTION_TYPE = "distance";
     private static final int NUMBER_OF_GENERATIONS = 50;
     private static final int NUMBER_OF_ITERATIONS = 1;
-    private static final List<String> CRITERIA = List.of("stability", "tension");
+    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
 
     public static void main(String[] args) {
 

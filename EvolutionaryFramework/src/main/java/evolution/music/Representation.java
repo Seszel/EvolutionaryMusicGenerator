@@ -2,18 +2,24 @@ package evolution.music;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
+import evolution.objective.EvaluationParameters;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Representation {
 
-    public static ImmutableList<Integer> getRepresentationInt(String representationType) {
-        ImmutableList<Integer> representationInt;
-        if ("f1".equals(representationType)) {
+    public static ImmutableList<Integer> getReprInt(String reprType) {
+        ImmutableList<Integer> reprInt;
+        if ("f1".equals(reprType)) {
 //            System.out.println("Representation f1");
             ArrayList<Integer> reprList = new ArrayList<>();
             // C4 - C7
@@ -22,54 +28,46 @@ public class Representation {
             }
             reprList.add(0);
             reprList.add(-1);
-            representationInt = ImmutableList.<Integer>builder()
+            reprInt = ImmutableList.<Integer>builder()
                     .addAll(reprList)
                     .build();
         } else {
             System.out.println("Other representation");
             return null;
         }
-        return representationInt;
+        return reprInt;
     }
 
-    public static BiMap<String, Double> getDurationMap() {
+    public static final ImmutableBiMap<String, Double> DurationMap =
+            new ImmutableBiMap.Builder<String, Double>()
+                    .put("w", 1.0)
+                    .put("h", 0.5)
+                    .put("q", 0.25)
+                    .put("e", 0.125)
+                    .put("s", 0.0625)
+                    .put("t", 0.03125)
+                    .put("o", 0.0078125)
+                     .put("x", 0.015625)
+                    .build();
 
-        BiMap<String, Double> durationMap = HashBiMap.create();
+    public static final ImmutableBiMap<String, Integer> NotesMap =
+            new ImmutableBiMap.Builder<String, Integer>()
+                    .put("C", 48)
+                    .put("C#", 49)
+                    .put("D", 50)
+                    .put("D#", 51)
+                    .put("E", 52)
+                    .put("F", 53)
+                    .put("F#", 54)
+                    .put("G", 55)
+                    .put("G#", 56)
+                    .put("A", 57)
+                    .put("A#", 58)
+                    .put("B", 59)
+                    .build();
 
-        durationMap.put("w", 1.0);
-        durationMap.put("h", 0.5);
-        durationMap.put("q", 0.25);
-        durationMap.put("e", 0.125);
-        durationMap.put("s", 0.0625);
-        durationMap.put("t", 0.03125);
-        durationMap.put("x", 0.015625);
-        durationMap.put("o", 0.0078125);
-
-        return durationMap;
-    }
-
-    public static BiMap<String, Integer> getNotesMap() {
-
-        BiMap<String, Integer> notesMap = HashBiMap.create();
-
-        notesMap.put("C", 48);
-        notesMap.put("C#", 49);
-        notesMap.put("D", 50);
-        notesMap.put("D#", 51);
-        notesMap.put("E", 52);
-        notesMap.put("F", 53);
-        notesMap.put("F#", 54);
-        notesMap.put("G", 55);
-        notesMap.put("G#", 56);
-        notesMap.put("A", 57);
-        notesMap.put("A#", 58);
-        notesMap.put("B", 59);
-
-        return notesMap;
-    }
-
-    public static ArrayList<HashMap<String, List<Integer>>> getChordProgressionMajor() {
-
+    public static final ArrayList<HashMap<String, List<Integer>>> ChordProgressionMajor;
+    static {
         ArrayList<HashMap<String, List<Integer>>> diatonicChords = new ArrayList<>();
 
         HashMap<String, List<Integer>> diatonicChordsChordTone = new HashMap<>();
@@ -106,10 +104,11 @@ public class Representation {
 
         diatonicChords.add(diatonicChordsAvoidNote);
 
-        return diatonicChords;
+        ChordProgressionMajor = diatonicChords;
     }
 
-    public static ArrayList<HashMap<String, List<Integer>>> getChordProgressionMinor() {
+    public static ArrayList<HashMap<String, List<Integer>>> ChordProgressionMinor;
+    static {
 
         ArrayList<HashMap<String, List<Integer>>> diatonicChords = new ArrayList<>();
 
@@ -139,7 +138,7 @@ public class Representation {
         HashMap<String, List<Integer>> diatonicChordsTensionNote = new HashMap<>();
         HashMap<String, List<Integer>> diatonicChordsAvoidNote = new HashMap<>();
 
-        return diatonicChords;
+        ChordProgressionMinor = diatonicChords;
     }
 
 

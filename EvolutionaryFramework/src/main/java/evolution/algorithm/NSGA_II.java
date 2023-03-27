@@ -2,13 +2,16 @@ package evolution.algorithm;
 
 import com.google.common.collect.ImmutableList;
 import evolution.music.Representation;
+import evolution.objective.EvaluationParameters;
 import evolution.operator.matingPoolSelection.TournamentMatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.player.Player;
 import org.json.simple.JSONObject;
+import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,14 +21,26 @@ import java.util.List;
 public class NSGA_II extends AEvolutionaryAlgorithm {
 
     public NSGA_II(int popSize, int numberOfBars, int maxNumberOfNotes, String representationType, List<String> chordProgression, String melodyKey, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType, int numberOfGenerations, int numberOfIterations, List<String> criteria) {
-        super(popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey, crossoverType, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIterations, criteria);
+        super(popSize, numberOfBars, maxNumberOfNotes,
+                representationType, chordProgression, melodyKey,
+                crossoverType, mutationType, selectionType,
+                matingPoolSelectionType, numberOfGenerations,
+                numberOfIterations, criteria);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void run() {
-        PopulationNSGA_II population = new PopulationNSGA_II(popSize, representationType, criteria, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
-        ImmutableList<Integer> representation = Representation.getRepresentationInt(representationType);
+        PopulationNSGA_II population = new PopulationNSGA_II(
+                popSize, representationType, criteria,
+                numberOfBars, maxNumberOfNotes,
+                chordProgression, melodyKey,
+                new EvaluationParameters("JoannaParameters")
+                .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
+                        Representation.ChordProgressionMajor)
+                // TODO add rest of the parameters
+        );
+        ImmutableList<Integer> representation = Representation.getReprInt(representationType);
         Player player = new Player();
 
         population.generatePopulation(representation);
