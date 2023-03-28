@@ -18,7 +18,7 @@ public abstract class Population {
     protected final int maxNumberOfNotes;
     protected final List<String> chordProgression;
     protected final String melodyKey;
-    protected ArrayList<Individual> population;
+    protected List<Individual> population;
 
     public Population(int popSize, String representationType, List<String> criteria, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
         this.popSize = popSize;
@@ -31,8 +31,8 @@ public abstract class Population {
     }
 
     public void generatePopulation(ImmutableList<Integer> representation) {
-        ArrayList<Individual> population = new ArrayList<>();
-        ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern = Representation.getChordProgressionMajor();
+        List<Individual> population = new ArrayList<>();
+        List<HashMap<String, List<Integer>>> chordProgressionPattern = Representation.getChordProgressionMajor();
         BiMap<String, Integer> notesMap = Representation.getNotesMap();
         int melodyKeyValue = notesMap.get(melodyKey);
 
@@ -49,11 +49,11 @@ public abstract class Population {
         this.population = population;
     }
 
-    public ArrayList<Individual> getPopulation() {
+    public List<Individual> getPopulation() {
         return population;
     }
 
-    public void setPopulation(ArrayList<Individual> population) {
+    public void setPopulation(List<Individual> population) {
         for (Individual individual : population) {
             individual.getGenome().setMelodyJFugue(maxNumberOfNotes);
         }

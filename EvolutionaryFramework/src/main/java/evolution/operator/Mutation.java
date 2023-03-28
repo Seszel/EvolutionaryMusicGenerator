@@ -1,13 +1,13 @@
-package evolution.operator.mutatation;
+package evolution.operator;
 
 import com.google.common.collect.ImmutableList;
-import evolution.util.Util;
 import evolution.music.Melody;
+import evolution.util.Util;
 
 import java.util.SplittableRandom;
 
-public class SimpleMutation implements IMutation {
-    public static Melody mutation(Melody melody, ImmutableList<Integer> representation, int numberOfBars, int maxNumberOfNotes) {
+public class Mutation {
+    public static Melody simpleMutation(Melody melody, ImmutableList<Integer> representation, int numberOfBars, int maxNumberOfNotes) {
         SplittableRandom random = new SplittableRandom();
         for (int i = 0; i < numberOfBars; i++) {
 //            random.nextInt(1, 101);

@@ -9,8 +9,7 @@ import java.util.List;
 
 public class Individual {
     private Melody genome;
-    private ArrayList<Double> fitness;
-//    private ArrayList<Double> bestFitnessSoFar; // for MOEA/D ONLY
+    private List<Double> fitness;
     private int frontRank;
     private double crowdingDistance = 0;
 
@@ -22,8 +21,8 @@ public class Individual {
         return genome;
     }
 
-    public void setFitness(List<String> criteria, ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue){
-        ArrayList<Double> fitness = new ArrayList<>();
+    public void setFitness(List<String> criteria, List<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue){
+        List<Double> fitness = new ArrayList<>();
         fitness.add(0.0);
         fitness.add(0.0);
         for (int c=0; c< criteria.size(); c++) {
@@ -39,7 +38,7 @@ public class Individual {
         this.fitness = fitness;
     }
 
-    public ArrayList<Double> getFitness(){
+    public List<Double> getFitness(){
         return fitness;
     }
     public Double getFitnessStability(){
@@ -50,9 +49,9 @@ public class Individual {
         return fitness.get(1);
     }
 
-    public double setFitnessStability(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
+    public double setFitnessStability(List<HashMap<String, List<Integer>>> chordProgressionPattern, List<String> chordProgression, int melodyKeyValue) {
         int fitness = 0;
-        ArrayList<ArrayList<Integer>> melody = genome.getMelody();
+        List<List<Integer>> melody = genome.getMelody();
 
         //CHORD NOTES
         int count = 1;
@@ -87,7 +86,7 @@ public class Individual {
         }
 
         // MOTION
-        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
+        List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;
@@ -139,10 +138,10 @@ public class Individual {
         return fitness;
     }
 
-    public double setFitnessTension(ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern,List<String> chordProgression, int melodyKeyValue) {
+    public double setFitnessTension(List<HashMap<String, List<Integer>>> chordProgressionPattern,List<String> chordProgression, int melodyKeyValue) {
 
         int fitness = 0;
-        ArrayList<ArrayList<Integer>> melody = genome.getMelody();
+        List<List<Integer>> melody = genome.getMelody();
 
         //CHORD NOTES
         int count = 1;
@@ -177,7 +176,7 @@ public class Individual {
         }
 
         // MOTION
-        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
+        List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;
@@ -252,29 +251,4 @@ public class Individual {
         return crowdingDistance;
     }
 
-
-//    /**
-//     * for moea/d only
-//     */
-//    public ArrayList<Double> getBestFitnessSoFar() {
-//        return bestFitnessSoFar;
-//    }
-//
-//    /**
-//     * for moea/d only
-//     */
-//    public void setBestFitnessSoFar(ArrayList<Double> bestFitnessSoFar) {
-//        this.bestFitnessSoFar = bestFitnessSoFar;
-//    }
-//
-//    /**
-//     * for moea/d only
-//     */
-//    public void updateFitnessSoFar(){
-//        for (int i=0; i<fitness.size(); i++){
-//            if (fitness.get(i) > bestFitnessSoFar.get(i)){
-//                bestFitnessSoFar.set(i,fitness.get(i));
-//            }
-//        }
-//    }
 }

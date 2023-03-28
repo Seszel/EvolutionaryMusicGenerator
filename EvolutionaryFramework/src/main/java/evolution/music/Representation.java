@@ -15,7 +15,7 @@ public class Representation {
         ImmutableList<Integer> representationInt;
         if ("f1".equals(representationType)) {
 //            System.out.println("Representation f1");
-            ArrayList<Integer> reprList = new ArrayList<>();
+            List<Integer> reprList = new ArrayList<>();
             // C4 - C7
             for (int i = 48; i < 85; i++) {
                 reprList.add(i);
@@ -68,9 +68,9 @@ public class Representation {
         return notesMap;
     }
 
-    public static ArrayList<HashMap<String, List<Integer>>> getChordProgressionMajor() {
+    public static List<HashMap<String, List<Integer>>> getChordProgressionMajor() {
 
-        ArrayList<HashMap<String, List<Integer>>> diatonicChords = new ArrayList<>();
+        List<HashMap<String, List<Integer>>> diatonicChords = new ArrayList<>();
 
         HashMap<String, List<Integer>> diatonicChordsChordTone = new HashMap<>();
         diatonicChordsChordTone.put("I", List.of(0, 4, 7));
@@ -109,9 +109,9 @@ public class Representation {
         return diatonicChords;
     }
 
-    public static ArrayList<HashMap<String, List<Integer>>> getChordProgressionMinor() {
+    public static List<HashMap<String, List<Integer>>> getChordProgressionMinor() {
 
-        ArrayList<HashMap<String, List<Integer>>> diatonicChords = new ArrayList<>();
+        List<HashMap<String, List<Integer>>> diatonicChords = new ArrayList<>();
 
         HashMap<String, List<Integer>> diatonicChordsChordTone = new HashMap<>();
 

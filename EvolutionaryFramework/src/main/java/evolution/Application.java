@@ -19,9 +19,9 @@ public class Application {
     private static final String SELECTION_TYPE = "elitist";
     private static final String MATING_POOL_SELECTION_TYPE = "distance";
     private static final int NUMBER_OF_GENERATIONS = 500;
-    private static final int NUMBER_OF_ITERATIONS = 1;
+    private static final int NUMBER_OF_ITERATIONS = 3;
     private static final List<String> CRITERIA = List.of("stability", "tension");
-    private static final int NUMBER_OF_NEIGHBOURS = 10;
+    private static final int NUMBER_OF_NEIGHBOURS = 5;
 
     public static void main(String[] args) {
 
@@ -42,7 +42,7 @@ public class Application {
                 CRITERIA
         );
 
-//        algorithm_NSGA_II.run();
+        algorithm_NSGA_II.run();
 
         MOEA_D algorithm_MOEA_D = new MOEA_D(
                 POP_SIZE,
@@ -61,7 +61,7 @@ public class Application {
                 NUMBER_OF_NEIGHBOURS
         );
 
-        algorithm_MOEA_D.run();
+//        algorithm_MOEA_D.run();
     }
 
 }

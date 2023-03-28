@@ -4,15 +4,16 @@ import com.google.common.collect.ImmutableList;
 import evolution.util.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Melody {
-    private ArrayList<ArrayList<Integer>> melody;
+    private List<List<Integer>> melody;
     private String melodyJFugue;
 
     public Melody() {
     }
 
-    public void setMelody(ArrayList<ArrayList<Integer>> melody) {
+    public void setMelody(List<List<Integer>> melody) {
         this.melody = melody;
     }
 
@@ -20,7 +21,7 @@ public class Melody {
         StringBuilder pattern = new StringBuilder();
         int count = 1;
         double durationValue;
-        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
+        List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         for (int i = 0; i < melodyArray.size(); i++) {
             if (i == 0) {
                 pattern.append(melodyArray.get(i));
@@ -49,7 +50,7 @@ public class Melody {
 
     public void initializeMelody(ImmutableList<Integer> representation, String representationType, int numberOfBars, int maxNumberOfNotes) {
 
-        ArrayList<ArrayList<Integer>> melody = new ArrayList<>();
+        List<List<Integer>> melody = new ArrayList<>();
         int representationSize = representation.size();
 
         if ("f1".equals(representationType)) {
@@ -57,7 +58,7 @@ public class Melody {
             int numberOfNotes;
             for (int i = 0; i < numberOfBars; i++) {
                 notesLeftForBar = maxNumberOfNotes;
-                ArrayList<Integer> tempBar = new ArrayList<>();
+                List<Integer> tempBar = new ArrayList<>();
                 while (notesLeftForBar > 0) {
                     tempBar.add(representation.get(Util.getRandomNumber(0, representationSize)));
                     notesLeftForBar -= 1;
@@ -81,7 +82,7 @@ public class Melody {
         return melodyJFugue;
     }
 
-    public ArrayList<ArrayList<Integer>> getMelody() {
+    public List<List<Integer>> getMelody() {
         return melody;
     }
 
