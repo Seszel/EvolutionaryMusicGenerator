@@ -28,7 +28,6 @@ public class TensionObjective extends Objective{
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey);
 
-
         //CHORD NOTES
         int count = 1;
         int lastNoteValue = 0;

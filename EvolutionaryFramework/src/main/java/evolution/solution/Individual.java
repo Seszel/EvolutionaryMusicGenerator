@@ -5,11 +5,12 @@ import evolution.objective.Evaluator;
 import evolution.music.Genome;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Individual {
-    private Genome genome;
-    private HashMap<String, Double> fitness = new HashMap<>();
+    final private Genome genome;
+    final private HashMap<String, Double> fitness = new HashMap<>();
     private int frontRank;
     private double crowdingDistance = 0;
 
@@ -28,12 +29,11 @@ public class Individual {
         return genome;
     }
 
-    public void setFitness(EvaluationParameters evalParams){
+    public void setFitness(List<String> criteria, EvaluationParameters evalParams){
 
-        this.fitness.forEach((criterion, val) -> {
-            val = Evaluator.evaluate(this, criterion, evalParams);
-            fitness.put(criterion, val);
-        });
+        for(String criterion : criteria){
+            this.fitness.put(criterion, Evaluator.evaluate(this, criterion, evalParams));
+        }
     }
 
     public HashMap<String, Double> getFitness(){

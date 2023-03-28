@@ -18,7 +18,7 @@ public class Application {
     private static final String MUTATION_TYPE = "simple";
     private static final String SELECTION_TYPE = "elitist";
     private static final String MATING_POOL_SELECTION_TYPE = "distance";
-    private static final int NUMBER_OF_GENERATIONS = 1000;
+    private static final int NUMBER_OF_GENERATIONS = 100;
     private static final int NUMBER_OF_ITERATIONS = 1;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
     private static final int NUMBER_OF_NEIGHBOURS = 10;
@@ -61,7 +61,7 @@ public class Application {
                 NUMBER_OF_NEIGHBOURS
         );
 
-        algorithm_MOEA_D.run();
+        algorithm_NSGA_II.run();
     }
 
 }

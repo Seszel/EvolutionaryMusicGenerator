@@ -41,11 +41,9 @@ public abstract class Population {
             assert representation != null;
             genome.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
             genome.setMelodyJFugue(maxNumberOfNotes);
-            Individual individual = new Individual(genome)
-                    .addCriterion("STABILITY")
-                    .addCriterion("TENSION");
+            Individual individual = new Individual(genome);
 
-            individual.setFitness(this.evalParams);
+            individual.setFitness(this.criteria, this.evalParams);
             population.add(individual);
         }
         this.population = population;

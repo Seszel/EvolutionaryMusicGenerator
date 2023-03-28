@@ -12,7 +12,8 @@ public class EvaluationParameters extends Representation {
     public enum ParamName {
         CHORD_PROGRESSION_PATTERN,
         MELODY_KEY,
-        CHORD_PROGRESSION
+        CHORD_PROGRESSION,
+
     }
     public HashMap<ParamName, Object> parameters = new HashMap<>();
 

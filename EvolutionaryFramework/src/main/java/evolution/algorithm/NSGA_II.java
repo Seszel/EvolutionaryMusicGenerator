@@ -26,6 +26,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                    String melodyKey, String crossoverType, String mutationType,
                    String selectionType, String matingPoolSelectionType,
                    int numberOfGenerations, int numberOfIterations, List<String> criteria) {
+
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
                 crossoverType, mutationType, selectionType,
@@ -71,15 +72,19 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             System.out.println("Iteration number " + (i + 1));
             JSONObject algorithmJSONObject = new JSONObject();
             for (int n = 0; n < numberOfGenerations; n++) {
-//                if (n % 10 == 0){
-//                    System.out.println(n);
-//                }
-                List<Pair<Individual, Individual>> matingPool = MatingPoolSelection.tournament(10, popSize, population);
+
+                var matingPool = MatingPoolSelection.tournament(
+                        10, popSize, population
+                );
                 population.createOffsprings(matingPool, representation);
+
                 population.changePopulation();
+
                 population.generateFronts();
+
                 List<List<Individual>> newPopulation = new ArrayList<>();
                 int newPopulationSize = 0;
+
                 for (List<Individual> front : population.getFronts()) {
                     population.crowdingDistanceAssignment(front);
                     newPopulation.add(front);
@@ -88,8 +93,12 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                     }
                     newPopulationSize += front.size();
                 }
+
                 population.crowdedComparisonOperator(newPopulation);
-                population.setPopulation(new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize)));
+                population.setPopulation(
+                        new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
+                );
+
                 iterationJSONObject.put("generation_" + (n + 1), Util.generateJSONObject(population.getPopulation(), criteria));
             }
             algorithmJSONObject.put("NSGA-II", iterationJSONObject);

@@ -78,16 +78,18 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 
                     Pair<Genome, Genome> offsprings = Crossover.onePointCrossover(parents);
                     if (random.nextInt(1, 101) <= 50) {
-                        offspring = new Individual(Mutation.simpleMutation(offsprings.getLeft(), representation, numberOfBars, maxNumberOfNotes))
-                                .addCriterion("STABILITY")
-                                .addCriterion("TENSION");
+                        offspring = new Individual(
+                                Mutation.simpleMutation(
+                                        offsprings.getLeft(), representation, numberOfBars, maxNumberOfNotes
+                                ));
                     } else {
-                        offspring = new Individual(Mutation.simpleMutation(offsprings.getRight(), representation, numberOfBars, maxNumberOfNotes))
-                                .addCriterion("STABILITY")
-                                .addCriterion("TENSION");;
+                        offspring = new Individual(
+                                Mutation.simpleMutation(
+                                        offsprings.getRight(), representation, numberOfBars, maxNumberOfNotes
+                                ));
                     }
                     offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
-                    offspring.setFitness(stats);
+                    offspring.setFitness(this.criteria, stats);
                     population.updateNeighboursSolutions(p, offspring);
                     population.updateExternalPopulation(offspring);
                 }

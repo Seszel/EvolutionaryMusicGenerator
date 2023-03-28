@@ -121,12 +121,10 @@ public class PopulationNSGA_II extends Population {
         for (Pair<Individual, Individual> individualPair : matingPool) {
             Pair<Genome, Genome> genomePair = new MutablePair<>(individualPair.getLeft().getGenome(), individualPair.getRight().getGenome());
             offspringsCrossover = Crossover.onePointCrossover(genomePair);
-            offsprings.add(new Individual(Mutation.simpleMutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes))
-                    .addCriterion("STABILITY")
-                    .addCriterion("TENSION"));
-            offsprings.add(new Individual(Mutation.simpleMutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes))
-                    .addCriterion("STABILITY")
-                    .addCriterion("TENSION"));
+            offsprings.add(new Individual(
+                    Mutation.simpleMutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes)));
+            offsprings.add(new Individual(
+                    Mutation.simpleMutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes)));
         }
 
         this.offsprings = offsprings;
@@ -135,7 +133,7 @@ public class PopulationNSGA_II extends Population {
     public void changePopulation() {
         population.addAll(offsprings);
         for (Individual individual : population) {
-            individual.setFitness(this.evalParams);
+            individual.setFitness(this.criteria, this.evalParams);
         }
     }
 
