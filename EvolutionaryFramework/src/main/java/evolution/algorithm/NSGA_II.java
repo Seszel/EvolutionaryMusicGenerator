@@ -7,6 +7,7 @@ import evolution.operator.matingPoolSelection.TournamentMatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import lombok.var;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.player.Player;
@@ -31,14 +32,18 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
     @SuppressWarnings("unchecked")
     @Override
     public void run() {
+
+        var stats = new EvaluationParameters("JoannaParameters");
+                stats.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
+                        Representation.ChordProgressionMajor)
+                .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION,
+                        chordProgression)
+                .addParam(EvaluationParameters.ParamName.MELODY_KEY,
+                        melodyKey);
         PopulationNSGA_II population = new PopulationNSGA_II(
                 popSize, representationType, criteria,
                 numberOfBars, maxNumberOfNotes,
-                chordProgression, melodyKey,
-                new EvaluationParameters("JoannaParameters")
-                .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
-                        Representation.ChordProgressionMajor)
-                // TODO add rest of the parameters
+                chordProgression, melodyKey, stats
         );
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
         Player player = new Player();

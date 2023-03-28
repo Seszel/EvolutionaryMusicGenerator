@@ -1,5 +1,6 @@
 package evolution.objective;
 
+import evolution.music.Representation;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import lombok.var;
@@ -14,16 +15,19 @@ public class TensionObjective extends Objective{
 
     public static Double evaluate(Individual individual, EvaluationParameters pack) {
 
+        ArrayList<ArrayList<Integer>> melody = individual.getGenome().getMelody();
+        double fitness = 0;
         @SuppressWarnings("unchecked")
         var chProgPattern = (ArrayList<HashMap<String, List<Integer>>>) pack.parameters
                 .get(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN);
         @SuppressWarnings("unchecked")
         var chProg = (List<String>) pack.parameters
-                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
-        var melodyKeyVal = (Integer) pack.parameters
-                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
-        double fitness = 0;
-        ArrayList<ArrayList<Integer>> melody = individual.getGenome().getMelody();
+                .get(EvaluationParameters.ParamName.CHORD_PROGRESSION);
+        var melodyKey = (String) pack.parameters
+                .get(EvaluationParameters.ParamName.MELODY_KEY);
+
+        var melodyKeyVal = Representation.NotesMap.get(melodyKey);
+
 
         //CHORD NOTES
         int count = 1;

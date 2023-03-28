@@ -122,8 +122,12 @@ public class PopulationNSGA_II extends Population {
         Pair<Melody, Melody> offspringsCrossover;
         for (Pair<Individual, Individual> individualIndividualPair : matingPool) {
             offspringsCrossover = OnePointCrossover.crossover(individualIndividualPair, numberOfBars, maxNumberOfNotes);
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes)));
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes)));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes))
+                    .addCriterion("STABILITY")
+                    .addCriterion("TENSION"));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes))
+                    .addCriterion("STABILITY")
+                    .addCriterion("TENSION"));
         }
 
         this.offsprings = offsprings;

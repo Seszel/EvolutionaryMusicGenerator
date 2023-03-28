@@ -1,6 +1,7 @@
 package evolution.objective;
 
 import com.google.j2objc.annotations.ReflectionSupport;
+import evolution.music.Representation;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import lombok.var;
@@ -25,9 +26,11 @@ public class StabilityObjective extends Objective{
                 .get(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN);
         @SuppressWarnings("unchecked")
         var chrProg = (List<String>) pack.parameters
-                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
-        var melodyKeyVal = (Integer) pack.parameters
-                .get(EvaluationParameters.ParamName.MELODY_KEY_VALUE);
+                .get(EvaluationParameters.ParamName.CHORD_PROGRESSION);
+        var melodyKey = (String) pack.parameters
+                .get(EvaluationParameters.ParamName.MELODY_KEY);
+
+        var melodyKeyVal = Representation.NotesMap.get(melodyKey);
         //CHORD NOTES
         int count = 1;
         int lastNoteValue = 0;

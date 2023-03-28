@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Individual {
     private Melody genome;
-    private HashMap<String, Double> fitness;
+    private HashMap<String, Double> fitness = new HashMap<>();
     private int frontRank;
     private double crowdingDistance = 0;
 
@@ -19,7 +19,7 @@ public class Individual {
     }
 
     public Individual addCriterion(String name) {
-        this.fitness.put(name, 0.0);
+        fitness.put(name, 0.0);
         return this;
     }
     public void removeObjective(String name) {
@@ -32,7 +32,8 @@ public class Individual {
     public void setFitness(EvaluationParameters evalParams){
 
         this.fitness.forEach((criterion, val) -> {
-            Evaluator.evaluate(this, criterion, evalParams);
+            val = Evaluator.evaluate(this, criterion, evalParams);
+            fitness.put(criterion, val);
         });
     }
 
@@ -54,7 +55,11 @@ public class Individual {
     }
 
     public boolean dominates(Individual q) {
+
         boolean strictlyBetter = false;
+        if(q.fitness.size()<2){
+            int i = 0;
+        }
         for(Map.Entry<String, Double> c : fitness.entrySet()){
             if(c.getValue() < q.getFitnessByName(c.getKey())){
                 return false;

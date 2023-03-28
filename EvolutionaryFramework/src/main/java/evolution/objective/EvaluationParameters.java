@@ -11,10 +11,10 @@ public class EvaluationParameters extends Representation {
     public final String name;
     public enum ParamName {
         CHORD_PROGRESSION_PATTERN,
-        MELODY_KEY_VALUE,
+        MELODY_KEY,
         CHORD_PROGRESSION
     }
-    public HashMap<ParamName, Object> parameters;
+    public HashMap<ParamName, Object> parameters = new HashMap<>();
 
     public EvaluationParameters(String name) {
         this.name = name;

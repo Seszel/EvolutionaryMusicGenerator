@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Application {
 
-    private static final int POP_SIZE = 100;
+    private static final int POP_SIZE = 50;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
@@ -17,7 +17,7 @@ public class Application {
     private static final String MUTATION_TYPE = "simple";
     private static final String SELECTION_TYPE = "elitist";
     private static final String MATING_POOL_SELECTION_TYPE = "distance";
-    private static final int NUMBER_OF_GENERATIONS = 50;
+    private static final int NUMBER_OF_GENERATIONS = 500;
     private static final int NUMBER_OF_ITERATIONS = 1;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
 
