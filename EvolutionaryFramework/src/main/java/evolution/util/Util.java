@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,22 +21,22 @@ public class Util {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    public static double getEuclideanDistance(List<Double> element1, List<Double> element2){
-        double distance=0;
-        for (int i=0; i<element1.size(); i++){
-            distance += Math.pow((element1.get(i)-element2.get(i)),2);
+    public static double getEuclideanDistance(List<Double> element1, List<Double> element2) {
+        double distance = 0;
+        for (int i = 0; i < element1.size(); i++) {
+            distance += Math.pow((element1.get(i) - element2.get(i)), 2);
         }
         return distance;
     }
 
-    public static <T> ArrayList<T> flattenListOfListsStream(ArrayList<ArrayList<T>> list) {
-        return (ArrayList<T>) list.stream()
+    public static <T> List<T> flattenListOfListsStream(List<List<T>> list) {
+        return list.stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")
-    public static JSONObject generateJSONObject(ArrayList<Individual> population, List<String> criteria) {
+    public static JSONObject generateJSONObject(List<Individual> population, List<String> criteria) {
 
         JSONObject frontsList = new JSONObject();
         JSONArray frontIndividuals = new JSONArray();

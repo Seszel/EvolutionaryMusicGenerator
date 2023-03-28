@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
 import evolution.operator.matingPoolSelection.TournamentMatingPoolSelection;
+import evolution.operator.MatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
 import evolution.util.Util;
@@ -70,13 +71,13 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 //                if (n % 10 == 0){
 //                    System.out.println(n);
 //                }
-                ArrayList<Pair<Individual, Individual>> matingPool = TournamentMatingPoolSelection.matingPoolSelection(10, popSize, population);
+                List<Pair<Individual, Individual>> matingPool = MatingPoolSelection.tournament(10, popSize, population);
                 population.createOffsprings(matingPool, representation);
                 population.changePopulation();
                 population.generateFronts();
-                ArrayList<ArrayList<Individual>> newPopulation = new ArrayList<>();
+                List<List<Individual>> newPopulation = new ArrayList<>();
                 int newPopulationSize = 0;
-                for (ArrayList<Individual> front : population.getFronts()) {
+                for (List<Individual> front : population.getFronts()) {
                     population.crowdingDistanceAssignment(front);
                     newPopulation.add(front);
                     if ((front.size() + newPopulationSize) > popSize) {
@@ -91,9 +92,9 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             algorithmJSONObject.put("NSGA-II", iterationJSONObject);
             Util.writeJSONFile(algorithmJSONObject, i, folderName);
         }
-        for (Individual individual : population.getPopulation()) {
-            player.play(individual.getGenome().getMelodyJFugue());
-        }
+//        for (Individual individual : population.getPopulation()) {
+//            player.play(individual.getGenome().getMelodyJFugue());
+//        }
         System.out.println("Nsga_II algorithm ended work!");
     }
 

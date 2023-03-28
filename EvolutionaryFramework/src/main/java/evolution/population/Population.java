@@ -21,7 +21,7 @@ public abstract class Population {
     protected final int maxNumberOfNotes;
     protected final List<String> chordProgression;
     protected final String melodyKey;
-    protected ArrayList<Individual> population;
+    protected List<Individual> population;
 
     final protected EvaluationParameters evalParams;
 
@@ -35,12 +35,10 @@ public abstract class Population {
         this.maxNumberOfNotes = maxNumberOfNotes;
         this.chordProgression = chordProgression;
         this.melodyKey = melodyKey;
-
-        this.evalParams = evalParams;
     }
 
     public void generatePopulation(ImmutableList<Integer> representation) {
-        ArrayList<Individual> population = new ArrayList<>();
+        List<Individual> population = new ArrayList<>();
 
         for (int n = 0; n < popSize; n++) {
             Melody melody = new Melody();
@@ -57,13 +55,11 @@ public abstract class Population {
         this.population = population;
     }
 
-    public abstract void generateFronts();
-
-    public ArrayList<Individual> getPopulation() {
+    public List<Individual> getPopulation() {
         return population;
     }
 
-    public void setPopulation(ArrayList<Individual> population) {
+    public void setPopulation(List<Individual> population) {
         for (Individual individual : population) {
             individual.getGenome().setMelodyJFugue(maxNumberOfNotes);
         }

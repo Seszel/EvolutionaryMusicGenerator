@@ -1,8 +1,9 @@
-package evolution.operator.matingPoolSelection;
+package evolution.operator;
 
 import evolution.population.Population;
-import evolution.util.Util;
 import evolution.solution.Individual;
+import evolution.util.Util;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -10,10 +11,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TournamentMatingPoolSelection implements IMatingPoolSelection {
+public class MatingPoolSelection {
 
-    public static ArrayList<Pair<Individual, Individual>> matingPoolSelection(int numberOfParents, int popSize, Population population) {
-        ArrayList<Pair<Individual, Individual>> matingPool = new ArrayList<>();
+    public static Pair<Integer, Integer> randomFromNeighbourhood(int numberOfNeighbours) {
+
+        int idx1, idx2;
+        idx1 = Util.getRandomNumber(0, numberOfNeighbours - 1);
+        idx2 = Util.getRandomNumber(0, numberOfNeighbours - 1);
+
+        return new ImmutablePair<>(idx1, idx2);
+
+
+    }
+
+    public static List<Pair<Individual, Individual>> tournament(int numberOfParents, int popSize, Population population) {
+        List<Pair<Individual, Individual>> matingPool = new ArrayList<>();
 
         int idx1, idx2;
         for (int n = 0; n < numberOfParents; n++) {

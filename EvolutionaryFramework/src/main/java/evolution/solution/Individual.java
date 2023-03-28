@@ -78,4 +78,30 @@ public class Individual {
     public double getCrowdingDistance() {
         return crowdingDistance;
     }
+
+
+//    /**
+//     * for moea/d only
+//     */
+//    public ArrayList<Double> getBestFitnessSoFar() {
+//        return bestFitnessSoFar;
+//    }
+//
+//    /**
+//     * for moea/d only
+//     */
+//    public void setBestFitnessSoFar(ArrayList<Double> bestFitnessSoFar) {
+//        this.bestFitnessSoFar = bestFitnessSoFar;
+//    }
+//
+//    /**
+//     * for moea/d only
+//     */
+//    public void updateFitnessSoFar(){
+//        for (int i=0; i<fitness.size(); i++){
+//            if (fitness.get(i) > bestFitnessSoFar.get(i)){
+//                bestFitnessSoFar.set(i,fitness.get(i));
+//            }
+//        }
+//    }
 }

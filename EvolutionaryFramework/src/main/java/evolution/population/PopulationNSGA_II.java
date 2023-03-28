@@ -6,9 +6,10 @@ import com.google.common.collect.ImmutableList;
 import evolution.music.Melody;
 import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
-import evolution.operator.crossover.OnePointCrossover;
-import evolution.operator.mutatation.SimpleMutation;
+import evolution.operator.Crossover;
+import evolution.operator.Mutation;
 import evolution.solution.Individual;
+import org.apache.commons.lang3.tuple.MutablePair;
 import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -16,8 +17,8 @@ import java.util.*;
 
 public class PopulationNSGA_II extends Population {
 
-    private ArrayList<ArrayList<Individual>> fronts;
-    private ArrayList<Individual> offsprings;
+    private List<List<Individual>> fronts;
+    private List<Individual> offsprings;
 
     public PopulationNSGA_II(int popSize, String representationType, List<String> criteria,
                              int numberOfBars, int maxNumberOfNotes,
@@ -30,9 +31,9 @@ public class PopulationNSGA_II extends Population {
     public void generateFronts() {
         BiMap<Integer, Individual> integerIndividualBiMap = HashBiMap.create();
 
-        ArrayList<ArrayList<Individual>> solutionsDominated = new ArrayList<>();
-        ArrayList<Integer> dominationCount = new ArrayList<>();
-        ArrayList<ArrayList<Individual>> fronts = new ArrayList<>();
+        List<List<Individual>> solutionsDominated = new ArrayList<>();
+        List<Integer> dominationCount = new ArrayList<>();
+        List<List<Individual>> fronts = new ArrayList<>();
 
         fronts.add(new ArrayList<>());
         for (int i = 0; i < population.size(); i++) {
@@ -52,13 +53,13 @@ public class PopulationNSGA_II extends Population {
             }
         }
         int i = 0;
-        ArrayList<Individual> front = fronts.get(0);
+        List<Individual> front = fronts.get(0);
         Individual p;
         Integer pId;
         Individual q;
         Integer qId;
         while (front.size() != 0) {
-            ArrayList<Individual> Q = new ArrayList<>();
+            List<Individual> Q = new ArrayList<>();
             for (int j = 0; j < fronts.get(i).size(); j++) {
                 p = fronts.get(i).get(j);
                 pId = integerIndividualBiMap.inverse().get(p);
@@ -81,7 +82,7 @@ public class PopulationNSGA_II extends Population {
         this.fronts = fronts;
     }
 
-    public void crowdingDistanceAssignment(ArrayList<Individual> frontSolutions) {
+    public void crowdingDistanceAssignment(List<Individual> frontSolutions) {
 
         double maxMin;
         double distance;
@@ -108,23 +109,23 @@ public class PopulationNSGA_II extends Population {
         }
     }
 
-    public void crowdedComparisonOperator(ArrayList<ArrayList<Individual>> newPopulation) {
-        for (ArrayList<Individual> front : newPopulation) {
+    public void crowdedComparisonOperator(List<List<Individual>> newPopulation) {
+        for (List<Individual> front : newPopulation) {
             front.sort(Comparator.comparing(Individual::getCrowdingDistance).reversed());
         }
     }
 
 
-    public void createOffsprings(ArrayList<Pair<Individual, Individual>> matingPool, ImmutableList<Integer> representation) {
-        ArrayList<Individual> offsprings = new ArrayList<>();
+    public void createOffsprings(List<Pair<Individual, Individual>> matingPool, ImmutableList<Integer> representation) {
+        List<Individual> offsprings = new ArrayList<>();
 
         Pair<Melody, Melody> offspringsCrossover;
         for (Pair<Individual, Individual> individualIndividualPair : matingPool) {
-            offspringsCrossover = OnePointCrossover.crossover(individualIndividualPair, numberOfBars, maxNumberOfNotes);
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes))
+            offspringsCrossover = Crossover.onePointCrossover(individualIndividualPair);
+            offsprings.add(new Individual(Mutation.simpleMutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes))
                     .addCriterion("STABILITY")
                     .addCriterion("TENSION"));
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes))
+            offsprings.add(new Individual(Mutation.simpleMutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes))
                     .addCriterion("STABILITY")
                     .addCriterion("TENSION"));
         }
@@ -139,7 +140,7 @@ public class PopulationNSGA_II extends Population {
         }
     }
 
-    public ArrayList<ArrayList<Individual>> getFronts() {
+    public List<List<Individual>> getFronts() {
         return fronts;
     }
 }
