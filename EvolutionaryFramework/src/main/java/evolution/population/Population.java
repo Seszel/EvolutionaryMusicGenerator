@@ -35,6 +35,7 @@ public abstract class Population {
         this.maxNumberOfNotes = maxNumberOfNotes;
         this.chordProgression = chordProgression;
         this.melodyKey = melodyKey;
+        this.evalParams = evalParams;
     }
 
     public void generatePopulation(ImmutableList<Integer> representation) {

@@ -3,7 +3,6 @@ package evolution.algorithm;
 import com.google.common.collect.ImmutableList;
 import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
-import evolution.operator.matingPoolSelection.TournamentMatingPoolSelection;
 import evolution.operator.MatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
