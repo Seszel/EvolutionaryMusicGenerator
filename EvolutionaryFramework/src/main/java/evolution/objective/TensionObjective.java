@@ -15,7 +15,7 @@ public class TensionObjective extends Objective{
 
     public static Double evaluate(Individual individual, EvaluationParameters pack) {
 
-        ArrayList<ArrayList<Integer>> melody = individual.getGenome().getMelody();
+        List<List<Integer>> melody = individual.getGenome().getMelody();
         double fitness = 0;
         @SuppressWarnings("unchecked")
         var chProgPattern = (ArrayList<HashMap<String, List<Integer>>>) pack.parameters
@@ -62,7 +62,7 @@ public class TensionObjective extends Objective{
         }
 
         // MOTION
-        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
+        List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;

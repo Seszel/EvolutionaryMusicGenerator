@@ -1,6 +1,5 @@
 package evolution.objective;
 
-import com.google.j2objc.annotations.ReflectionSupport;
 import evolution.music.Representation;
 import evolution.solution.Individual;
 import evolution.util.Util;
@@ -19,7 +18,7 @@ public class StabilityObjective extends Objective{
         double fitness = 0;
 
 
-        ArrayList<ArrayList<Integer>> melody = individual.getGenome().getMelody();
+        List<List<Integer>> melody = individual.getGenome().getMelody();
 
         @SuppressWarnings("unchecked")
         var chrProgPattern = (ArrayList<HashMap<String, List<Integer>>>) pack.parameters
@@ -64,7 +63,7 @@ public class StabilityObjective extends Objective{
         }
 
         // MOTION
-        ArrayList<Integer> melodyArray = Util.flattenListOfListsStream(melody);
+        List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
         int countStepwise = 0;
         int countLeap = -1;

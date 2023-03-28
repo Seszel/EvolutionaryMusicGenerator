@@ -2,19 +2,18 @@ package evolution.solution;
 
 import evolution.objective.EvaluationParameters;
 import evolution.objective.Evaluator;
-import evolution.music.Melody;
+import evolution.music.Genome;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Individual {
-    private Melody genome;
+    private Genome genome;
     private HashMap<String, Double> fitness = new HashMap<>();
     private int frontRank;
     private double crowdingDistance = 0;
 
-    public Individual(Melody genome) {
+    public Individual(Genome genome) {
         this.genome = genome;
     }
 
@@ -25,7 +24,7 @@ public class Individual {
     public void removeObjective(String name) {
         this.fitness.remove(name);
     }
-    public Melody getGenome() {
+    public Genome getGenome() {
         return genome;
     }
 

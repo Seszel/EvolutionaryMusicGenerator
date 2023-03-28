@@ -1,6 +1,7 @@
 package evolution.operator;
 
 import evolution.population.Population;
+import evolution.population.PopulationMOEA_D;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -13,14 +14,21 @@ import java.util.List;
 
 public class MatingPoolSelection {
 
-    public static Pair<Integer, Integer> randomFromNeighbourhood(int numberOfNeighbours) {
+    public static Pair<Individual, Individual> randomFromNeighbourhood(int numberOfNeighbours, PopulationMOEA_D population, int idxIndividual) {
 
         int idx1, idx2;
         idx1 = Util.getRandomNumber(0, numberOfNeighbours - 1);
         idx2 = Util.getRandomNumber(0, numberOfNeighbours - 1);
 
-        return new ImmutablePair<>(idx1, idx2);
+        Pair<Integer, Integer> neighboursIdx = new ImmutablePair<>(
+                population.getNeighbours().get(idxIndividual).get(idx1),
+                population.getNeighbours().get(idxIndividual).get(idx2)
+        );
 
+        return new ImmutablePair<>(
+                population.getPopulation().get(neighboursIdx.getLeft()),
+                population.getPopulation().get(neighboursIdx.getRight())
+        );
 
     }
 

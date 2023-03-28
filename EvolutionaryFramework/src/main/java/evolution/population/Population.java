@@ -1,16 +1,11 @@
 package evolution.population;
 
-import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
-import evolution.music.Melody;
-import evolution.music.Representation;
+import evolution.music.Genome;
 import evolution.objective.EvaluationParameters;
-import evolution.objective.StabilityObjective;
-import evolution.objective.TensionObjective;
 import evolution.solution.Individual;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public abstract class Population {
@@ -42,11 +37,11 @@ public abstract class Population {
         List<Individual> population = new ArrayList<>();
 
         for (int n = 0; n < popSize; n++) {
-            Melody melody = new Melody();
+            Genome genome = new Genome();
             assert representation != null;
-            melody.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
-            melody.setMelodyJFugue(maxNumberOfNotes);
-            Individual individual = new Individual(melody)
+            genome.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
+            genome.setMelodyJFugue(maxNumberOfNotes);
+            Individual individual = new Individual(genome)
                     .addCriterion("STABILITY")
                     .addCriterion("TENSION");
 

@@ -3,14 +3,12 @@ package evolution.population;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
-import evolution.music.Melody;
-import evolution.music.Representation;
+import evolution.music.Genome;
 import evolution.objective.EvaluationParameters;
 import evolution.operator.Crossover;
 import evolution.operator.Mutation;
 import evolution.solution.Individual;
 import org.apache.commons.lang3.tuple.MutablePair;
-import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
@@ -119,9 +117,10 @@ public class PopulationNSGA_II extends Population {
     public void createOffsprings(List<Pair<Individual, Individual>> matingPool, ImmutableList<Integer> representation) {
         List<Individual> offsprings = new ArrayList<>();
 
-        Pair<Melody, Melody> offspringsCrossover;
-        for (Pair<Individual, Individual> individualIndividualPair : matingPool) {
-            offspringsCrossover = Crossover.onePointCrossover(individualIndividualPair);
+        Pair<Genome, Genome> offspringsCrossover;
+        for (Pair<Individual, Individual> individualPair : matingPool) {
+            Pair<Genome, Genome> genomePair = new MutablePair<>(individualPair.getLeft().getGenome(), individualPair.getRight().getGenome());
+            offspringsCrossover = Crossover.onePointCrossover(genomePair);
             offsprings.add(new Individual(Mutation.simpleMutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes))
                     .addCriterion("STABILITY")
                     .addCriterion("TENSION"));

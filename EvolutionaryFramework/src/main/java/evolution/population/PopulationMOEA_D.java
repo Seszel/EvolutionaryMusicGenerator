@@ -2,15 +2,12 @@ package evolution.population;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
-import evolution.music.Melody;
 import evolution.music.Representation;
-import evolution.operator.Crossover;
+import evolution.objective.EvaluationParameters;
 import evolution.operator.MatingPoolSelection;
-import evolution.operator.Mutation;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
@@ -22,10 +19,14 @@ public class PopulationMOEA_D extends Population {
     private List<List<Pair<Integer, Double>>> euclideanDistancesWeightVectors;
     private List<Pair<Integer, List<Double>>> weightVectors;
     private List<List<Integer>> neighbours;
-    private List<Double> referencePointsZ;
+    private HashMap<String, Double> referencePointsZ;
 
-    public PopulationMOEA_D(int popSize, String representationType, List<String> criteria, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
-        super(popSize, representationType, criteria, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
+    public PopulationMOEA_D(int popSize, String representationType, List<String> criteria,
+                            int numberOfBars, int maxNumberOfNotes,
+                            List<String> chordProgression, String melodyKey,
+                            EvaluationParameters evalParams) {
+        super(popSize, representationType, criteria, numberOfBars,
+                maxNumberOfNotes, chordProgression, melodyKey, evalParams);
     }
 
     public void setEuclideanDistancesWeightVectors() {
@@ -87,48 +88,35 @@ public class PopulationMOEA_D extends Population {
     }
 
     public void updateNeighboursSolutions(int idxIndividual, Individual newIndividual) {
-        double newSolutionDifference = 0;
-        List<Double> newSolutionFitness = newIndividual.getFitness();
-        for (int c = 0; c < criteria.size(); c++) {
-            newSolutionDifference += Math.abs(newSolutionFitness.get(c) - referencePointsZ.get(c));
-        }
+        HashMap<String, Double> newSolutionFitness = newIndividual.getFitness();
+//        HashMap<String, Double> newSolutionDifference = new HashMap<>();
 
-        List<Double> neighbourSolutionFitness;
-        double neighbourSolutionDifference;
-        for (int i = 0; i < neighbours.get(idxIndividual).size(); i++) {
-            neighbourSolutionDifference = 0;
-            neighbourSolutionFitness = population.get(neighbours.get(idxIndividual).get(i)).getFitness();
-            for (int c = 0; c < criteria.size(); c++) {
-                neighbourSolutionDifference += Math.abs(neighbourSolutionFitness.get(c) - referencePointsZ.get(c));
-            }
-            if (neighbourSolutionDifference >= newSolutionDifference) {
-                population.set(neighbours.get(idxIndividual).get(i), newIndividual);
-            }
-        }
-    }
-
-    public void update(ImmutableList<Integer> representation) {
-        List<HashMap<String, List<Integer>>> chordProgressionPattern = Representation.getChordProgressionMajor();
-        BiMap<String, Integer> notesMap = Representation.getNotesMap();
-        int melodyKeyValue = notesMap.get(melodyKey);
-
-        Pair<Integer, Integer> matingPool = MatingPoolSelection.randomFromNeighbourhood(neighbours.get(0).size());
-        SplittableRandom random = new SplittableRandom();
-        Individual offspring;
-
-//        Pair<Melody, Melody> offsprings = Crossover.onePointCrossover(new MutablePair<>(matingPool.get(p).getLeft().getGenome(), matingPool.get(p).getRight().getGenome()), numberOfBars, maxNumberOfNotes);
-//        if (random.nextInt(1, 101) <= 50) {
-//            offspring = new Individual(Mutation.simpleMutation(offsprings.getLeft(), representation, numberOfBars, maxNumberOfNotes));
-//        } else {
-//            offspring = new Individual(Mutation.simpleMutation(offsprings.getRight(), representation, numberOfBars, maxNumberOfNotes));
+//        for (int c = 0; c < criteria.size(); c++) {
+//            newSolutionDifference.put(
+//                    criteria.get(c),
+//                    weightVectors.get(idxIndividual).getValue().get(c)
+//                            * Math.abs(newSolutionFitness.get(criteria.get(c)) - referencePointsZ.get(criteria.get(c)))
+//            );
 //        }
-//        offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
-//        offspring.setFitness(criteria, chordProgressionPattern, chordProgression, melodyKeyValue);
-////        updateNeighboursSolutions(p, offspring);
-//        updateExternalPopulation(offspring);
+        double tempDifference;
+        double newSolutionDifference;
+        double lambdas;
+        for (int neighbour : neighbours.get(idxIndividual)) {
+            for (int c = 0; c < criteria.size(); c++) {
+                lambdas = weightVectors.get(neighbour).getValue().get(c);
+
+                tempDifference = lambdas * Math.abs(population.get(neighbour).getFitnessByName(criteria.get(c)) - referencePointsZ.get(criteria.get(c)));
+                newSolutionDifference = lambdas * Math.abs(newSolutionFitness.get(criteria.get(c)) - referencePointsZ.get(criteria.get(c)));
+
+                if (newSolutionDifference <= tempDifference) {
+                    population.set(neighbour, newIndividual);
+                    break;
+                }
+            }
+        }
     }
 
-    public List<Double> getReferencePointsZ() {
+    public HashMap<String, Double> getReferencePointsZ() {
         return referencePointsZ;
     }
 
@@ -136,9 +124,10 @@ public class PopulationMOEA_D extends Population {
         return externalPopulation;
     }
 
-    public void setExternalPopulation(){
+    public void setExternalPopulation() {
         this.externalPopulation = new ArrayList<>();
     }
+
     public void updateExternalPopulation(Individual offspring) {
         List<Individual> newExternalPopulation = new ArrayList<>(externalPopulation);
         boolean dominates = true;
@@ -156,16 +145,16 @@ public class PopulationMOEA_D extends Population {
     }
 
     public void setReferencePointsZ() {
-        List<Double> bestSoFar = new ArrayList<>();
+        HashMap<String, Double> bestSoFar = new HashMap<>();
         for (Individual individual : population) {
             if (bestSoFar.size() == 0) {
-                for (int c = 0; c < criteria.size(); c++) {
-                    bestSoFar.add(individual.getFitness().get(c));
+                for (String criterion : criteria) {
+                    bestSoFar.put(criterion, individual.getFitnessByName(criterion));
                 }
             }
-            for (int c = 0; c < criteria.size(); c++) {
-                if (individual.getFitness().get(c) > bestSoFar.get(c)) {
-                    bestSoFar.set(c, individual.getFitness().get(c));
+            for (String criterion : criteria) {
+                if (individual.getFitnessByName(criterion) > bestSoFar.get(criterion)) {
+                    bestSoFar.put(criterion, individual.getFitnessByName(criterion));
                 }
             }
         }

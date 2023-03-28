@@ -6,11 +6,11 @@ import evolution.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Melody {
+public class Genome {
     private List<List<Integer>> melody;
     private String melodyJFugue;
 
-    public Melody() {
+    public Genome() {
     }
 
     public void setMelody(List<List<Integer>> melody) {

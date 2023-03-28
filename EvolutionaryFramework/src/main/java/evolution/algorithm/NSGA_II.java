@@ -21,7 +21,11 @@ import java.util.List;
 
 public class NSGA_II extends AEvolutionaryAlgorithm {
 
-    public NSGA_II(int popSize, int numberOfBars, int maxNumberOfNotes, String representationType, List<String> chordProgression, String melodyKey, String crossoverType, String mutationType, String selectionType, String matingPoolSelectionType, int numberOfGenerations, int numberOfIterations, List<String> criteria) {
+    public NSGA_II(int popSize, int numberOfBars, int maxNumberOfNotes,
+                   String representationType, List<String> chordProgression,
+                   String melodyKey, String crossoverType, String mutationType,
+                   String selectionType, String matingPoolSelectionType,
+                   int numberOfGenerations, int numberOfIterations, List<String> criteria) {
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
                 crossoverType, mutationType, selectionType,
@@ -91,9 +95,9 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             algorithmJSONObject.put("NSGA-II", iterationJSONObject);
             Util.writeJSONFile(algorithmJSONObject, i, folderName);
         }
-//        for (Individual individual : population.getPopulation()) {
-//            player.play(individual.getGenome().getMelodyJFugue());
-//        }
+        for (Individual individual : population.getPopulation()) {
+            player.play(individual.getGenome().getMelodyJFugue());
+        }
         System.out.println("Nsga_II algorithm ended work!");
     }
 
