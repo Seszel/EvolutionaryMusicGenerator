@@ -5,9 +5,11 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
 import evolution.music.Melody;
 import evolution.music.Representation;
+import evolution.objective.EvaluationParameters;
 import evolution.operator.crossover.OnePointCrossover;
 import evolution.operator.mutatation.SimpleMutation;
 import evolution.solution.Individual;
+import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
@@ -17,8 +19,12 @@ public class PopulationNSGA_II extends Population {
     private ArrayList<ArrayList<Individual>> fronts;
     private ArrayList<Individual> offsprings;
 
-    public PopulationNSGA_II(int popSize, String representationType, List<String> criteria, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
-        super(popSize, representationType, criteria, numberOfBars, maxNumberOfNotes, chordProgression, melodyKey);
+    public PopulationNSGA_II(int popSize, String representationType, List<String> criteria,
+                             int numberOfBars, int maxNumberOfNotes,
+                             List<String> chordProgression, String melodyKey,
+                             EvaluationParameters evalParams) {
+        super(popSize, representationType, criteria, numberOfBars,
+                maxNumberOfNotes, chordProgression, melodyKey, evalParams);
     }
 
     public void generateFronts() {
@@ -80,37 +86,24 @@ public class PopulationNSGA_II extends Population {
         double maxMin;
         double distance;
         for (String criterion : criteria) {
-            switch (criterion) {
-                case "stability":
-                    frontSolutions.sort(Comparator.comparing(Individual::getFitnessStability));
-                    frontSolutions.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-                    frontSolutions.get(frontSolutions.size() - 1).setCrowdingDistance(Double.POSITIVE_INFINITY);
 
-                    maxMin = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability()
-                            - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessStability)).orElseThrow(NoSuchElementException::new).getFitnessStability();
+            frontSolutions.sort(Comparator.comparing(o -> o.getFitnessByName(criterion)));
+            frontSolutions
+                    .get(0)
+                    .setCrowdingDistance(Double.POSITIVE_INFINITY);
 
-                    for (int i = 1; i < frontSolutions.size() - 1; i++) {
-                        distance = frontSolutions.get(i).getCrowdingDistance()
-                                + (frontSolutions.get(i + 1).getFitnessStability() - frontSolutions.get(i - 1).getFitnessStability())
-                                / maxMin;
-                        frontSolutions.get(i).setCrowdingDistance(distance);
-                    }
-                    break;
-                case "tension":
-                    frontSolutions.sort(Comparator.comparing(Individual::getFitnessTension));
-                    frontSolutions.get(0).setCrowdingDistance(Double.POSITIVE_INFINITY);
-                    frontSolutions.get(frontSolutions.size() - 1).setCrowdingDistance(Double.POSITIVE_INFINITY);
+            frontSolutions
+                    .get(frontSolutions.size() - 1)
+                    .setCrowdingDistance(Double.POSITIVE_INFINITY);
 
-                    maxMin = frontSolutions.stream().max(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension()
-                            - frontSolutions.stream().min(Comparator.comparing(Individual::getFitnessTension)).orElseThrow(NoSuchElementException::new).getFitnessTension();
+            maxMin = frontSolutions.get(frontSolutions.size() - 1)
+                    .getFitnessByName(criterion) - frontSolutions.get(0).getFitnessByName(criterion);
 
-                    for (int i = 1; i < frontSolutions.size() - 1; i++) {
-                        distance = frontSolutions.get(i).getCrowdingDistance()
-                                + (frontSolutions.get(i + 1).getFitnessTension() - frontSolutions.get(i - 1).getFitnessTension())
-                                / maxMin;
-                        frontSolutions.get(i).setCrowdingDistance(distance);
-                    }
-                    break;
+            for (int i = 1; i < frontSolutions.size() - 1; i++) {
+                distance = frontSolutions.get(i).getCrowdingDistance()
+                        + (frontSolutions.get(i + 1).getFitnessByName(criterion) - frontSolutions.get(i - 1).getFitnessByName(criterion))
+                        / maxMin;
+                frontSolutions.get(i).setCrowdingDistance(distance);
             }
         }
     }
@@ -128,20 +121,21 @@ public class PopulationNSGA_II extends Population {
         Pair<Melody, Melody> offspringsCrossover;
         for (Pair<Individual, Individual> individualIndividualPair : matingPool) {
             offspringsCrossover = OnePointCrossover.crossover(individualIndividualPair, numberOfBars, maxNumberOfNotes);
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes)));
-            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes)));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes))
+                    .addCriterion("STABILITY")
+                    .addCriterion("TENSION"));
+            offsprings.add(new Individual(SimpleMutation.mutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes))
+                    .addCriterion("STABILITY")
+                    .addCriterion("TENSION"));
         }
 
         this.offsprings = offsprings;
     }
 
     public void changePopulation() {
-        ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern = Representation.getChordProgressionMajor();
-        BiMap<String, Integer> notesMap = Representation.getNotesMap();
-        int melodyKeyValue = notesMap.get(melodyKey);
         population.addAll(offsprings);
         for (Individual individual : population) {
-            individual.setFitness(criteria, chordProgressionPattern, chordProgression, melodyKeyValue);
+            individual.setFitness(this.evalParams);
         }
     }
 

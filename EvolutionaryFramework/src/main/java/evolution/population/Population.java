@@ -4,6 +4,9 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableList;
 import evolution.music.Melody;
 import evolution.music.Representation;
+import evolution.objective.EvaluationParameters;
+import evolution.objective.StabilityObjective;
+import evolution.objective.TensionObjective;
 import evolution.solution.Individual;
 
 import java.util.ArrayList;
@@ -20,7 +23,11 @@ public abstract class Population {
     protected final String melodyKey;
     protected ArrayList<Individual> population;
 
-    public Population(int popSize, String representationType, List<String> criteria, int numberOfBars, int maxNumberOfNotes, List<String> chordProgression, String melodyKey) {
+    final protected EvaluationParameters evalParams;
+
+    public Population(int popSize, String representationType, List<String> criteria,
+                      int numberOfBars, int maxNumberOfNotes, List<String> chordProgression,
+                      String melodyKey, EvaluationParameters evalParams) {
         this.popSize = popSize;
         this.representationType = representationType;
         this.criteria = criteria;
@@ -28,26 +35,29 @@ public abstract class Population {
         this.maxNumberOfNotes = maxNumberOfNotes;
         this.chordProgression = chordProgression;
         this.melodyKey = melodyKey;
+
+        this.evalParams = evalParams;
     }
 
     public void generatePopulation(ImmutableList<Integer> representation) {
         ArrayList<Individual> population = new ArrayList<>();
-        ArrayList<HashMap<String, List<Integer>>> chordProgressionPattern = Representation.getChordProgressionMajor();
-        BiMap<String, Integer> notesMap = Representation.getNotesMap();
-        int melodyKeyValue = notesMap.get(melodyKey);
 
         for (int n = 0; n < popSize; n++) {
             Melody melody = new Melody();
             assert representation != null;
             melody.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
             melody.setMelodyJFugue(maxNumberOfNotes);
-            Individual individual = new Individual(melody);
-            individual.setFitness(criteria, chordProgressionPattern, chordProgression, melodyKeyValue);
-//            individual.setBestFitnessSoFar(individual.getFitness()); // for MOEA/D only
+            Individual individual = new Individual(melody)
+                    .addCriterion("STABILITY")
+                    .addCriterion("TENSION");
+
+            individual.setFitness(this.evalParams);
             population.add(individual);
         }
         this.population = population;
     }
+
+    public abstract void generateFronts();
 
     public ArrayList<Individual> getPopulation() {
         return population;
