@@ -25,12 +25,11 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                   String representationType, List<String> chordProgression,
                   String melodyKey, String crossoverType,
                   String mutationType, String selectionType, String matingPoolSelectionType,
-                  int numberOfGenerations, int numberOfIterations, List<String> criteria,
+                  int numberOfGenerations,int numberOfIteration, List<String> criteria,
                   int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey, crossoverType, mutationType,
-                selectionType, matingPoolSelectionType, numberOfGenerations,
-                numberOfIterations, criteria);
+                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria);
 
         this.numberOfNeighbours = numberOfNeighbours;
     }
@@ -48,66 +47,59 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
         Player player = new Player();
 
-//        LocalDateTime now = LocalDateTime.now();
-//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH:mm:ss");
-//        String folderName = dtf.format(now);
-//        Util.createDirectory(folderName);
+        PopulationMOEA_D population = new PopulationMOEA_D(
+                popSize, representationType, criteria,
+                numberOfBars, maxNumberOfNotes,
+                chordProgression, melodyKey, stats
+        );
 
-        for (int i = 0; i < numberOfIterations; i++) {
-            PopulationMOEA_D population = new PopulationMOEA_D(
-                    popSize, representationType, criteria,
-                    numberOfBars, maxNumberOfNotes,
-                    chordProgression, melodyKey, stats
-            );
-
-            population.setExternalPopulation();
-            population.setWeightVectors();
-            population.setEuclideanDistancesWeightVectors();
-            population.setNeighbours(numberOfNeighbours);
-            population.generatePopulation(representation);
-            population.setReferencePointsZ();
+        population.setExternalPopulation();
+        population.setWeightVectors();
+        population.setEuclideanDistancesWeightVectors();
+        population.setNeighbours(numberOfNeighbours);
+        population.generatePopulation(representation);
+        population.setReferencePointsZ();
 
 
-            System.out.println("Iteration number " + (i + 1));
-            for (int g = 0; g < numberOfGenerations; g++) {
-                for (int p = 0; p < popSize; p++) {
+        System.out.println("Iteration number " + (numberOfIteration + 1));
+        for (int g = 0; g < numberOfGenerations; g++) {
+            for (int p = 0; p < popSize; p++) {
 
-                    Pair<Individual, Individual> parentsIndexes = MatingPoolSelection.randomFromNeighbourhood(numberOfNeighbours, population, p);
-                    Pair<Genome, Genome> parents = new MutablePair<>(parentsIndexes.getLeft().getGenome(), parentsIndexes.getRight().getGenome());
-                    SplittableRandom random = new SplittableRandom();
-                    Individual offspring;
+                Pair<Individual, Individual> parentsIndexes = MatingPoolSelection.randomFromNeighbourhood(numberOfNeighbours, population, p);
+                Pair<Genome, Genome> parents = new MutablePair<>(parentsIndexes.getLeft().getGenome(), parentsIndexes.getRight().getGenome());
+                SplittableRandom random = new SplittableRandom();
+                Individual offspring;
 
-                    Pair<Genome, Genome> offsprings = Crossover.onePointCrossover(parents);
-                    if (random.nextInt(1, 101) <= 50) {
-                        offspring = new Individual(
-                                Mutation.simpleMutation(
-                                        offsprings.getLeft(), representation, numberOfBars, maxNumberOfNotes
-                                ));
-                    } else {
-                        offspring = new Individual(
-                                Mutation.simpleMutation(
-                                        offsprings.getRight(), representation, numberOfBars, maxNumberOfNotes
-                                ));
-                    }
-                    offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
-                    offspring.setFitness(this.criteria, stats);
-                    population.updateReferencePointsZ(offspring);
-                    population.updateNeighboursSolutions(p, offspring);
-                    population.updateExternalPopulation(offspring);
+                Pair<Genome, Genome> offsprings = Crossover.onePointCrossover(parents);
+                if (random.nextInt(1, 101) <= 50) {
+                    offspring = new Individual(
+                            Mutation.simpleMutation(
+                                    offsprings.getLeft(), representation, numberOfBars, maxNumberOfNotes
+                            ));
+                } else {
+                    offspring = new Individual(
+                            Mutation.simpleMutation(
+                                    offsprings.getRight(), representation, numberOfBars, maxNumberOfNotes
+                            ));
                 }
-            }
-
-
-            for (Individual individual : population.getExternalPopulation()) {
-                Pattern pattern = new Pattern();
-                pattern.setTempo(90);
-                pattern.add(individual.getGenome().getMelodyJFugue());
-                player.play(pattern);
+                offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
+                offspring.setFitness(this.criteria, stats);
+                population.updateReferencePointsZ(offspring);
+                population.updateNeighboursSolutions(p, offspring);
+                population.updateExternalPopulation(offspring);
             }
         }
 
 
-        System.out.println("MOEA/D ended his work!");
+//        for (Individual individual : population.getExternalPopulation()) {
+//            Pattern pattern = new Pattern();
+//            pattern.setTempo(90);
+//            pattern.add(individual.getGenome().getMelodyJFugue());
+//            player.play(pattern);
+//        }
+
+
+        System.out.println("MOEA/D ended his work!" + (numberOfIteration + 1));
     }
 
 

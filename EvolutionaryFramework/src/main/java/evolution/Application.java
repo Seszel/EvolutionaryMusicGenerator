@@ -2,6 +2,9 @@ package evolution;
 
 import evolution.algorithm.MOEA_D;
 import evolution.algorithm.NSGA_II;
+import evolution.objective.EvaluationParameters;
+import evolution.population.Population;
+import evolution.population.PopulationNSGA_II;
 
 import java.util.List;
 
@@ -19,48 +22,53 @@ public class Application {
     private static final String SELECTION_TYPE = "elitist";
     private static final String MATING_POOL_SELECTION_TYPE = "distance";
     private static final int NUMBER_OF_GENERATIONS = 100;
-    private static final int NUMBER_OF_ITERATIONS = 1;
+    private static final int NUMBER_OF_ITERATIONS = 3;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
     private static final int NUMBER_OF_NEIGHBOURS = 10;
 
     public static void main(String[] args) {
 
 
-        NSGA_II algorithm_NSGA_II = new NSGA_II(
-                POP_SIZE,
-                NUMBER_OF_BARS,
-                MAX_NUMBER_OF_NOTES,
-                REPRESENTATION_TYPE,
-                CHORD_PROGRESSION,
-                MELODY_KEY,
-                CROSSOVER_TYPE,
-                MUTATION_TYPE,
-                SELECTION_TYPE,
-                MATING_POOL_SELECTION_TYPE,
-                NUMBER_OF_GENERATIONS,
-                NUMBER_OF_ITERATIONS,
-                CRITERIA
-        );
+//        for (int i=0; i<NUMBER_OF_ITERATIONS; i++) {
+//            MOEA_D algorithm_MOEA_D = new MOEA_D(
+//                    POP_SIZE,
+//                    NUMBER_OF_BARS,
+//                    MAX_NUMBER_OF_NOTES,
+//                    REPRESENTATION_TYPE,
+//                    CHORD_PROGRESSION,
+//                    MELODY_KEY,
+//                    CROSSOVER_TYPE,
+//                    MUTATION_TYPE,
+//                    SELECTION_TYPE,
+//                    MATING_POOL_SELECTION_TYPE,
+//                    NUMBER_OF_GENERATIONS,
+//                    i,
+//                    CRITERIA,
+//                    NUMBER_OF_NEIGHBOURS
+//            );
+//            Thread t = new Thread(algorithm_MOEA_D);
+//            t.start();
+//        }
 
-        MOEA_D algorithm_MOEA_D = new MOEA_D(
-                POP_SIZE,
-                NUMBER_OF_BARS,
-                MAX_NUMBER_OF_NOTES,
-                REPRESENTATION_TYPE,
-                CHORD_PROGRESSION,
-                MELODY_KEY,
-                CROSSOVER_TYPE,
-                MUTATION_TYPE,
-                SELECTION_TYPE,
-                MATING_POOL_SELECTION_TYPE,
-                NUMBER_OF_GENERATIONS,
-                NUMBER_OF_ITERATIONS,
-                CRITERIA,
-                NUMBER_OF_NEIGHBOURS
-        );
-
-        //        algorithm_NSGA_II.run();
-        algorithm_MOEA_D.run();
+        for (int i=0; i<NUMBER_OF_ITERATIONS; i++){
+            NSGA_II algorithm_NSGA_II = new NSGA_II(
+                    POP_SIZE,
+                    NUMBER_OF_BARS,
+                    MAX_NUMBER_OF_NOTES,
+                    REPRESENTATION_TYPE,
+                    CHORD_PROGRESSION,
+                    MELODY_KEY,
+                    CROSSOVER_TYPE,
+                    MUTATION_TYPE,
+                    SELECTION_TYPE,
+                    MATING_POOL_SELECTION_TYPE,
+                    NUMBER_OF_GENERATIONS,
+                    i,
+                    CRITERIA
+            );
+            Thread t = new Thread(algorithm_NSGA_II);
+            t.start();
+        }
     }
 
 }

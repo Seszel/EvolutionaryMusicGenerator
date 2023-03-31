@@ -8,11 +8,8 @@ import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import lombok.var;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.player.Player;
 import org.json.simple.JSONObject;
-import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,13 +22,12 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                    String representationType, List<String> chordProgression,
                    String melodyKey, String crossoverType, String mutationType,
                    String selectionType, String matingPoolSelectionType,
-                   int numberOfGenerations, int numberOfIterations, List<String> criteria) {
+                   int numberOfGenerations, int numberOfIteration, List<String> criteria) {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
                 crossoverType, mutationType, selectionType,
-                matingPoolSelectionType, numberOfGenerations,
-                numberOfIterations, criteria);
+                matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria);
     }
 
     @SuppressWarnings("unchecked")
@@ -39,7 +35,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
     public void run() {
 
         var stats = new EvaluationParameters("JoannaParameters");
-                stats.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
+        stats.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
                         Representation.ChordProgressionMajor)
                 .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION,
                         chordProgression)
@@ -67,47 +63,48 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         Util.createDirectory(folderName);
 
 
-        for (int i = 0; i < numberOfIterations; i++) {
-            JSONObject iterationJSONObject = new JSONObject();
-            System.out.println("Iteration number " + (i + 1));
-            JSONObject algorithmJSONObject = new JSONObject();
-            for (int n = 0; n < numberOfGenerations; n++) {
+        JSONObject iterationJSONObject = new JSONObject();
+        System.out.println("Iteration number " + (numberOfIteration + 1));
+        JSONObject algorithmJSONObject = new JSONObject();
+        for (int n = 0; n < numberOfGenerations; n++) {
 
-                var matingPool = MatingPoolSelection.tournament(
-                        10, popSize, population
-                );
-                population.createOffsprings(matingPool, representation);
+            var matingPool = MatingPoolSelection.tournament(
+                    10, popSize, population
+            );
+            population.createOffsprings(matingPool, representation);
 
-                population.changePopulation();
+            population.changePopulation();
 
-                population.generateFronts();
+            population.generateFronts();
 
-                List<List<Individual>> newPopulation = new ArrayList<>();
-                int newPopulationSize = 0;
+            List<List<Individual>> newPopulation = new ArrayList<>();
+            int newPopulationSize = 0;
 
-                for (List<Individual> front : population.getFronts()) {
-                    population.crowdingDistanceAssignment(front);
-                    newPopulation.add(front);
-                    if ((front.size() + newPopulationSize) > popSize) {
-                        break;
-                    }
-                    newPopulationSize += front.size();
+            for (List<Individual> front : population.getFronts()) {
+                population.crowdingDistanceAssignment(front);
+                newPopulation.add(front);
+                if ((front.size() + newPopulationSize) > popSize) {
+                    break;
                 }
-
-                population.crowdedComparisonOperator(newPopulation);
-                population.setPopulation(
-                        new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
-                );
-
-                iterationJSONObject.put("generation_" + (n + 1), Util.generateJSONObject(population.getPopulation(), criteria));
+                newPopulationSize += front.size();
             }
-            algorithmJSONObject.put("NSGA-II", iterationJSONObject);
-            Util.writeJSONFile(algorithmJSONObject, i, folderName);
+
+            population.crowdedComparisonOperator(newPopulation);
+            population.setPopulation(
+                    new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
+            );
+
+            iterationJSONObject.put("generation_" + (n + 1), Util.generateJSONObject(population.getPopulation(), criteria));
         }
+        algorithmJSONObject.put("NSGA-II", iterationJSONObject);
+        Util.writeJSONFile(algorithmJSONObject, numberOfIteration, folderName);
+
         for (Individual individual : population.getPopulation()) {
             player.play(individual.getGenome().getMelodyJFugue());
+            break;
         }
-        System.out.println("Nsga_II algorithm ended work!");
+
+        System.out.println("Nsga_II algorithm ended work, iteration:" + numberOfIteration + 1);
     }
 
 }
