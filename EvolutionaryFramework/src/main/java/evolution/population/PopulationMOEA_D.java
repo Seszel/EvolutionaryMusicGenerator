@@ -1,10 +1,6 @@
 package evolution.population;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableList;
-import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
-import evolution.operator.MatingPoolSelection;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -89,30 +85,24 @@ public class PopulationMOEA_D extends Population {
 
     public void updateNeighboursSolutions(int idxIndividual, Individual newIndividual) {
         HashMap<String, Double> newSolutionFitness = newIndividual.getFitness();
-//        HashMap<String, Double> newSolutionDifference = new HashMap<>();
-
-//        for (int c = 0; c < criteria.size(); c++) {
-//            newSolutionDifference.put(
-//                    criteria.get(c),
-//                    weightVectors.get(idxIndividual).getValue().get(c)
-//                            * Math.abs(newSolutionFitness.get(criteria.get(c)) - referencePointsZ.get(criteria.get(c)))
-//            );
-//        }
-        double tempDifference;
-        double newSolutionDifference;
+        HashMap<String, Double> tempDifference = new HashMap<>();
+        HashMap<String, Double> newSolutionDifference = new HashMap<>();
+        String maxTempDifferenceKey;
+        String maxNewSolutionDifferenceKey;
         double lambdas;
         for (int neighbour : neighbours.get(idxIndividual)) {
             for (int c = 0; c < criteria.size(); c++) {
                 lambdas = weightVectors.get(neighbour).getValue().get(c);
 
-                tempDifference = lambdas * Math.abs(population.get(neighbour).getFitnessByName(criteria.get(c)) - referencePointsZ.get(criteria.get(c)));
-                newSolutionDifference = lambdas * Math.abs(newSolutionFitness.get(criteria.get(c)) - referencePointsZ.get(criteria.get(c)));
-
-                if (newSolutionDifference <= tempDifference) {
-                    population.set(neighbour, newIndividual);
-                    break;
-                }
+                tempDifference.put(criteria.get(c), lambdas * Math.abs(population.get(neighbour).getFitnessByName(criteria.get(c)) - referencePointsZ.get(criteria.get(c))));
+                newSolutionDifference.put(criteria.get(c), lambdas * Math.abs(newSolutionFitness.get(criteria.get(c)) - referencePointsZ.get(criteria.get(c))));
             }
+
+            maxTempDifferenceKey = Collections.max(tempDifference.keySet());
+            maxNewSolutionDifferenceKey = Collections.max(newSolutionDifference.keySet());
+
+            if (newSolutionDifference.get(maxNewSolutionDifferenceKey) <= tempDifference.get(maxTempDifferenceKey))
+                population.set(neighbour, newIndividual);
         }
     }
 
@@ -129,19 +119,20 @@ public class PopulationMOEA_D extends Population {
     }
 
     public void updateExternalPopulation(Individual offspring) {
-        List<Individual> newExternalPopulation = new ArrayList<>(externalPopulation);
+
         boolean dominates = true;
-        for (Individual individual : externalPopulation) {
+        Iterator<Individual> itr = externalPopulation.iterator();
+        while (itr.hasNext()) {
+            Individual individual = itr.next();
             if (offspring.dominates(individual)) {
-                newExternalPopulation.remove(individual);
+                itr.remove();
             } else {
                 dominates = false;
             }
         }
-        if (dominates) {
-            newExternalPopulation.add(offspring);
+        if (dominates){
+            externalPopulation.add(offspring);
         }
-        this.externalPopulation = newExternalPopulation;
     }
 
     public void setReferencePointsZ() {
@@ -159,5 +150,12 @@ public class PopulationMOEA_D extends Population {
             }
         }
         this.referencePointsZ = bestSoFar;
+    }
+    public void updateReferencePointsZ(Individual newIndividual){
+        for (String criterion : criteria) {
+            if (newIndividual.getFitnessByName(criterion) > referencePointsZ.get(criterion)) {
+                referencePointsZ.put(criterion, newIndividual.getFitnessByName(criterion));
+            }
+        }
     }
 }

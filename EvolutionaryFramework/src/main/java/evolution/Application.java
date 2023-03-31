@@ -42,8 +42,6 @@ public class Application {
                 CRITERIA
         );
 
-//        algorithm_NSGA_II.run();
-
         MOEA_D algorithm_MOEA_D = new MOEA_D(
                 POP_SIZE,
                 NUMBER_OF_BARS,
@@ -61,7 +59,8 @@ public class Application {
                 NUMBER_OF_NEIGHBOURS
         );
 
-        algorithm_NSGA_II.run();
+        //        algorithm_NSGA_II.run();
+        algorithm_MOEA_D.run();
     }
 
 }

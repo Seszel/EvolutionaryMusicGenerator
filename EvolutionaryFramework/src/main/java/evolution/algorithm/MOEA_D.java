@@ -12,6 +12,7 @@ import evolution.solution.Individual;
 import lombok.var;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 
 import java.util.List;
@@ -90,13 +91,18 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                     }
                     offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
                     offspring.setFitness(this.criteria, stats);
+                    population.updateReferencePointsZ(offspring);
                     population.updateNeighboursSolutions(p, offspring);
                     population.updateExternalPopulation(offspring);
                 }
             }
 
+
             for (Individual individual : population.getExternalPopulation()) {
-                player.play(individual.getGenome().getMelodyJFugue());
+                Pattern pattern = new Pattern();
+                pattern.setTempo(90);
+                pattern.add(individual.getGenome().getMelodyJFugue());
+                player.play(pattern);
             }
         }
 
