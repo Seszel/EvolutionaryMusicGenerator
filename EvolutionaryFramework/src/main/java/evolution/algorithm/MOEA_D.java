@@ -12,6 +12,7 @@ import evolution.solution.Individual;
 import lombok.var;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 
 import java.util.List;
@@ -92,15 +93,15 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         }
 
 
-//        for (Individual individual : population.getExternalPopulation()) {
-//            Pattern pattern = new Pattern();
-//            pattern.setTempo(90);
-//            pattern.add(individual.getGenome().getMelodyJFugue());
-//            player.play(pattern);
-//        }
+        for (Individual individual : population.getExternalPopulation()) {
+            Pattern pattern = new Pattern();
+            pattern.setTempo(90);
+            pattern.add(individual.getGenome().getMelodyJFugue());
+            player.play(pattern);
+        }
 
 
-        System.out.println("MOEA/D ended his work!" + (numberOfIteration + 1));
+        System.out.println("MOEA/D ended his work! " + (numberOfIteration + 1));
     }
 
     @Override

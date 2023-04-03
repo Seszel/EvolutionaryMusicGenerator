@@ -101,8 +101,9 @@ public class PopulationMOEA_D extends Population {
             maxTempDifferenceKey = Collections.max(tempDifference.keySet());
             maxNewSolutionDifferenceKey = Collections.max(newSolutionDifference.keySet());
 
-            if (newSolutionDifference.get(maxNewSolutionDifferenceKey) <= tempDifference.get(maxTempDifferenceKey))
+            if (newSolutionDifference.get(maxNewSolutionDifferenceKey) <= tempDifference.get(maxTempDifferenceKey)) {
                 population.set(neighbour, newIndividual);
+            }
         }
     }
 
@@ -120,17 +121,17 @@ public class PopulationMOEA_D extends Population {
 
     public void updateExternalPopulation(Individual offspring) {
 
-        boolean dominates = true;
-        Iterator<Individual> itr = externalPopulation.iterator();
-        while (itr.hasNext()) {
-            Individual individual = itr.next();
-            if (offspring.dominates(individual)) {
-                itr.remove();
-            } else {
-                dominates = false;
+        boolean leszczu = false;
+
+        externalPopulation.removeIf(offspring::dominates);
+
+        for (Individual individual : externalPopulation) {
+            if (individual.dominates(offspring)) {
+                leszczu = true;
             }
         }
-        if (dominates){
+
+        if (!leszczu) {
             externalPopulation.add(offspring);
         }
     }
@@ -151,7 +152,8 @@ public class PopulationMOEA_D extends Population {
         }
         this.referencePointsZ = bestSoFar;
     }
-    public void updateReferencePointsZ(Individual newIndividual){
+
+    public void updateReferencePointsZ(Individual newIndividual) {
         for (String criterion : criteria) {
             if (newIndividual.getFitnessByName(criterion) > referencePointsZ.get(criterion)) {
                 referencePointsZ.put(criterion, newIndividual.getFitnessByName(criterion));

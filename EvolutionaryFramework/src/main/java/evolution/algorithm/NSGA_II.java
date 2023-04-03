@@ -111,7 +111,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             player.play(pattern);
         }
 
-        System.out.println("Nsga_II algorithm ended work, iteration:" + (numberOfIteration + 1));
+        System.out.println("Nsga_II algorithm ended work! " + (numberOfIteration + 1));
     }
 
     @Override
