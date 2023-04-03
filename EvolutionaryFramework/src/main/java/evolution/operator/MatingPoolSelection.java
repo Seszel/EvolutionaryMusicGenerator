@@ -18,8 +18,11 @@ public class MatingPoolSelection {
     public static Pair<Individual, Individual> randomFromNeighbourhood(int numberOfNeighbours, PopulationMOEA_D population, int idxIndividual) {
 
         int idx1, idx2;
-        idx1 = Util.getRandomNumber(0, numberOfNeighbours - 1);
-        idx2 = Util.getRandomNumber(0, numberOfNeighbours - 1);
+        idx1 = Util.getRandomNumber(0, numberOfNeighbours);
+        idx2 = Util.getRandomNumber(0, numberOfNeighbours);
+        while (idx2 == idx1){
+            idx2 = Util.getRandomNumber(0, numberOfNeighbours - 1);
+        }
 
         Pair<Integer, Integer> neighboursIdx = new ImmutablePair<>(
                 population.getNeighbours().get(idxIndividual).get(idx1),
@@ -38,8 +41,8 @@ public class MatingPoolSelection {
 
         int idx1, idx2;
         for (int n = 0; n < numberOfParents; n++) {
-            idx1 = Collections.max(List.of(Util.getRandomNumber(0, popSize - 1), Util.getRandomNumber(0, popSize - 1)));
-            idx2 = Collections.max(List.of(Util.getRandomNumber(0, popSize - 1), Util.getRandomNumber(0, popSize - 1)));
+            idx1 = Collections.max(List.of(Util.getRandomNumber(0, popSize), Util.getRandomNumber(0, popSize)));
+            idx2 = Collections.max(List.of(Util.getRandomNumber(0, popSize), Util.getRandomNumber(0, popSize)));
             matingPool.add(new MutablePair<>(population.getPopulation().get(idx1), population.getPopulation().get(idx2)));
         }
         return matingPool;

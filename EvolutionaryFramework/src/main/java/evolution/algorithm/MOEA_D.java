@@ -15,6 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.player.Player;
 
 import java.util.List;
+import java.util.Random;
 import java.util.SplittableRandom;
 
 public class MOEA_D extends AEvolutionaryAlgorithm {
@@ -67,16 +68,17 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 
                 Pair<Individual, Individual> parentsIndexes = MatingPoolSelection.randomFromNeighbourhood(numberOfNeighbours, population, p);
                 Pair<Genome, Genome> parents = new MutablePair<>(parentsIndexes.getLeft().getGenome(), parentsIndexes.getRight().getGenome());
-                SplittableRandom random = new SplittableRandom();
+                Random random = new Random();
                 Individual offspring;
 
                 Pair<Genome, Genome> offsprings = Crossover.crossover(getCrossoverType(), parents);
-                if (random.nextInt(1, 101) <= 50) {
+                if (random.nextDouble() <= 0.5) {
                     assert offsprings != null;
                     offspring = new Individual(
                             Mutation.mutation(getMutationType(),
                                     offsprings.getLeft(), representation));
                 } else {
+                    assert offsprings != null;
                     offspring = new Individual(
                             Mutation.mutation(getMutationType(),
                                     offsprings.getRight(), representation));
