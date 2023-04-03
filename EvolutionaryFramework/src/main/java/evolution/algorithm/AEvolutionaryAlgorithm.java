@@ -1,8 +1,5 @@
 package evolution.algorithm;
 
-//import com.sun.tools.javac.util.List;
-
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;

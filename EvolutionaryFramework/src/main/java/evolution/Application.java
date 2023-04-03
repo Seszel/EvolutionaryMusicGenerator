@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Application {
 
-    private static final String ALGORITHM = "NSGA_II";
+    private static final String ALGORITHM = "MOEA/D";
     private static final int POP_SIZE = 1000;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
@@ -19,8 +19,8 @@ public class Application {
     private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("A", "MAJOR");
     private static final String CROSSOVER_TYPE = "ONE_POINT_CROSSOVER";
     private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.8);
-    private static final String SELECTION_TYPE = "ELITIST";
-    private static final String MATING_POOL_SELECTION_TYPE = "TOURNAMENT";
+    private static final String SELECTION_TYPE = "";
+    private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 10000;
     private static final int NUMBER_OF_ITERATIONS = 1;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
