@@ -12,7 +12,6 @@ import evolution.solution.Individual;
 import lombok.var;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 
 import java.util.List;
@@ -23,13 +22,13 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 
     public MOEA_D(int popSize, int numberOfBars, int maxNumberOfNotes,
                   String representationType, List<String> chordProgression,
-                  String melodyKey, String crossoverType,
-                  String mutationType, String selectionType, String matingPoolSelectionType,
-                  int numberOfGenerations,int numberOfIteration, List<String> criteria,
+                  Pair<String, String> melodyKey, String crossoverType,
+                  Pair<String, Double> mutationType, String selectionType, String matingPoolSelectionType,
+                  int numberOfGenerations, int numberOfIteration, List<String> criteria, boolean saveToJSON,
                   int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey, crossoverType, mutationType,
-                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria);
+                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON);
 
         this.numberOfNeighbours = numberOfNeighbours;
     }
@@ -37,9 +36,11 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
     @Override
     public void run() {
 
+        System.out.println("Algorithm MOEA/D is working");
+
         var stats = new EvaluationParameters("JoannaParameters");
         stats.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
-                        Representation.ChordProgressionMajor)
+                        Representation.ChordProgression(melodyKey.getRight()))
                 .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION,
                         chordProgression)
                 .addParam(EvaluationParameters.ParamName.MELODY_KEY,
@@ -61,7 +62,6 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         population.setReferencePointsZ();
 
 
-        System.out.println("Iteration number " + (numberOfIteration + 1));
         for (int g = 0; g < numberOfGenerations; g++) {
             for (int p = 0; p < popSize; p++) {
 
@@ -70,17 +70,16 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 SplittableRandom random = new SplittableRandom();
                 Individual offspring;
 
-                Pair<Genome, Genome> offsprings = Crossover.onePointCrossover(parents);
+                Pair<Genome, Genome> offsprings = Crossover.crossover(getCrossoverType(), parents);
                 if (random.nextInt(1, 101) <= 50) {
+                    assert offsprings != null;
                     offspring = new Individual(
-                            Mutation.simpleMutation(
-                                    offsprings.getLeft(), representation, numberOfBars, maxNumberOfNotes
-                            ));
+                            Mutation.mutation(getMutationType(),
+                                    offsprings.getLeft(), representation));
                 } else {
                     offspring = new Individual(
-                            Mutation.simpleMutation(
-                                    offsprings.getRight(), representation, numberOfBars, maxNumberOfNotes
-                            ));
+                            Mutation.mutation(getMutationType(),
+                                    offsprings.getRight(), representation));
                 }
                 offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
                 offspring.setFitness(this.criteria, stats);
@@ -100,6 +99,11 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 
 
         System.out.println("MOEA/D ended his work!" + (numberOfIteration + 1));
+    }
+
+    @Override
+    public void writeToJSON() {
+
     }
 
 

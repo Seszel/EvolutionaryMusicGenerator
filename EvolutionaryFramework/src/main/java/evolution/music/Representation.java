@@ -1,18 +1,11 @@
 package evolution.music;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
-import evolution.objective.EvaluationParameters;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class Representation {
@@ -47,7 +40,7 @@ public class Representation {
                     .put("s", 0.0625)
                     .put("t", 0.03125)
                     .put("o", 0.0078125)
-                     .put("x", 0.015625)
+                    .put("x", 0.015625)
                     .build();
 
     public static final ImmutableBiMap<String, Integer> NotesMap =
@@ -65,6 +58,17 @@ public class Representation {
                     .put("A#", 58)
                     .put("B", 59)
                     .build();
+
+    public static ArrayList<HashMap<String, List<Integer>>> ChordProgression(String keyType) {
+        switch (keyType) {
+            case "MAJOR":
+                return Representation.ChordProgressionMajor;
+            case "MINOR":
+                return Representation.ChordProgressionMinor;
+            default:
+                return null;
+        }
+    }
 
     public static final ArrayList<HashMap<String, List<Integer>>> ChordProgressionMajor;
     static {
@@ -108,6 +112,7 @@ public class Representation {
     }
 
     public static ArrayList<HashMap<String, List<Integer>>> ChordProgressionMinor;
+
     static {
 
         ArrayList<HashMap<String, List<Integer>>> diatonicChords = new ArrayList<>();
@@ -140,6 +145,5 @@ public class Representation {
 
         ChordProgressionMinor = diatonicChords;
     }
-
 
 }

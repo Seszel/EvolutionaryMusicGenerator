@@ -20,7 +20,7 @@ public class PopulationNSGA_II extends Population {
 
     public PopulationNSGA_II(int popSize, String representationType, List<String> criteria,
                              int numberOfBars, int maxNumberOfNotes,
-                             List<String> chordProgression, String melodyKey,
+                             List<String> chordProgression, Pair<String, String> melodyKey,
                              EvaluationParameters evalParams) {
         super(popSize, representationType, criteria, numberOfBars,
                 maxNumberOfNotes, chordProgression, melodyKey, evalParams);
@@ -114,17 +114,17 @@ public class PopulationNSGA_II extends Population {
     }
 
 
-    public void createOffsprings(List<Pair<Individual, Individual>> matingPool, ImmutableList<Integer> representation) {
+    public void createOffsprings(List<Pair<Individual, Individual>> matingPool, ImmutableList<Integer> representation, String crossoverType, Pair<String, Double> mutationType) {
         List<Individual> offsprings = new ArrayList<>();
 
         Pair<Genome, Genome> offspringsCrossover;
         for (Pair<Individual, Individual> individualPair : matingPool) {
             Pair<Genome, Genome> genomePair = new MutablePair<>(individualPair.getLeft().getGenome(), individualPair.getRight().getGenome());
-            offspringsCrossover = Crossover.onePointCrossover(genomePair);
+            offspringsCrossover = Crossover.crossover(crossoverType, genomePair);
             offsprings.add(new Individual(
-                    Mutation.simpleMutation(offspringsCrossover.getLeft(), representation, numberOfBars, maxNumberOfNotes)));
+                    Mutation.mutation(mutationType,offspringsCrossover.getLeft(), representation)));
             offsprings.add(new Individual(
-                    Mutation.simpleMutation(offspringsCrossover.getRight(), representation, numberOfBars, maxNumberOfNotes)));
+                    Mutation.mutation(mutationType, offspringsCrossover.getRight(), representation)));
         }
 
         this.offsprings = offsprings;

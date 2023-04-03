@@ -9,6 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Crossover {
+    public static Pair<Genome, Genome> crossover(String crossoverType, Pair<Genome, Genome> parents) {
+        switch (crossoverType) {
+            case "ONE_POINT_CROSSOVER":
+                return onePointCrossover(parents);
+            default:
+                return null;
+        }
+    }
+
     public static Pair<Genome, Genome> onePointCrossover(Pair<Genome, Genome> parents) {
         List<List<Integer>> offspringMelody1 = new ArrayList<>();
         List<List<Integer>> offspringMelody2 = new ArrayList<>();
@@ -16,7 +25,7 @@ public class Crossover {
         int idx;
 
         for (int i = 0; i < parents.getLeft().getMelody().size(); i++) {
-            idx = Util.getRandomNumber(0, parents.getLeft().getMelody().get(i).size()-1);
+            idx = Util.getRandomNumber(0, parents.getLeft().getMelody().get(i).size() - 1);
             List<Integer> offspring1 = new ArrayList<>(parents.getLeft().getMelody().get(i).subList(0, idx));
             offspring1.addAll(parents.getRight().getMelody().get(i).subList(idx, parents.getLeft().getMelody().get(i).size()));
 
@@ -35,4 +44,5 @@ public class Crossover {
 
         return new MutablePair<>(genome1, genome2);
     }
+
 }

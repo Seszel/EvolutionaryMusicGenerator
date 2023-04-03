@@ -4,6 +4,7 @@ import evolution.music.Representation;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import lombok.var;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,10 +27,11 @@ public class StabilityObjective extends Objective{
         @SuppressWarnings("unchecked")
         var chrProg = (List<String>) pack.parameters
                 .get(EvaluationParameters.ParamName.CHORD_PROGRESSION);
-        var melodyKey = (String) pack.parameters
+        @SuppressWarnings("unchecked")
+        var melodyKey = (Pair<String, String>) pack.parameters
                 .get(EvaluationParameters.ParamName.MELODY_KEY);
 
-        var melodyKeyVal = Representation.NotesMap.get(melodyKey);
+        var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
         //CHORD NOTES
         int count = 1;
         int lastNoteValue = 0;

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import evolution.music.Genome;
 import evolution.objective.EvaluationParameters;
 import evolution.solution.Individual;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +16,14 @@ public abstract class Population {
     protected final int numberOfBars;
     protected final int maxNumberOfNotes;
     protected final List<String> chordProgression;
-    protected final String melodyKey;
+    protected final Pair<String, String> melodyKey;
     protected List<Individual> population;
 
     final protected EvaluationParameters evalParams;
 
     public Population(int popSize, String representationType, List<String> criteria,
                       int numberOfBars, int maxNumberOfNotes, List<String> chordProgression,
-                      String melodyKey, EvaluationParameters evalParams) {
+                      Pair<String, String> melodyKey, EvaluationParameters evalParams) {
         this.popSize = popSize;
         this.representationType = representationType;
         this.criteria = criteria;

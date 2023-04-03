@@ -19,7 +19,7 @@ public class PopulationMOEA_D extends Population {
 
     public PopulationMOEA_D(int popSize, String representationType, List<String> criteria,
                             int numberOfBars, int maxNumberOfNotes,
-                            List<String> chordProgression, String melodyKey,
+                            List<String> chordProgression, Pair<String, String> melodyKey,
                             EvaluationParameters evalParams) {
         super(popSize, representationType, criteria, numberOfBars,
                 maxNumberOfNotes, chordProgression, melodyKey, evalParams);
