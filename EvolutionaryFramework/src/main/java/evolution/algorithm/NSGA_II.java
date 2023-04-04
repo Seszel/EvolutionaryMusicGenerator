@@ -6,16 +6,15 @@ import evolution.objective.EvaluationParameters;
 import evolution.operator.MatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
+import evolution.stats.StatsNSGA_II;
 import evolution.util.Util;
 import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
-import org.json.simple.JSONObject;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class NSGA_II extends AEvolutionaryAlgorithm {
@@ -24,22 +23,28 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                    String representationType, List<String> chordProgression,
                    Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType,
                    String selectionType, String matingPoolSelectionType,
-                   int numberOfGenerations, int numberOfIteration, List<String> criteria, boolean saveToJSON) {
+                   int numberOfGenerations, int numberOfIteration, List<String> criteria,
+                   Pair<Boolean, Double> saveToJSON, String folderName) {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
                 crossoverType, mutationType, selectionType,
-                matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON);
+                matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void run() {
 
-        System.out.println("Algorithm NSGA_II is working");
+        StatsNSGA_II stats = new StatsNSGA_II("NSGA-II", popSize,
+                numberOfBars, maxNumberOfNotes, representationType,
+                chordProgression, melodyKey, crossoverType,
+                mutationType, selectionType, matingPoolSelectionType,
+                numberOfGenerations, criteria, folderName);
 
-        var stats = new EvaluationParameters("JoannaParameters");
-        stats.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
+        System.out.println("Algorithm NSGA_II is working, iteration: " + (numberOfIteration+1));
+
+        var params = new EvaluationParameters("JoannaParameters");
+        params.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
                         Representation.ChordProgression(melodyKey.getRight()))
                 .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION,
                         chordProgression)
@@ -48,27 +53,13 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         PopulationNSGA_II population = new PopulationNSGA_II(
                 popSize, representationType, criteria,
                 numberOfBars, maxNumberOfNotes,
-                chordProgression, melodyKey, stats
+                chordProgression, melodyKey, params
         );
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
         Player player = new Player();
 
         population.generatePopulation(representation);
         population.generateFronts();
-
-//        for (Individual individual : population.getPopulation()) {
-//            player.play(individual.getGenome().getMelodyJFugue());
-//            break;
-//        }
-
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH:mm:ss");
-        String folderName = dtf.format(now);
-        Util.createDirectory(folderName);
-
-
-        JSONObject iterationJSONObject = new JSONObject();
-        JSONObject algorithmJSONObject = new JSONObject();
 
         for (int n = 0; n < numberOfGenerations; n++) {
 
@@ -97,26 +88,29 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             population.setPopulation(
                     new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
             );
-            if (n%100 == 0){
-                iterationJSONObject.put("generation_" + (n + 1), Util.generateJSONObject(population.getPopulation(), criteria));
+
+            if (saveToJSON.getLeft() && (n % (numberOfGenerations * saveToJSON.getRight()) == 0 || n == (numberOfGenerations - 1))) {
+                List<Individual> populationToJSON = new ArrayList<>();
+                for (Individual i : population.getPopulation()) {
+                    Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getFrontRank());
+                    populationToJSON.add(newI);
+                }
+
+                stats.updateStats(n, populationToJSON);
             }
         }
-        algorithmJSONObject.put("NSGA-II", iterationJSONObject);
-        Util.writeJSONFile(algorithmJSONObject, numberOfIteration, folderName);
 
-        for (Individual individual : population.getPopulation()) {
-            Pattern pattern = new Pattern();
-            pattern.setTempo(90);
-            pattern.add(individual.getGenome().getMelodyJFugue());
-            player.play(pattern);
+        if (saveToJSON.getLeft()) {
+            stats.generateJSON(numberOfIteration);
         }
+//        for (Individual individual : population.getPopulation()) {
+//            Pattern pattern = new Pattern();
+//            pattern.setTempo(90);
+//            pattern.add(individual.getGenome().getMelodyJFugue());
+//            player.play(pattern);
+//        }
 
-        System.out.println("Nsga_II algorithm ended work! " + (numberOfIteration + 1));
-    }
-
-    @Override
-    public void writeToJSON() {
-
+        System.out.println("Nsga_II algorithm ended work, iteration: " + (numberOfIteration + 1));
     }
 
 }

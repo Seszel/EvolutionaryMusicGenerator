@@ -9,26 +9,24 @@ import java.util.List;
 public class StatsMOEA_D extends Stats {
 
     private final int numberOfNeighbours;
-    private HashMap<Integer, Individual> externalPopulation;
+    private HashMap<Integer, List<Individual>> externalPopulationForGeneration = new HashMap<>();
 
     public StatsMOEA_D(String algorithmName, int popSize,
                        int numberOfBars, int maxNumberOfNotes,
                        String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
                        String crossoverType, Pair<String, Double> mutationType, String selectionType, String matingPoolSelectionType,
-                       int numberOfGenerations, List<String> criteria,
-                       int numberOfNeighbours, HashMap<Integer, Individual> externalPopulation) {
-        super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey, crossoverType, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria);
+                       int numberOfGenerations, List<String> criteria, String folderName,
+                       int numberOfNeighbours) {
+        super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey, crossoverType, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
         this.numberOfNeighbours = numberOfNeighbours;
-        this.externalPopulation = externalPopulation;
+    }
+
+    public void updateStats(int generationNumber, List<Individual> externalPopulation) {
+        externalPopulationForGeneration.put(generationNumber, externalPopulation);
     }
 
     @Override
-    public void updateStats() {
-
-    }
-
-    @Override
-    public void writeToFile() {
+    public void generateJSON(int numberOfIteration) {
 
     }
 }

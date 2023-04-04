@@ -17,7 +17,6 @@ import org.jfugue.player.Player;
 
 import java.util.List;
 import java.util.Random;
-import java.util.SplittableRandom;
 
 public class MOEA_D extends AEvolutionaryAlgorithm {
     private final int numberOfNeighbours;
@@ -25,12 +24,13 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
     public MOEA_D(int popSize, int numberOfBars, int maxNumberOfNotes,
                   String representationType, List<String> chordProgression,
                   Pair<String, String> melodyKey, String crossoverType,
-                  Pair<String, Double> mutationType, String selectionType, String matingPoolSelectionType,
-                  int numberOfGenerations, int numberOfIteration, List<String> criteria, boolean saveToJSON,
+                  Pair<String, Double> mutationType, String selectionType,
+                  String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
+                  List<String> criteria, Pair<Boolean, Double> saveToJSON, String folderName,
                   int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey, crossoverType, mutationType,
-                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON);
+                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName);
 
         this.numberOfNeighbours = numberOfNeighbours;
     }
@@ -104,10 +104,6 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         System.out.println("MOEA/D ended his work! " + (numberOfIteration + 1));
     }
 
-    @Override
-    public void writeToJSON() {
-
-    }
 
 
 }

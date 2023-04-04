@@ -1,8 +1,13 @@
 package evolution.stats;
 
-import evolution.objective.EvaluationParameters;
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.simple.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public abstract class Stats {
@@ -19,12 +24,13 @@ public abstract class Stats {
     protected final String matingPoolSelectionType;
     protected final int numberOfGenerations;
     protected final List<String> criteria;
+    protected final String folderName;
 
 
     public Stats(String algorithmName, int popSize, int numberOfBars, int maxNumberOfNotes,
                  String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
-                 String crossoverType, Pair<String,Double> mutationType, String selectionType,
-                 String matingPoolSelectionType, int numberOfGenerations,List<String> criteria) {
+                 String crossoverType, Pair<String, Double> mutationType, String selectionType,
+                 String matingPoolSelectionType, int numberOfGenerations, List<String> criteria, String folderName) {
         this.algorithmName = algorithmName;
         this.popSize = popSize;
         this.representationType = representationType;
@@ -38,9 +44,30 @@ public abstract class Stats {
         this.maxNumberOfNotes = maxNumberOfNotes;
         this.chordProgression = chordProgression;
         this.melodyKey = melodyKey;
+        this.folderName = folderName;
     }
 
-    public abstract void updateStats();
-    public abstract void writeToFile();
+    public abstract void generateJSON(int numberOfIteration);
+
+    public static void writeJSONToFile(JSONObject iterationJSON, int numberOfIteration, String folderName) {
+        try (FileWriter file = new FileWriter("results/" + folderName + "/result" + "_" + numberOfIteration + ".json")) {
+            file.write(iterationJSON.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createDirectory(String folderName) {
+        try {
+            Path path = Paths.get("results/" + folderName);
+            Files.createDirectories(path);
+            System.out.println("Directory was created!");
+
+        } catch (IOException e) {
+            System.err.println("Failed: directory wasn't created!" + e.getMessage());
+        }
+    }
 
 }

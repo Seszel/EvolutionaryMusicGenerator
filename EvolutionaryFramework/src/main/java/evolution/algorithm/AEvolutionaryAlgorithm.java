@@ -11,16 +11,22 @@ abstract class AEvolutionaryAlgorithm implements Runnable{
     protected final String representationType;
     protected final List<String> chordProgression;
     protected final Pair<String, String> melodyKey;
-    private final String crossoverType;
-    private final Pair<String, Double> mutationType;
-    private final String selectionType;
-    private final String matingPoolSelectionType;
+    protected final String crossoverType;
+    protected final Pair<String, Double> mutationType;
+    protected final String selectionType;
+    protected final String matingPoolSelectionType;
     protected final int numberOfGenerations;
     protected final int numberOfIteration;
     protected final List<String> criteria;
-    protected final boolean saveToJSON;
+    protected final Pair<Boolean, Double> saveToJSON;
+    protected final String folderName;
 
-    protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes, String representationType, List<String> chordProgression, Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType, String selectionType, String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration, List<String> criteria, boolean saveToJSON) {
+    protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes,
+                                     String representationType, List<String> chordProgression,
+                                     Pair<String, String> melodyKey, String crossoverType,
+                                     Pair<String, Double> mutationType, String selectionType,
+                                     String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
+                                     List<String> criteria, Pair<Boolean, Double> saveToJSON, String folderName) {
         this.popSize = popSize;
         this.numberOfBars = numberOfBars;
         this.maxNumberOfNotes = maxNumberOfNotes;
@@ -35,6 +41,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable{
         this.numberOfIteration = numberOfIteration;
         this.criteria = criteria;
         this.saveToJSON = saveToJSON;
+        this.folderName = folderName;
     }
 
     public abstract void run();
@@ -66,6 +73,4 @@ abstract class AEvolutionaryAlgorithm implements Runnable{
     public int getNumberOfGenerations() {
         return numberOfGenerations;
     }
-
-    public abstract void writeToJSON();
 }

@@ -18,6 +18,15 @@ public class Individual {
         this.genome = genome;
     }
 
+    public Individual(Genome genome, HashMap<String, Double> fitness, int frontRank){
+        for (String criterion : fitness.keySet() ){
+            this.fitness.put(criterion, getFitnessByName(criterion));
+        }
+        this.genome = genome;
+        this.frontRank = frontRank;
+
+    }
+
     public Individual addCriterion(String name) {
         fitness.put(name, 0.0);
         return this;
@@ -78,29 +87,4 @@ public class Individual {
         return crowdingDistance;
     }
 
-
-//    /**
-//     * for moea/d only
-//     */
-//    public ArrayList<Double> getBestFitnessSoFar() {
-//        return bestFitnessSoFar;
-//    }
-//
-//    /**
-//     * for moea/d only
-//     */
-//    public void setBestFitnessSoFar(ArrayList<Double> bestFitnessSoFar) {
-//        this.bestFitnessSoFar = bestFitnessSoFar;
-//    }
-//
-//    /**
-//     * for moea/d only
-//     */
-//    public void updateFitnessSoFar(){
-//        for (int i=0; i<fitness.size(); i++){
-//            if (fitness.get(i) > bestFitnessSoFar.get(i)){
-//                bestFitnessSoFar.set(i,fitness.get(i));
-//            }
-//        }
-//    }
 }
