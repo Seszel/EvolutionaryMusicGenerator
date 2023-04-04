@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,12 @@ public class StatsNSGA_II extends Stats {
     }
 
     public void updateStats(int generationNumber, List<Individual> population) {
-        frontsForGeneration.put(generationNumber, population);
+        List<Individual> populationToJSON = new ArrayList<>();
+        for (Individual i : population) {
+            Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getFrontRank());
+            populationToJSON.add(newI);
+        }
+        frontsForGeneration.put(generationNumber, populationToJSON);
     }
 
     @SuppressWarnings("unchecked")

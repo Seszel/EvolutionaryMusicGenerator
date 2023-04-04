@@ -20,7 +20,7 @@ public class Individual {
 
     public Individual(Genome genome, HashMap<String, Double> fitness, int frontRank){
         for (String criterion : fitness.keySet() ){
-            this.fitness.put(criterion, getFitnessByName(criterion));
+            this.fitness.put(criterion, fitness.get(criterion));
         }
         this.genome = genome;
         this.frontRank = frontRank;

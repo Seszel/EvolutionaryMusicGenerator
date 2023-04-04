@@ -27,7 +27,7 @@ public class Application {
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 10;
-    private static final int NUMBER_OF_ITERATIONS = 1;
+    private static final int NUMBER_OF_ITERATIONS = 3;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
     private static final Pair<Boolean, Double> SAVE_TO_JSON = new ImmutablePair<>(true, 0.5);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
@@ -66,9 +66,9 @@ public class Application {
                             SAVE_TO_JSON,
                             folderName
                     );
-                    algorithm_NSGA_II.run();
-//                    Thread t = new Thread(algorithm_NSGA_II);
-//                    t.start();
+//                    algorithm_NSGA_II.run();
+                    Thread t = new Thread(algorithm_NSGA_II);
+                    t.start();
                 }
                 break;
             case "MOEA/D":
