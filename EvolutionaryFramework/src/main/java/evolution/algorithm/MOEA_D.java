@@ -11,12 +11,20 @@ import evolution.population.PopulationMOEA_D;
 import evolution.solution.Individual;
 import evolution.stats.StatsMOEA_D;
 import lombok.var;
+import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.player.Player;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MOEA_D extends AEvolutionaryAlgorithm {
     private final int numberOfNeighbours;
@@ -69,8 +77,10 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         population.generatePopulation(representation);
         population.setReferencePointsZ();
 
+        List<Integer> generations = IntStream.rangeClosed(1, numberOfGenerations)
+                .boxed().collect(Collectors.toList());
 
-        for (int g = 1; g <= numberOfGenerations; g++) {
+        for (Integer g : ProgressBar.wrap(generations, "Iteration: " + (numberOfIteration + 1))) {
             for (int p = 0; p < popSize; p++) {
 
                 Pair<Individual, Individual> parentsIndexes = MatingPoolSelection.randomFromNeighbourhood(numberOfNeighbours, population, p);
@@ -114,7 +124,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 //        }
 
 
-        System.out.println("MOEA/D ended his work, iteration: " + (numberOfIteration + 1));
+//        System.out.println("MOEA/D ended his work, iteration: " + (numberOfIteration + 1));
     }
 
 

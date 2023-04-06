@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
-abstract class AEvolutionaryAlgorithm implements Runnable{
+abstract class AEvolutionaryAlgorithm implements Runnable {
     protected final int popSize;
     protected final int numberOfBars;
     protected final int maxNumberOfNotes;
