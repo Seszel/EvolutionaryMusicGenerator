@@ -25,6 +25,7 @@ public class StatsNSGA_II extends Stats {
         this.frontsForGeneration = new HashMap<>();
     }
 
+    @Override
     public void updateStats(int generationNumber, List<Individual> population) {
         List<Individual> populationToJSON = new ArrayList<>();
         for (Individual i : population) {

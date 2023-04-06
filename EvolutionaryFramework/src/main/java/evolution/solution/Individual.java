@@ -24,7 +24,13 @@ public class Individual {
         }
         this.genome = genome;
         this.frontRank = frontRank;
+    }
 
+    public Individual(Genome genome, HashMap<String, Double> fitness){
+        for (String criterion : fitness.keySet() ){
+            this.fitness.put(criterion, fitness.get(criterion));
+        }
+        this.genome = genome;
     }
 
     public Individual addCriterion(String name) {

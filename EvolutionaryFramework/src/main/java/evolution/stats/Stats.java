@@ -1,5 +1,6 @@
 package evolution.stats;
 
+import evolution.solution.Individual;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.simple.JSONObject;
 
@@ -48,6 +49,8 @@ public abstract class Stats {
     }
 
     public abstract void generateJSON(int numberOfIteration);
+
+    public abstract void updateStats(int generationNumber, List<Individual> population);
 
     public static void writeJSONToFile(JSONObject iterationJSON, int numberOfIteration, String folderName) {
         try (FileWriter file = new FileWriter("results/" + folderName + "/result" + "_" + numberOfIteration + ".json")) {

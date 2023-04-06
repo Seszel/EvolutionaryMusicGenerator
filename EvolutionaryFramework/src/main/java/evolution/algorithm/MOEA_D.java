@@ -9,6 +9,8 @@ import evolution.operator.MatingPoolSelection;
 import evolution.operator.Mutation;
 import evolution.population.PopulationMOEA_D;
 import evolution.solution.Individual;
+import evolution.stats.StatsMOEA_D;
+import evolution.stats.StatsNSGA_II;
 import lombok.var;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -38,10 +40,16 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
     @Override
     public void run() {
 
+        StatsMOEA_D stats = new StatsMOEA_D("MOEA/D", popSize,
+                numberOfBars, maxNumberOfNotes, representationType,
+                chordProgression, melodyKey, crossoverType,
+                mutationType, selectionType, matingPoolSelectionType,
+                numberOfGenerations, criteria, folderName, numberOfNeighbours);
+
         System.out.println("Algorithm MOEA/D is working");
 
-        var stats = new EvaluationParameters("JoannaParameters");
-        stats.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
+        var params = new EvaluationParameters("JoannaParameters");
+        params.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
                         Representation.ChordProgression(melodyKey.getRight()))
                 .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION,
                         chordProgression)
@@ -53,7 +61,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         PopulationMOEA_D population = new PopulationMOEA_D(
                 popSize, representationType, criteria,
                 numberOfBars, maxNumberOfNotes,
-                chordProgression, melodyKey, stats
+                chordProgression, melodyKey, params
         );
 
         population.setExternalPopulation();
@@ -85,20 +93,28 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                                     offsprings.getRight(), representation));
                 }
                 offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
-                offspring.setFitness(this.criteria, stats);
+                offspring.setFitness(this.criteria, params);
                 population.updateReferencePointsZ(offspring);
                 population.updateNeighboursSolutions(p, offspring);
                 population.updateExternalPopulation(offspring);
             }
+            if (saveToJSON.getLeft() && (g % (numberOfGenerations / (numberOfGenerations * (1 - saveToJSON.getRight()))) == 0 || g == (numberOfGenerations - 1))) {
+//                System.out.println(g);
+                stats.updateStats(g, population.getExternalPopulation());
+            }
+        }
+
+        if (saveToJSON.getLeft()) {
+            stats.generateJSON(numberOfIteration);
         }
 
 
-        for (Individual individual : population.getExternalPopulation()) {
-            Pattern pattern = new Pattern();
-            pattern.setTempo(90);
-            pattern.add(individual.getGenome().getMelodyJFugue());
-            player.play(pattern);
-        }
+//        for (Individual individual : population.getExternalPopulation()) {
+//            Pattern pattern = new Pattern();
+//            pattern.setTempo(90);
+//            pattern.add(individual.getGenome().getMelodyJFugue());
+//            player.play(pattern);
+//        }
 
 
         System.out.println("MOEA/D ended his work! " + (numberOfIteration + 1));

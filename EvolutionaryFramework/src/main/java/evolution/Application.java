@@ -15,8 +15,8 @@ import java.util.List;
 
 public class Application {
 
-    private static final String ALGORITHM = "NSGA_II";
-    private static final int POP_SIZE = 10;
+    private static final String ALGORITHM = "MOEA/D";
+    private static final int POP_SIZE = 25;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
@@ -29,8 +29,8 @@ public class Application {
     private static final int NUMBER_OF_GENERATIONS = 10;
     private static final int NUMBER_OF_ITERATIONS = 3;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
-    private static final Pair<Boolean, Double> SAVE_TO_JSON = new ImmutablePair<>(true, 0.5);
-    private static final int NUMBER_OF_NEIGHBOURS = 10;
+    private static final Pair<Boolean, Double> SAVE_TO_JSON = new ImmutablePair<>(true, 0.8);
+    private static final int NUMBER_OF_NEIGHBOURS = 3;
 
     public static void main(String[] args) {
         runAlgorithm();
