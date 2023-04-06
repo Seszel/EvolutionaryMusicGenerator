@@ -44,7 +44,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 mutationType, selectionType, matingPoolSelectionType,
                 numberOfGenerations, criteria, folderName, numberOfNeighbours);
 
-        System.out.println("Algorithm MOEA/D is working");
+        System.out.println("Algorithm MOEA/D is working, iteration: " + (numberOfIteration + 1));
 
         var params = new EvaluationParameters("JoannaParameters");
         params.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
@@ -70,7 +70,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         population.setReferencePointsZ();
 
 
-        for (int g = 0; g < numberOfGenerations; g++) {
+        for (int g = 1; g <= numberOfGenerations; g++) {
             for (int p = 0; p < popSize; p++) {
 
                 Pair<Individual, Individual> parentsIndexes = MatingPoolSelection.randomFromNeighbourhood(numberOfNeighbours, population, p);
@@ -96,7 +96,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 population.updateNeighboursSolutions(p, offspring);
                 population.updateExternalPopulation(offspring);
             }
-            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == (numberOfGenerations - 1))) {
+            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == numberOfGenerations)) {
                 stats.updateStats(g, population.getExternalPopulation());
             }
         }
@@ -114,7 +114,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 //        }
 
 
-        System.out.println("MOEA/D ended his work! " + (numberOfIteration + 1));
+        System.out.println("MOEA/D ended his work, iteration: " + (numberOfIteration + 1));
     }
 
 

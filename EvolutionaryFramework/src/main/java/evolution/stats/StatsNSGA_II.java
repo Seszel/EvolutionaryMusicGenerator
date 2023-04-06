@@ -29,6 +29,7 @@ public class StatsNSGA_II extends Stats {
     public void updateStats(int generationNumber, List<Individual> population) {
         List<Individual> populationToJSON = new ArrayList<>();
         for (Individual i : population) {
+            if (i.getFrontRank() > 3){break;}
             Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getFrontRank());
             populationToJSON.add(newI);
         }
@@ -94,7 +95,7 @@ public class StatsNSGA_II extends Stats {
                     rank = individual.getFrontRank();
                     frontIndividuals = new JSONArray();
 
-                    if (i == popSize - 1) {
+                    if (i == generation.size() - 1) {
                         individualDetails = new JSONObject();
 
                         individualDetails.put("melody", individual.getGenome().getMelodyJFugue());
@@ -124,16 +125,16 @@ public class StatsNSGA_II extends Stats {
 
                 frontIndividuals.add(individualDetails);
 
-                if (i == popSize - 1) {
+                if (i == generation.size() - 1) {
                     frontsList.put("front_" + rank, frontIndividuals);
                 }
 
-                if (rank > 3){
-                    break;
-                }
+//                if (rank > 3){
+//                    break;
+//                }
 
             }
-            generationList.put("generation_" + (generationKey + 1), frontsList);
+            generationList.put("generation_" + generationKey, frontsList);
         }
 
         structure.put("experiment", generationList);

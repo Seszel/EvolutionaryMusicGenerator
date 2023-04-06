@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Application {
 
-    private static final String ALGORITHM = "MOEA/D";
+    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
@@ -28,9 +28,9 @@ public class Application {
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 1000;
-    private static final int NUMBER_OF_ITERATIONS = 6;
+    private static final int NUMBER_OF_ITERATIONS = 10;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, POP_SIZE);
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, NUMBER_OF_GENERATIONS);
     private static final int NUMBER_OF_NEIGHBOURS = 5;
 
     public static void main(String[] args) {
@@ -45,8 +45,9 @@ public class Application {
 
 
         switch (ALGORITHM) {
-            case "NSGA-II":
+            case "NSGA_II":
                 if (SAVE_TO_JSON.getLeft()){
+                    folderName = "NSGA_II/" + folderName;
                     Stats.createDirectory(folderName);
                 }
                 for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
@@ -72,8 +73,9 @@ public class Application {
                     t.start();
                 }
                 break;
-            case "MOEA/D":
+            case "MOEA_D":
                 if (SAVE_TO_JSON.getLeft()){
+                    folderName = "MOEA_D/" + folderName;
                     Stats.createDirectory(folderName);
                 }
                 for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {

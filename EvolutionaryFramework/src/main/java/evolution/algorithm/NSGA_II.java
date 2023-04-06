@@ -10,11 +10,9 @@ import evolution.stats.StatsNSGA_II;
 import evolution.util.Util;
 import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class NSGA_II extends AEvolutionaryAlgorithm {
@@ -41,7 +39,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                 mutationType, selectionType, matingPoolSelectionType,
                 numberOfGenerations, criteria, folderName);
 
-        System.out.println("Algorithm NSGA_II is working, iteration: " + (numberOfIteration+1));
+        System.out.println("Algorithm NSGA_II is working, iteration: " + (numberOfIteration + 1));
 
         var params = new EvaluationParameters("JoannaParameters");
         params.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
@@ -61,7 +59,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         population.generatePopulation(representation);
         population.generateFronts();
 
-        for (int n = 0; n < numberOfGenerations; n++) {
+        for (int g = 1; g <= numberOfGenerations; g++) {
 
             var matingPool = MatingPoolSelection.tournament(
                     10, popSize, population
@@ -89,8 +87,8 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                     new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
             );
 
-            if (saveToJSON.getLeft() && (n % saveToJSON.getRight() == 0 || n == (numberOfGenerations - 1))) {
-                stats.updateStats(n, population.getPopulation());
+            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == numberOfGenerations)) {
+                stats.updateStats(g, population.getPopulation());
             }
         }
 
