@@ -9,11 +9,14 @@ import evolution.solution.Individual;
 import evolution.stats.StatsNSGA_II;
 import evolution.util.Util;
 import lombok.var;
+import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class NSGA_II extends AEvolutionaryAlgorithm {
 
@@ -59,7 +62,10 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         population.generatePopulation(representation);
         population.generateFronts();
 
-        for (int g = 1; g <= numberOfGenerations; g++) {
+        List<Integer> generations = IntStream.rangeClosed(1, numberOfGenerations)
+                .boxed().collect(Collectors.toList());
+
+        for (Integer g : ProgressBar.wrap(generations, "Iteration: " + (numberOfIteration + 1))) {
 
             var matingPool = MatingPoolSelection.tournament(
                     10, popSize, population
