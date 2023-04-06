@@ -128,6 +128,10 @@ public class StatsNSGA_II extends Stats {
                     frontsList.put("front_" + rank, frontIndividuals);
                 }
 
+                if (rank > 3){
+                    break;
+                }
+
             }
             generationList.put("generation_" + (generationKey + 1), frontsList);
         }

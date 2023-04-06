@@ -10,11 +10,9 @@ import evolution.operator.Mutation;
 import evolution.population.PopulationMOEA_D;
 import evolution.solution.Individual;
 import evolution.stats.StatsMOEA_D;
-import evolution.stats.StatsNSGA_II;
 import lombok.var;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                   Pair<String, String> melodyKey, String crossoverType,
                   Pair<String, Double> mutationType, String selectionType,
                   String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
-                  List<String> criteria, Pair<Boolean, Double> saveToJSON, String folderName,
+                  List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName,
                   int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey, crossoverType, mutationType,
@@ -98,8 +96,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 population.updateNeighboursSolutions(p, offspring);
                 population.updateExternalPopulation(offspring);
             }
-            if (saveToJSON.getLeft() && (g % (numberOfGenerations / (numberOfGenerations * (1 - saveToJSON.getRight()))) == 0 || g == (numberOfGenerations - 1))) {
-//                System.out.println(g);
+            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == (numberOfGenerations - 1))) {
                 stats.updateStats(g, population.getExternalPopulation());
             }
         }
@@ -119,7 +116,6 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 
         System.out.println("MOEA/D ended his work! " + (numberOfIteration + 1));
     }
-
 
 
 }

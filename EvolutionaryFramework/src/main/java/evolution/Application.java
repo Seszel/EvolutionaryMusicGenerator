@@ -3,6 +3,7 @@ package evolution;
 import com.google.common.collect.ImmutableList;
 import evolution.algorithm.MOEA_D;
 import evolution.algorithm.NSGA_II;
+import evolution.population.Population;
 import evolution.stats.Stats;
 import evolution.util.Util;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Application {
 
     private static final String ALGORITHM = "MOEA/D";
-    private static final int POP_SIZE = 25;
+    private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
@@ -26,11 +27,11 @@ public class Application {
     private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.8);
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 10;
-    private static final int NUMBER_OF_ITERATIONS = 3;
+    private static final int NUMBER_OF_GENERATIONS = 1000;
+    private static final int NUMBER_OF_ITERATIONS = 6;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
-    private static final Pair<Boolean, Double> SAVE_TO_JSON = new ImmutablePair<>(true, 0.8);
-    private static final int NUMBER_OF_NEIGHBOURS = 3;
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, POP_SIZE);
+    private static final int NUMBER_OF_NEIGHBOURS = 5;
 
     public static void main(String[] args) {
         runAlgorithm();
@@ -44,7 +45,7 @@ public class Application {
 
 
         switch (ALGORITHM) {
-            case "NSGA_II":
+            case "NSGA-II":
                 if (SAVE_TO_JSON.getLeft()){
                     Stats.createDirectory(folderName);
                 }

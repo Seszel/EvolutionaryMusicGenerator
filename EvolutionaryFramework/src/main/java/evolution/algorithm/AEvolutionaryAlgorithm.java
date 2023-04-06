@@ -18,7 +18,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable{
     protected final int numberOfGenerations;
     protected final int numberOfIteration;
     protected final List<String> criteria;
-    protected final Pair<Boolean, Double> saveToJSON;
+    protected final Pair<Boolean, Integer> saveToJSON;
     protected final String folderName;
 
     protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes,
@@ -26,7 +26,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable{
                                      Pair<String, String> melodyKey, String crossoverType,
                                      Pair<String, Double> mutationType, String selectionType,
                                      String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
-                                     List<String> criteria, Pair<Boolean, Double> saveToJSON, String folderName) {
+                                     List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName) {
         this.popSize = popSize;
         this.numberOfBars = numberOfBars;
         this.maxNumberOfNotes = maxNumberOfNotes;

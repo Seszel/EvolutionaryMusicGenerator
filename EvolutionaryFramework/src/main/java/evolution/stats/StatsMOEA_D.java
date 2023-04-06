@@ -13,7 +13,7 @@ import java.util.List;
 public class StatsMOEA_D extends Stats {
 
     private final int numberOfNeighbours;
-    private HashMap<Integer, List<Individual>> externalPopulationForGeneration = new HashMap<>();
+    private final HashMap<Integer, List<Individual>> externalPopulationForGeneration = new HashMap<>();
 
     public StatsMOEA_D(String algorithmName, int popSize,
                        int numberOfBars, int maxNumberOfNotes,

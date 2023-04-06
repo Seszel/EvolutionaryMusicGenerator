@@ -24,7 +24,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                    Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType,
                    String selectionType, String matingPoolSelectionType,
                    int numberOfGenerations, int numberOfIteration, List<String> criteria,
-                   Pair<Boolean, Double> saveToJSON, String folderName) {
+                   Pair<Boolean, Integer> saveToJSON, String folderName) {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
@@ -89,7 +89,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                     new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
             );
 
-            if (saveToJSON.getLeft() && (n % (numberOfGenerations * (1 - saveToJSON.getRight())) == 0 || n == (numberOfGenerations - 1))) {
+            if (saveToJSON.getLeft() && (n % saveToJSON.getRight() == 0 || n == (numberOfGenerations - 1))) {
                 stats.updateStats(n, population.getPopulation());
             }
         }
