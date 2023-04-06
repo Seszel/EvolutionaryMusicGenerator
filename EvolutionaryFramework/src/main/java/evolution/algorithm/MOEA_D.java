@@ -96,7 +96,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 population.updateNeighboursSolutions(p, offspring);
                 population.updateExternalPopulation(offspring);
             }
-            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == numberOfGenerations)) {
+            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 1 || g == numberOfGenerations)) {
                 stats.updateStats(g, population.getExternalPopulation());
             }
         }

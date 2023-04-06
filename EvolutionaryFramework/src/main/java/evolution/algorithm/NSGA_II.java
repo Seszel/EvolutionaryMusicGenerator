@@ -87,7 +87,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                     new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
             );
 
-            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == numberOfGenerations)) {
+            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 1 || g == numberOfGenerations)) {
                 stats.updateStats(g, population.getPopulation());
             }
         }

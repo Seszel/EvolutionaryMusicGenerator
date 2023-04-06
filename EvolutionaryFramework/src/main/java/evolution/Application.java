@@ -16,7 +16,8 @@ import java.util.List;
 
 public class Application {
 
-    private static final String ALGORITHM = "MOEA_D";
+    private static final String ALGORITHM = "NSGA_II";
+//    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
