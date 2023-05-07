@@ -14,7 +14,9 @@ import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
+import org.jfugue.theory.ChordProgression;
 
 import java.util.Arrays;
 import java.util.List;
@@ -62,7 +64,6 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 .addParam(EvaluationParameters.ParamName.MELODY_KEY,
                         melodyKey);
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
-        Player player = new Player();
 
         PopulationMOEA_D population = new PopulationMOEA_D(
                 popSize, representationType, criteria,
@@ -116,15 +117,26 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         }
 
 
-//        for (Individual individual : population.getExternalPopulation()) {
-//            Pattern pattern = new Pattern();
-//            pattern.setTempo(90);
-//            pattern.add(individual.getGenome().getMelodyJFugue());
-//            player.play(pattern);
-//        }
+        for (Individual individual : population.getExternalPopulation()) {
+            Player player = new Player();
+
+            Pattern chords = new ChordProgression(chordProgression.toString())
+                    .setKey("C")
+                    .allChordsAs("$0w $1w $2w $3w")
+                    .getPattern()
+                    .setVoice(0)
+                    .setInstrument("Piano")
+                    .setTempo(90);
+
+            Pattern pattern = new Pattern("X[Volume]=13000" + individual.getGenome().getMelodyJFugue())
+                    .setTempo(90)
+                    .setInstrument("Piano")
+                    .setVoice(1);
+            player.play(chords, pattern);
+        }
 
 
-//        System.out.println("MOEA/D ended his work, iteration: " + (numberOfIteration + 1));
+        System.out.println("MOEA/D ended his work, iteration: " + (numberOfIteration + 1));
     }
 
 

@@ -11,7 +11,10 @@ import evolution.util.Util;
 import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
+import org.jfugue.theory.Chord;
+import org.jfugue.theory.ChordProgression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +60,6 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                 chordProgression, melodyKey, params
         );
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
-        Player player = new Player();
 
         population.generatePopulation(representation);
         population.generateFronts();
@@ -101,12 +103,24 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         if (saveToJSON.getLeft()) {
             stats.generateJSON(numberOfIteration);
         }
-//        for (Individual individual : population.getPopulation()) {
-//            Pattern pattern = new Pattern();
-//            pattern.setTempo(90);
-//            pattern.add(individual.getGenome().getMelodyJFugue());
-//            player.play(pattern);
-//        }
+        for (Individual individual : population.getPopulation()) {
+
+            Player player = new Player();
+
+            Pattern chords = new ChordProgression(chordProgression.toString())
+                    .setKey("C")
+                    .allChordsAs("$0w $1w $2w $3w")
+                    .getPattern()
+                    .setVoice(0)
+                    .setInstrument("Piano")
+                    .setTempo(90);
+
+            Pattern pattern = new Pattern("X[Volume]=13000" + individual.getGenome().getMelodyJFugue())
+                    .setTempo(90)
+                    .setInstrument("Piano")
+                    .setVoice(1);
+            player.play(chords, pattern);
+        }
 
         System.out.println("Nsga_II algorithm ended work, iteration: " + (numberOfIteration + 1));
     }

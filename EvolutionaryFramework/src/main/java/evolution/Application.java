@@ -23,16 +23,16 @@ public class Application {
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
-    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("A", "MAJOR");
+    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
     private static final String CROSSOVER_TYPE = "ONE_POINT_CROSSOVER";
-    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.8);
+    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.5);
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 1000;
-    private static final int NUMBER_OF_ITERATIONS = 15;
+    private static final int NUMBER_OF_ITERATIONS = 1;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, NUMBER_OF_GENERATIONS);
-    private static final int NUMBER_OF_NEIGHBOURS = 20;
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, NUMBER_OF_GENERATIONS/10);
+    private static final int NUMBER_OF_NEIGHBOURS = 25;
 
     public static void main(String[] args) {
         runAlgorithm();
