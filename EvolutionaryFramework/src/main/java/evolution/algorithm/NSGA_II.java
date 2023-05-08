@@ -61,6 +61,10 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         population.generatePopulation(representation);
         population.generateFronts();
 
+        if (saveToJSON.getLeft()) {
+            stats.updateStats(0, population.getPopulation());
+        }
+
         List<Integer> generations = IntStream.rangeClosed(1, numberOfGenerations)
                 .boxed().collect(Collectors.toList());
 
