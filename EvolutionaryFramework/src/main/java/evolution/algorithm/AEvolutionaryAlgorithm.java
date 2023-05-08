@@ -20,13 +20,14 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
     protected final List<String> criteria;
     protected final Pair<Boolean, Integer> saveToJSON;
     protected final String folderName;
+    protected final boolean play;
 
     protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes,
                                      String representationType, List<String> chordProgression,
                                      Pair<String, String> melodyKey, String crossoverType,
                                      Pair<String, Double> mutationType, String selectionType,
                                      String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
-                                     List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName) {
+                                     List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
         this.popSize = popSize;
         this.numberOfBars = numberOfBars;
         this.maxNumberOfNotes = maxNumberOfNotes;
@@ -42,6 +43,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
         this.criteria = criteria;
         this.saveToJSON = saveToJSON;
         this.folderName = folderName;
+        this.play = play;
     }
 
     public abstract void run();

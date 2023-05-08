@@ -16,8 +16,8 @@ import java.util.List;
 
 public class Application {
 
-//    private static final String ALGORITHM = "NSGA_II";
-    private static final String ALGORITHM = "MOEA_D";
+    private static final String ALGORITHM = "NSGA_II";
+//    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
@@ -32,7 +32,8 @@ public class Application {
     private static final int NUMBER_OF_ITERATIONS = 1;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, NUMBER_OF_GENERATIONS/10);
-    private static final int NUMBER_OF_NEIGHBOURS = 25;
+    private static final int NUMBER_OF_NEIGHBOURS = 15;
+    private static final boolean PLAY = true;
 
     public static void main(String[] args) {
         runAlgorithm();
@@ -67,7 +68,8 @@ public class Application {
                             i,
                             CRITERIA,
                             SAVE_TO_JSON,
-                            folderName
+                            folderName,
+                            PLAY
                     );
                     Thread t = new Thread(algorithm_NSGA_II);
                     t.start();
@@ -95,6 +97,7 @@ public class Application {
                             CRITERIA,
                             SAVE_TO_JSON,
                             folderName,
+                            PLAY,
                             NUMBER_OF_NEIGHBOURS
                     );
                     Thread t = new Thread(algorithm_MOEA_D);

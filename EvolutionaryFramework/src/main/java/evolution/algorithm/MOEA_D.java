@@ -2,6 +2,7 @@ package evolution.algorithm;
 
 import com.google.common.collect.ImmutableList;
 import evolution.music.Genome;
+import evolution.music.PlayResultMelodies;
 import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
 import evolution.operator.Crossover;
@@ -14,19 +15,11 @@ import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jfugue.pattern.Pattern;
-import org.jfugue.player.Player;
-import org.jfugue.theory.ChordProgression;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MOEA_D extends AEvolutionaryAlgorithm {
     private final int numberOfNeighbours;
@@ -36,11 +29,11 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                   Pair<String, String> melodyKey, String crossoverType,
                   Pair<String, Double> mutationType, String selectionType,
                   String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
-                  List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName,
+                  List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName, boolean play,
                   int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey, crossoverType, mutationType,
-                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName);
+                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName, play);
 
         this.numberOfNeighbours = numberOfNeighbours;
     }
@@ -116,25 +109,9 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
             stats.generateJSON(numberOfIteration);
         }
 
-
-        for (Individual individual : population.getExternalPopulation()) {
-            Player player = new Player();
-
-            Pattern chords = new ChordProgression(chordProgression.toString())
-                    .setKey("C")
-                    .allChordsAs("$0w $1w $2w $3w")
-                    .getPattern()
-                    .setVoice(0)
-                    .setInstrument("Piano")
-                    .setTempo(90);
-
-            Pattern pattern = new Pattern("X[Volume]=13000" + individual.getGenome().getMelodyJFugue())
-                    .setTempo(90)
-                    .setInstrument("Piano")
-                    .setVoice(1);
-            player.play(chords, pattern);
+        if (play){
+            PlayResultMelodies.playMelodies(population.getExternalPopulation(), melodyKey, chordProgression);
         }
-
 
         System.out.println("MOEA/D ended his work, iteration: " + (numberOfIteration + 1));
     }

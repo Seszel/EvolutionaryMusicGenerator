@@ -1,6 +1,7 @@
 package evolution.algorithm;
 
 import com.google.common.collect.ImmutableList;
+import evolution.music.PlayResultMelodies;
 import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
 import evolution.operator.MatingPoolSelection;
@@ -11,10 +12,6 @@ import evolution.util.Util;
 import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jfugue.pattern.Pattern;
-import org.jfugue.player.Player;
-import org.jfugue.theory.Chord;
-import org.jfugue.theory.ChordProgression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +25,12 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                    Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType,
                    String selectionType, String matingPoolSelectionType,
                    int numberOfGenerations, int numberOfIteration, List<String> criteria,
-                   Pair<Boolean, Integer> saveToJSON, String folderName) {
+                   Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
                 crossoverType, mutationType, selectionType,
-                matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName);
+                matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName, play);
     }
 
     @Override
@@ -103,23 +100,9 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         if (saveToJSON.getLeft()) {
             stats.generateJSON(numberOfIteration);
         }
-        for (Individual individual : population.getPopulation()) {
 
-            Player player = new Player();
-
-            Pattern chords = new ChordProgression(chordProgression.toString())
-                    .setKey("C")
-                    .allChordsAs("$0w $1w $2w $3w")
-                    .getPattern()
-                    .setVoice(0)
-                    .setInstrument("Piano")
-                    .setTempo(90);
-
-            Pattern pattern = new Pattern("X[Volume]=13000" + individual.getGenome().getMelodyJFugue())
-                    .setTempo(90)
-                    .setInstrument("Piano")
-                    .setVoice(1);
-            player.play(chords, pattern);
+        if (play){
+            PlayResultMelodies.playMelodies(population.getPopulation(), melodyKey, chordProgression);
         }
 
         System.out.println("Nsga_II algorithm ended work, iteration: " + (numberOfIteration + 1));
