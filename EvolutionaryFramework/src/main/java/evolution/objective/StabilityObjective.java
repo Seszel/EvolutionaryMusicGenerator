@@ -151,38 +151,6 @@ public class StabilityObjective extends Objective{
             }
         }
 
-
-
-//        for (List<Integer> bar: durations){
-//            for (int noteDuration : bar){
-//                fitness += Math.pow(2,noteDuration)*2;
-//            }
-//        }
-
-
-
-//        for (List<Integer> bar: durations){
-//            for (int noteDuration : bar){
-//                fitness += (noteDuration - 1 )*5;
-//                if (noteDuration == 1){
-//                    fitness -= 15;
-//                }
-//            }
-//        }
-
-//        List<Integer> rhythmArray = Util.flattenListOfListsStream(melody);
-//        int countZeros = 0;
-//        for (Integer integer : rhythmArray) {
-//            if (integer != 0) {
-//                countZeros = 0;
-//                fitness -= 30;
-//            } else {
-//                countZeros += 1;
-//            }
-//        }
-
-//        fitness /= rhythmArray.size();
-
         return fitness;
 
     }
