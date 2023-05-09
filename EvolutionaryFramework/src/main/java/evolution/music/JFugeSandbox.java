@@ -14,23 +14,33 @@ import java.io.IOException;
 public class JFugeSandbox {
 
     public static void main(String[] args) {
+
+
         Player player = new Player();
-//        Pattern melody = new Pattern("0/0.1875 74/0.125 69/0.1875 69/0.125 69/0.1875 69/0.0625 59/0.0625 71/0.0625 59/0.0625 71/0.25 64/0.125 71/0.0625 " +
-//                "71/0.125 68/0.125 80/0.125 80/0.0625 80/0.0625 73/0.0625 73/0.375 " +
-//                "66/0.0625 73/0.0625 66/0.0625 66/0.0625 78/0.1875 78/0.0625 76/0.0625 69/0.1875 74/0.3125 74/0.375 66/0.0625 54/0.0625 ");
-//        melody.setTempo(90);
-//        player.play(melody);
 
-        Pattern introRhythm = new Pattern("T180 V9 [CLOSED_HI_HAT]x Rx [MARACAS]x Rss [CLOSED_HI_HAT]x [MARACAS]x Rtt [CLOSED_HI_HAT]x [MARACAS]x Rss [CLOSED_HI_HAT]x [MARACAS]x Rtt [ELECTRIC_SNARE]x [CLOSED_HI_HAT]x [MARACAS]x Rss [CLOSED_HI_HAT]x [MARACAS]x Rtt [CLOSED_HI_HAT]x [MARACAS]x Rss [CLOSED_HI_HAT]x [MARACAS]x Rtt");
+        StringBuilder durationOfChords = new StringBuilder();
+        for (int i=0; i<4; i++){
+            durationOfChords.append("$").append(i).append("w ");
+        }
 
-        Pattern mainChords = new Pattern("T180 V0 D4Min9hqit Ri G3Maj13hqi Ri C4Maj9wh Rh");
-        mainChords.add("D4Minhqit Ri G4Majhqi Ri C4Majwh Rht");
+        Pattern chords = new ChordProgression("I V vi IV")
+                .setKey("C")
+                .allChordsAs(durationOfChords.toString())
+                .getPattern()
+                .setVoice(0)
+                .setInstrument("Piano")
+                .setTempo(90);
 
-        Pattern pianoTouch = new Pattern("T180 V1 Rw | Rw | Rhi | G4qi G3s A3is CMajis ri");
-        pianoTouch.add("Rw | Rw | Rhi | G4s C5wa100d0");
-        Pattern introOnce = new Pattern(mainChords, pianoTouch);
+        Pattern melody = new Pattern("X[Volume]=13000"
+        + "60/0.0625 60/0.0625 67/0.0625 67/0.0625 67/0.1875 67/0.0625 67/0.0625 62/0.0625 67/0.0625 62/0.0625 55/0.0625 55/0.0625 64/0.0625 69/0.0625 71/0.0625 71/0.0625 71/0.1875 71/0.0625 71/0.0625 71/0.125 71/0.125 62/0.0625 62/0.0625 50/0.0625 62/0.0625 67/0.0625 64/0.0625 64/0.1875 64/0.0625 64/0.0625 69/0.0625 64/0.0625 64/0.0625 64/0.0625 64/0.125 64/0.125 64/0.0625 66/0.0625 65/0.1875 60/0.0625 60/0.1875 48/0.0625 60/0.0625 60/0.0625 67/0.0625 69/0.0625 64/0.0625 64/0.0625 55/0.0625 58/0.0625 "
+        )
+                .setTempo(90)
+                .setInstrument("Piano")
+                .setVoice(1);
+        player.play(chords, melody);
 
-        player.play(introOnce, introRhythm.repeat(8));
+
+
 //        try {
 //            File filePath = new File("sandboxMidi.mid");
 //            MidiFileManager.savePatternToMidi(melody, filePath);

@@ -31,26 +31,36 @@ public class TensionObjective extends Objective{
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
         //CHORD NOTES
-        int count = 1;
+        int count = 0;
         int lastNoteValue = 0;
         int noteValue;
+        int toFitness = 0;
         for (int i = 0; i < melody.size(); i++) {
             for (int j = 0; j < melody.get(i).size(); j++) {
                 noteValue = melody.get(i).get(j);
                 if (noteValue != 0 && noteValue != -1) {
+                    if (count != 0){
+                        fitness += toFitness*((double)count/melody.get(i).size());
+                        toFitness = 0;
+                    }
                     if (chProgPattern.get(0).get(chProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
-                        fitness -= 5;
+//                        fitness -= 5;
+                        toFitness -= 5;
                         if (lastNoteValue != 0) {
                             if (Math.abs(noteValue - lastNoteValue) <= 2) {
-                                fitness += 30;
+//                                fitness += 30;
+                                toFitness += 30;
                             }
                         }
                     } else if (chProgPattern.get(1).get(chProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
-                        fitness += 20;
+//                        fitness += 20;
+                        toFitness += 20;
                     } else if (chProgPattern.get(2).get(chProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
-                        fitness += 5;
+//                        fitness += 5;
+                        toFitness += 5;
                     } else {
-                        fitness -= 10;
+//                        fitness -= 10;
+                        toFitness -= 10;
                     }
                     count = 1;
                     lastNoteValue = noteValue;
@@ -87,8 +97,12 @@ public class TensionObjective extends Objective{
 //            }
 //            durations.add(barDurations);
 //        }
-
-//        fitness /= Util.flattenListOfListsStream(durations).size();
+//
+//        var durationFlattened = Util.flattenListOfListsStream(durations);
+//
+//        for (int noteLength : durationFlattened){
+//            fitness += noteLength/16.0*100;
+//        }
 
         // MOTION
         List<Integer> melodyArray = Util.flattenListOfListsStream(melody);

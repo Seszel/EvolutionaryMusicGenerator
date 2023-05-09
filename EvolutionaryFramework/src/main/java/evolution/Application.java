@@ -15,22 +15,22 @@ public class Application {
 
 //    private static final String ALGORITHM = "NSGA_II";
     private static final String ALGORITHM = "MOEA_D";
-    private static final int POP_SIZE = 1000;
+    private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
     private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
     private static final String CROSSOVER_TYPE = "ONE_POINT_CROSSOVER";
-    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.5);
+    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.8);
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 100;
+    private static final int NUMBER_OF_GENERATIONS = 10000;
     private static final int NUMBER_OF_ITERATIONS = 1;
     private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, NUMBER_OF_GENERATIONS/10);
-    private static final int NUMBER_OF_NEIGHBOURS = 50;
-    private static final boolean PLAY = true;
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, NUMBER_OF_GENERATIONS/100);
+    private static final int NUMBER_OF_NEIGHBOURS = 25;
+    private static final boolean PLAY = false;
 
     public static void main(String[] args) {
         runAlgorithm();

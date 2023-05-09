@@ -32,27 +32,38 @@ public class StabilityObjective extends Objective{
                 .get(EvaluationParameters.ParamName.MELODY_KEY);
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
+
         //CHORD NOTES
-        int count = 1;
+        int count = 0;
         int lastNoteValue = 0;
         int noteValue;
+        int toFitness = 0;
         for (int i = 0; i < melody.size(); i++) {
             for (int j = 0; j < melody.get(i).size(); j++) {
                 noteValue = melody.get(i).get(j);
                 if (noteValue != 0 && noteValue != -1) {
+                    if (count != 0){
+                        fitness += toFitness*((double)count/melody.get(i).size());
+                        toFitness = 0;
+                    }
                     if (chrProgPattern.get(0).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
-                        fitness += 30;
+//                        fitness += 30;
+                        toFitness += 30;
                         if (lastNoteValue != 0) {
                             if (Math.abs(noteValue - lastNoteValue) <= 2) {
-                                fitness += 10;
+//                                fitness += 10;
+                                toFitness += 10;
                             }
                         }
                     } else if (chrProgPattern.get(1).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
-                        fitness -= 10;
+//                        fitness -= 10;
+                        toFitness -= 10;
                     } else if (chrProgPattern.get(2).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) {
-                        fitness -= 20;
+//                        fitness -= 20;
+                        toFitness -= 20;
                     } else {
-                        fitness -= 30;
+//                        fitness -= 30;
+                        toFitness -= 30;
                     }
                     count = 1;
                     lastNoteValue = noteValue;
@@ -63,8 +74,8 @@ public class StabilityObjective extends Objective{
                 }
             }
         }
-
-        // RHYTHM
+//
+////         RHYTHM
 //        List<List<Integer>> durations = new ArrayList<>();
 //        int lengthOfNote = 1;
 //        int lastNote = 1000;
@@ -89,7 +100,12 @@ public class StabilityObjective extends Objective{
 //            durations.add(barDurations);
 //        }
 //
-//        fitness /= Util.flattenListOfListsStream(durations).size();
+//        var durationFlattened = Util.flattenListOfListsStream(durations);
+//
+//        for (int noteLength : durationFlattened){
+//            fitness += noteLength/16.0*100;
+//        }
+//
 
 
         // MOTION
