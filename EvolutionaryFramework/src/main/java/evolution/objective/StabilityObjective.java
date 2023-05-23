@@ -74,31 +74,41 @@ public class StabilityObjective extends Objective{
                 }
             }
         }
+
+//         RHYTHM
+        List<List<Integer>> durations = new ArrayList<>();
+        int lengthOfNote = 1;
+        int lastNote = 1000;
+        for (int i = 0; i < melody.size(); i++) {
+            List<Integer> barDurations = new ArrayList<>();
+            for (int j = 0; j < melody.get(i).size(); j++) {
+                noteValue = melody.get(i).get(j);
+                if (noteValue == 0){
+                    lengthOfNote += 1;
+                }
+                if (noteValue != 0){
+                    if (lengthOfNote != 0) {
+                        barDurations.add(lengthOfNote);
+                        lengthOfNote = 1;
+                        lastNote = noteValue;
+                    } else if (lastNote != 1000){
+                        barDurations.add(1);
+                        lastNote = noteValue;
+                    }
+                }
+            }
+            durations.add(barDurations);
+        }
+
+//        int rhythmCount = 0;
+//        for (int i=0; i<durations.size(); i++){
+//            for (int j=1; j< durations.size(); j++){
+//                for (int k=0; j<durations.get(i).size(); k++) {
 //
-////         RHYTHM
-//        List<List<Integer>> durations = new ArrayList<>();
-//        int lengthOfNote = 1;
-//        int lastNote = 1000;
-//        for (int i = 0; i < melody.size(); i++) {
-//            List<Integer> barDurations = new ArrayList<>();
-//            for (int j = 0; j < melody.get(i).size(); j++) {
-//                noteValue = melody.get(i).get(j);
-//                if (noteValue == 0){
-//                    lengthOfNote += 1;
-//                }
-//                if (noteValue != 0){
-//                    if (lengthOfNote != 0) {
-//                        barDurations.add(lengthOfNote);
-//                        lengthOfNote = 1;
-//                        lastNote = noteValue;
-//                    } else if (lastNote != 1000){
-//                        barDurations.add(1);
-//                        lastNote = noteValue;
-//                    }
 //                }
 //            }
-//            durations.add(barDurations);
 //        }
+
 //
 //        var durationFlattened = Util.flattenListOfListsStream(durations);
 //

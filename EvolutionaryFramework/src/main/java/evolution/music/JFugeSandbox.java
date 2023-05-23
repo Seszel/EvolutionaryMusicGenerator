@@ -32,21 +32,23 @@ public class JFugeSandbox {
                 .setTempo(90);
 
         Pattern melody = new Pattern("X[Volume]=13000"
-        + "60/0.0625 60/0.0625 67/0.0625 67/0.0625 67/0.1875 67/0.0625 67/0.0625 62/0.0625 67/0.0625 62/0.0625 55/0.0625 55/0.0625 64/0.0625 69/0.0625 71/0.0625 71/0.0625 71/0.1875 71/0.0625 71/0.0625 71/0.125 71/0.125 62/0.0625 62/0.0625 50/0.0625 62/0.0625 67/0.0625 64/0.0625 64/0.1875 64/0.0625 64/0.0625 69/0.0625 64/0.0625 64/0.0625 64/0.0625 64/0.125 64/0.125 64/0.0625 66/0.0625 65/0.1875 60/0.0625 60/0.1875 48/0.0625 60/0.0625 60/0.0625 67/0.0625 69/0.0625 64/0.0625 64/0.0625 55/0.0625 58/0.0625 "
+        + "51/0.875 78/0.0625 54/0.0625 61/0.875 50/0.0625 82/0.0625 52/0.6875 67/0.1875 51/0.0625 68/0.0625 81/0.125 63/0.3125 78/0.375 50/0.0625 73/0.0625 53/0.0625 "
         )
                 .setTempo(90)
                 .setInstrument("Piano")
                 .setVoice(1);
-        player.play(chords, melody);
+
+        Pattern music = new Pattern(chords, melody);
+        player.play(music);
 
 
 
-//        try {
-//            File filePath = new File("sandboxMidi.mid");
-//            MidiFileManager.savePatternToMidi(melody, filePath);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            File filePath = new File("random.mid");
+            MidiFileManager.savePatternToMidi(music, filePath);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
     }
 

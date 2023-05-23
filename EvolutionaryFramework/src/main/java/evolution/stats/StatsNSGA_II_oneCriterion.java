@@ -10,30 +10,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StatsMOEA_D extends Stats {
+public class StatsNSGA_II_oneCriterion extends Stats {
 
-    private final int numberOfNeighbours;
-    private final HashMap<Integer, List<Individual>> externalPopulationForGeneration = new HashMap<>();
+    private final HashMap<Integer, List<Individual>> populationForGeneration;
 
-    public StatsMOEA_D(String algorithmName, int popSize,
-                       int numberOfBars, int maxNumberOfNotes,
-                       String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
-                       String crossoverType, Pair<String, Double> mutationType, String selectionType, String matingPoolSelectionType,
-                       int numberOfGenerations, List<String> criteria, String folderName,
-                       int numberOfNeighbours) {
-        super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey, crossoverType, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
-        this.numberOfNeighbours = numberOfNeighbours;
+    public StatsNSGA_II_oneCriterion(String algorithmName, int popSize,
+                                     int numberOfBars, int maxNumberOfNotes, String representationType,
+                                     List<String> chordProgression, Pair<String, String> melodyKey,
+                                     String crossoverType, Pair<String, Double> mutationType, String selectionType, String matingPoolSelectionType,
+                                     int numberOfGenerations, List<String> criteria, String folderName) {
+        super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey,
+                crossoverType, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
+        this.populationForGeneration = new HashMap<>();
     }
 
-
     @Override
-    public void updateStats(int generationNumber, List<Individual> externalPopulation) {
+    public void updateStats(int generationNumber, List<Individual> population) {
         List<Individual> populationToJSON = new ArrayList<>();
-        for (Individual i : externalPopulation) {
+        for (Individual i : population) {
             Individual newI = new Individual(i.getGenome(), i.getFitness());
             populationToJSON.add(newI);
         }
-        externalPopulationForGeneration.put(generationNumber, populationToJSON);
+        populationForGeneration.put(generationNumber, populationToJSON);
     }
 
     @SuppressWarnings("unchecked")
@@ -58,21 +56,23 @@ public class StatsMOEA_D extends Stats {
         metaParameters.put("selectionType", selectionType);
         metaParameters.put("matingPoolSelectionType", matingPoolSelectionType);
         metaParameters.put("numberOfGenerations", numberOfGenerations);
-        metaParameters.put("numberOfNeighbours", numberOfNeighbours);
         metaParameters.put("criteria", criteria);
 
         structure.put("metaParameters", metaParameters);
 
         JSONObject generationList = new JSONObject();
-        JSONArray externalPopulationIndividuals;
+        JSONArray populationIndividuals;
         JSONObject individualDetails;
         JSONObject fitnessDetails;
+        JSONObject generationObject;
 
         HashMap<String, Double> fitness;
 
-        for (Integer generationKey : externalPopulationForGeneration.keySet()){
-            externalPopulationIndividuals = new JSONArray();
-            for (Individual individual : externalPopulationForGeneration.get(generationKey)){
+        for (Integer generationKey : populationForGeneration.keySet()) {
+            populationIndividuals = new JSONArray();
+            generationObject = new JSONObject();
+            int i = 0;
+            for (Individual individual : populationForGeneration.get(generationKey)) {
                 individualDetails = new JSONObject();
 
                 individualDetails.put("melody", individual.getGenome().getMelodyJFugue());
@@ -82,16 +82,21 @@ public class StatsMOEA_D extends Stats {
                     fitnessDetails.put(criterion, fitness.get(criterion));
                 }
                 individualDetails.put("fitness", fitnessDetails);
+                if (i == 0) {
+                    generationObject.put("bestIndividual", individualDetails);
+                }
+                populationIndividuals.add(individualDetails);
+                i++;
 
-                externalPopulationIndividuals.add(individualDetails);
             }
-            generationList.put("generation_" + generationKey, externalPopulationIndividuals);
+            generationObject.put("population", populationIndividuals);
+            generationList.put("generation_" + generationKey, generationObject);
+
         }
+
 
         structure.put("experiment", generationList);
 
         writeJSONToFile(structure, numberOfIteration, folderName);
-
     }
-
 }

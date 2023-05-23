@@ -6,21 +6,22 @@ import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
 import evolution.operator.MatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
-import evolution.solution.Individual;
 import evolution.stats.StatsNSGA_II;
-import evolution.util.Util;
+import evolution.stats.StatsNSGA_II_oneCriterion;
 import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class NSGA_II extends AEvolutionaryAlgorithm {
+public class NSGA_II_oneCriterion extends AEvolutionaryAlgorithm {
 
-    public NSGA_II(int popSize, int numberOfBars, int maxNumberOfNotes,
+
+    public NSGA_II_oneCriterion(int popSize, int numberOfBars, int maxNumberOfNotes,
                    String representationType, List<String> chordProgression,
                    Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType,
                    String selectionType, String matingPoolSelectionType,
@@ -36,13 +37,13 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
     @Override
     public void run() {
 
-        StatsNSGA_II stats = new StatsNSGA_II("NSGA-II", popSize,
+        StatsNSGA_II_oneCriterion stats = new StatsNSGA_II_oneCriterion("NSGA-II one criterion", popSize,
                 numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey, crossoverType,
                 mutationType, selectionType, matingPoolSelectionType,
                 numberOfGenerations, criteria, folderName);
 
-        System.out.println("Algorithm NSGA_II is working, iteration: " + (numberOfIteration + 1));
+        System.out.println("Algorithm NSGA_II for " + criteria.get(0) + " criterion is working, iteration: " + (numberOfIteration + 1));
 
         var params = new EvaluationParameters("JoannaParameters");
         params.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
@@ -51,6 +52,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                         chordProgression)
                 .addParam(EvaluationParameters.ParamName.MELODY_KEY,
                         melodyKey);
+
         PopulationNSGA_II population = new PopulationNSGA_II(
                 popSize, representationType, criteria,
                 numberOfBars, maxNumberOfNotes,
@@ -59,11 +61,6 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
 
         population.generatePopulation(representation);
-        population.generateFronts();
-
-//        if (saveToJSON.getLeft()) {
-//            stats.updateStats(0, population.getPopulation());
-//        }
 
         List<Integer> generations = IntStream.rangeClosed(1, numberOfGenerations)
                 .boxed().collect(Collectors.toList());
@@ -71,34 +68,22 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         for (Integer g : ProgressBar.wrap(generations, "Iteration: " + (numberOfIteration + 1))) {
 
             var matingPool = MatingPoolSelection.tournament(
-                    10, popSize, population
+                    50, popSize, population
             );
             population.createOffsprings(matingPool, representation, getCrossoverType(), getMutationType());
 
             population.changePopulation();
 
-            population.generateFronts();
+            population.getPopulation().sort(Comparator.comparing(o -> o.getFitnessByName(criteria.get(0)), Comparator.reverseOrder()));
 
-            List<List<Individual>> newPopulation = new ArrayList<>();
-            int newPopulationSize = 0;
-
-            for (List<Individual> front : population.getFronts()) {
-                population.crowdingDistanceAssignment(front);
-                newPopulation.add(front);
-                if ((front.size() + newPopulationSize) > popSize) {
-                    break;
-                }
-                newPopulationSize += front.size();
-            }
-
-            population.crowdedComparisonOperator(newPopulation);
             population.setPopulation(
-                    new ArrayList<>(Util.flattenListOfListsStream(newPopulation).subList(0, popSize))
+                    new ArrayList<>(population.getPopulation().subList(0, popSize))
             );
 
             if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 1 || g == numberOfGenerations)) {
                 stats.updateStats(g, population.getPopulation());
             }
+
         }
 
         if (saveToJSON.getLeft()) {
@@ -106,10 +91,12 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         }
 
         if (play){
-            PlayResultMelodies.playMelodies(population.getPopulation(), melodyKey, chordProgression);
+            PlayResultMelodies.playMelodies(population.getPopulation().subList(0,1), melodyKey, chordProgression);
         }
 
-        System.out.println("Nsga_II algorithm ended work, iteration: " + (numberOfIteration + 1));
+        System.out.println("Nsga_II algorithm for one criterion ended work, iteration: " + (numberOfIteration + 1));
+
+
     }
 
 }
