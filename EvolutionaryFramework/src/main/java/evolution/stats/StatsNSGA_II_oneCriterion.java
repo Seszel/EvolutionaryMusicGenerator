@@ -89,7 +89,7 @@ public class StatsNSGA_II_oneCriterion extends Stats {
                 i++;
 
             }
-            generationObject.put("population", populationIndividuals);
+//            generationObject.put("population", populationIndividuals);
             generationList.put("generation_" + generationKey, generationObject);
 
         }

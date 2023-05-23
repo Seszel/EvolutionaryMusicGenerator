@@ -6,7 +6,6 @@ import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
 import evolution.operator.MatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
-import evolution.stats.StatsNSGA_II;
 import evolution.stats.StatsNSGA_II_oneCriterion;
 import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
@@ -67,14 +66,16 @@ public class NSGA_II_oneCriterion extends AEvolutionaryAlgorithm {
 
         for (Integer g : ProgressBar.wrap(generations, "Iteration: " + (numberOfIteration + 1))) {
 
-            var matingPool = MatingPoolSelection.tournament(
-                    50, popSize, population
+            var matingPool = MatingPoolSelection.tournament((int)(0.5*popSize), popSize, population
             );
             population.createOffsprings(matingPool, representation, getCrossoverType(), getMutationType());
 
             population.changePopulation();
 
+            // max
             population.getPopulation().sort(Comparator.comparing(o -> o.getFitnessByName(criteria.get(0)), Comparator.reverseOrder()));
+            //min
+//            population.getPopulation().sort(Comparator.comparing(o -> o.getFitnessByName(criteria.get(0))));
 
             population.setPopulation(
                     new ArrayList<>(population.getPopulation().subList(0, popSize))

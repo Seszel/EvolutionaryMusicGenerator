@@ -158,9 +158,9 @@ public class TensionObjective extends Objective{
         List<Integer> perfectIntervals = List.of(0,12, 5, 7);
         for (int i = 1; i < melodyArray.size(); i++) {
             if (perfectIntervals.contains(Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)))) {
-                fitness -= 5;
+                fitness -= 5.0/melodyArray.size();
             } else if (Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)) > 12) {
-                fitness -= 20;
+                fitness -= 20.0/melodyArray.size();
             }
         }
 
