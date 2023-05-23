@@ -1,12 +1,15 @@
 package evolution.solution;
 
+import com.google.common.collect.ImmutableList;
 import evolution.objective.EvaluationParameters;
 import evolution.objective.Evaluator;
 import evolution.music.Genome;
+import evolution.util.Util;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Individual {
     final private Genome genome;
@@ -93,4 +96,16 @@ public class Individual {
         return crowdingDistance;
     }
 
+    public void repairIndividual(ImmutableList<Integer> representation) {
+        Random randomObj = new Random();
+        for (List<Integer> bar : genome.getMelody()) {
+            if (bar.get(0) == 0) {
+                if (randomObj.nextDouble() <= 0.1) {
+                    bar.set(0, -1);
+                } else {
+                    bar.set(0, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
+                }
+            }
+        }
+    }
 }

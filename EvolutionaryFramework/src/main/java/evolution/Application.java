@@ -29,8 +29,8 @@ public class Application {
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 500;
     private static final int NUMBER_OF_ITERATIONS = 1;
-    private static final List<String> CRITERIA = List.of("STABILITY");
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
+    private static final List<String> CRITERIA = List.of("TENSION");
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
     private static final boolean PLAY = true;
 

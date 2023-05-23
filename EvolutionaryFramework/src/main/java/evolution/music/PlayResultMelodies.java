@@ -13,6 +13,10 @@ public class PlayResultMelodies {
         for (Individual individual : population) {
             Player player = new Player();
 
+            System.out.println(individual.getGenome().getMelodyJFugue());
+            System.out.println(individual.getFitnessByName("TENSION"));
+//            System.out.println(individual.getFitnessByName("STABILITY"));
+
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){
                 durationOfChords.append("$").append(i).append("w ");

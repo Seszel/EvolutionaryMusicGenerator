@@ -5,6 +5,7 @@ import evolution.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Genome {
     private List<List<Integer>> melody;
@@ -52,6 +53,7 @@ public class Genome {
 
         List<List<Integer>> melody = new ArrayList<>();
         int representationSize = representation.size();
+        Random randomObj = new Random();
 
         if ("f1".equals(representationType)) {
             int notesLeftForBar;
@@ -60,7 +62,11 @@ public class Genome {
                 notesLeftForBar = maxNumberOfNotes;
                 List<Integer> tempBar = new ArrayList<>();
                 while (notesLeftForBar > 0) {
-                    tempBar.add(representation.get(Util.getRandomNumber(0, representationSize)));
+                    if (randomObj.nextDouble() <= 0.1){
+                        tempBar.add(-1);
+                    } else {
+                        tempBar.add(representation.get(Util.getRandomNumber(0, representationSize)));
+                    }
                     notesLeftForBar -= 1;
                     numberOfNotes = Util.getRandomNumber(0, notesLeftForBar);
                     if (numberOfNotes != 0) {

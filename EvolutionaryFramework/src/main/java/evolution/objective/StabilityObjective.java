@@ -169,7 +169,6 @@ public class StabilityObjective extends Objective{
 
         //INTERVAL
         List<Integer> perfectIntervals = List.of(0, 12, 5, 7);
-        int fitnessInterval = 0;
         for (int i = 1; i < melodyArray.size(); i++) {
             if (perfectIntervals.contains(Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)))) {
                 fitness += 10.0/melodyArray.size();

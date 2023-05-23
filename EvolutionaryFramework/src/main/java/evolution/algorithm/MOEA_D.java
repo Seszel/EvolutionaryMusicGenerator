@@ -98,6 +98,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                             Mutation.mutation(getMutationType(),
                                     offsprings.getRight(), representation));
                 }
+                offspring.repairIndividual(representation);
                 offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
                 offspring.setFitness(this.criteria, params);
                 population.updateReferencePointsZ(offspring);

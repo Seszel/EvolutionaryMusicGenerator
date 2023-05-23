@@ -19,10 +19,20 @@ public class Mutation {
 
     public static Genome simpleMutation(Genome genome, ImmutableList<Integer> representation, double probability) {
         Random randomObj = new Random();
+        double randomNumber;
+        int mutation;
         for (int i = 0; i < genome.getMelody().size(); i++) {
             if (randomObj.nextDouble() <= probability) {
                 int idx = Util.getRandomNumber(0, genome.getMelody().get(i).size() - 1);
-                int mutation = representation.get(Util.getRandomNumber(0, representation.size() - 1));
+                randomNumber = randomObj.nextDouble();
+                if (randomNumber <= 0.1) {
+                    mutation = -1;
+                } else if (randomNumber <= 0.5){
+                    mutation = 0;
+                } else {
+                    mutation = representation.get(Util.getRandomNumber(0, representation.size() - 1));
+                }
+
                 genome.getMelody().get(i).set(idx, mutation);
             }
         }

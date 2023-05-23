@@ -19,8 +19,8 @@ public class Representation {
             for (int i = 48; i < 85; i++) {
                 reprList.add(i);
             }
-            reprList.add(0);
-            reprList.add(-1);
+//            reprList.add(0);
+//            reprList.add(-1);
             reprInt = ImmutableList.<Integer>builder()
                     .addAll(reprList)
                     .build();
