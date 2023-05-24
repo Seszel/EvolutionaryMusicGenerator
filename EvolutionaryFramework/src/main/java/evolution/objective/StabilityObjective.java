@@ -9,6 +9,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StabilityObjective extends Objective{
 
@@ -77,9 +79,9 @@ public class StabilityObjective extends Objective{
 
 //         RHYTHM
         List<List<Integer>> durations = new ArrayList<>();
-        int lengthOfNote = 1;
-        int lastNote = 1000;
+        int lengthOfNote;
         for (int i = 0; i < melody.size(); i++) {
+            lengthOfNote = 0;
             List<Integer> barDurations = new ArrayList<>();
             for (int j = 0; j < melody.get(i).size(); j++) {
                 noteValue = melody.get(i).get(j);
@@ -90,32 +92,41 @@ public class StabilityObjective extends Objective{
                     if (lengthOfNote != 0) {
                         barDurations.add(lengthOfNote);
                         lengthOfNote = 1;
-                        lastNote = noteValue;
-                    } else if (lastNote != 1000){
+                    } else {
+                        lengthOfNote += 1;
+                    }
+                    if (j==melody.get(i).size()-1){
                         barDurations.add(1);
-                        lastNote = noteValue;
                     }
                 }
+
             }
             durations.add(barDurations);
         }
 
-//        int rhythmCount = 0;
-//        for (int i=0; i<durations.size(); i++){
-//            for (int j=1; j< durations.size(); j++){
-//                for (int k=0; j<durations.get(i).size(); k++) {
-//
+        boolean sameRhythm = false;
+        List<Integer> powersOfTwo = IntStream.rangeClosed(1, (int)Math.sqrt(melody.get(0).size()))
+                .mapToObj(i -> (int) Math.pow(2, i))
+                .collect(Collectors.toList());
+        for (int i=0; i<durations.size(); i++){
+            for (int j=1; j<durations.get(i).size(); j++) {
+                if (powersOfTwo.contains(durations.get(i).get(j))){
+                    fitness += 10.0*durations.get(i).get(j)/melody.get(i).size();
+                }
+//                else {
+//                    fitness -= 20.0*durations.get(i).get(j)/melody.get(i).size();
 //                }
-//            }
-//        }
-
-//
-//        var durationFlattened = Util.flattenListOfListsStream(durations);
-//
-//        for (int noteLength : durationFlattened){
-//            fitness += noteLength/16.0*100;
-//        }
-//
+            }
+            for (int k=i+1; k< durations.size(); k++){
+                if (durations.get(i).equals(durations.get(k))){
+                    sameRhythm = true;
+                    break;
+                }
+            }
+        }
+        if (sameRhythm){
+            fitness += 20;
+        }
 
 
         // MOTION
@@ -169,10 +180,12 @@ public class StabilityObjective extends Objective{
 
         //INTERVAL
         List<Integer> perfectIntervals = List.of(0, 12, 5, 7);
+        int interval;
         for (int i = 1; i < melodyArray.size(); i++) {
-            if (perfectIntervals.contains(Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)))) {
+            interval = Math.abs(melodyArray.get(i - 1) - melodyArray.get(i));
+            if (perfectIntervals.contains(interval)) {
                 fitness += 10.0/melodyArray.size();
-            } else if (Math.abs(melodyArray.get(i - 1) - melodyArray.get(i)) > 12) {
+            } else if (interval > 12) {
                 fitness -= 20.0/melodyArray.size();
             }
         }

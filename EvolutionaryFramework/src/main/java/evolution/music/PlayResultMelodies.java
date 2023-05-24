@@ -14,8 +14,8 @@ public class PlayResultMelodies {
             Player player = new Player();
 
             System.out.println(individual.getGenome().getMelodyJFugue());
-            System.out.println(individual.getFitnessByName("TENSION"));
-//            System.out.println(individual.getFitnessByName("STABILITY"));
+//            System.out.println(individual.getFitnessByName("TENSION"));
+            System.out.println(individual.getFitnessByName("STABILITY"));
 
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){
@@ -30,11 +30,12 @@ public class PlayResultMelodies {
                     .setInstrument("Piano")
                     .setTempo(90);
 
-            Pattern pattern = new Pattern("X[Volume]=13000" + individual.getGenome().getMelodyJFugue())
+            Pattern pattern = new Pattern("X[Volume]=15000" + individual.getGenome().getMelodyJFugue())
                     .setTempo(90)
                     .setInstrument("Piano")
                     .setVoice(1);
             player.play(chords, pattern);
+//            player.play(pattern);
         }
     }
 }
