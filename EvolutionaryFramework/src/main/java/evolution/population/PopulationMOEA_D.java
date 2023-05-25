@@ -59,12 +59,8 @@ public class PopulationMOEA_D extends Population {
         double normalization;
         for (int i = 0; i < popSize; i++) {
             List<Double> temp = new ArrayList<>();
-//            normalization = 0;
-//            for (int j = 0; j < criteria.size(); j++) {
-//                normalization += i + j*0.5;
                 temp.add((double)i);
                 temp.add((double)Math.abs(popSize - i));
-//            }
             for (int j = 0; j < temp.size(); j++) {
                 temp.set(j, temp.get(j) / popSize);
             }
@@ -120,6 +116,7 @@ public class PopulationMOEA_D extends Population {
     public void updateExternalPopulation(Individual offspring) {
 
         boolean leszczu = false;
+        boolean clone = false;
 
         externalPopulation.removeIf(offspring::dominates);
 
@@ -130,7 +127,20 @@ public class PopulationMOEA_D extends Population {
         }
 
         if (!leszczu) {
-            externalPopulation.add(offspring);
+
+//            externalPopulation.add(offspring);
+
+            if (externalPopulation.size() != 0) {
+                for (Individual individual : externalPopulation){
+                    if (offspring.getGenome().getMelody().equals(individual.getGenome().getMelody())) {
+                        clone = true;
+                        break;
+                        }
+                    }
+            }
+            if (!clone) {
+                externalPopulation.add(offspring);
+            }
         }
     }
 

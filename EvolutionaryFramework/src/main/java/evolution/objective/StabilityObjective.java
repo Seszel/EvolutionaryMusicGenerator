@@ -198,5 +198,7 @@ public class StabilityObjective extends Objective {
 
         return ( fitness - min ) / ( max - min );
 
+//        return fitness;
+
     }
 }

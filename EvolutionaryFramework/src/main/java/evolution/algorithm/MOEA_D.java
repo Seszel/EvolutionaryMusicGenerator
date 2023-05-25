@@ -96,12 +96,12 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                     assert offsprings != null;
                     offspring = new Individual(
                             Mutation.mutation(getMutationType(),
-                                    offsprings.getLeft(), representation));
+                                    offsprings.getLeft(), representation, g));
                 } else {
                     assert offsprings != null;
                     offspring = new Individual(
                             Mutation.mutation(getMutationType(),
-                                    offsprings.getRight(), representation));
+                                    offsprings.getRight(), representation, g));
                 }
                 offspring.repairIndividual(representation);
                 offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);

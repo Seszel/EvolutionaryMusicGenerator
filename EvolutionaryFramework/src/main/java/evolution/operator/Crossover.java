@@ -13,6 +13,8 @@ public class Crossover {
         switch (crossoverType) {
             case "ONE_POINT_CROSSOVER":
                 return onePointCrossover(parents);
+            case "TWO_POINT_CROSSOVER":
+                return twoPointCrossover(parents);
             default:
                 return null;
         }
@@ -31,6 +33,39 @@ public class Crossover {
 
             List<Integer> offspring2 = new ArrayList<>(parents.getRight().getMelody().get(i).subList(0, idx));
             offspring2.addAll(parents.getLeft().getMelody().get(i).subList(idx, parents.getRight().getMelody().get(i).size()));
+
+            offspringMelody1.add(offspring1);
+            offspringMelody2.add(offspring2);
+
+        }
+
+        Genome genome1 = new Genome();
+        Genome genome2 = new Genome();
+        genome1.setMelody(offspringMelody1);
+        genome2.setMelody(offspringMelody2);
+
+        return new MutablePair<>(genome1, genome2);
+    }
+
+    public static Pair<Genome, Genome> twoPointCrossover(Pair<Genome, Genome> parents) {
+        List<List<Integer>> offspringMelody1 = new ArrayList<>();
+        List<List<Integer>> offspringMelody2 = new ArrayList<>();
+
+        int idx1, idx2;
+
+        for (int i = 0; i < parents.getLeft().getMelody().size(); i++) {
+            idx1 = Util.getRandomNumber(0, parents.getLeft().getMelody().get(i).size() - 2);
+            do {
+                idx2 = Util.getRandomNumber(idx1 + 1, parents.getLeft().getMelody().get(i).size() - 1);
+            } while (idx1 == idx2);
+
+            List<Integer> offspring1 = new ArrayList<>(parents.getLeft().getMelody().get(i).subList(0, idx1));
+            offspring1.addAll(parents.getRight().getMelody().get(i).subList(idx1, idx2));
+            offspring1.addAll(parents.getLeft().getMelody().get(i).subList(idx2, parents.getLeft().getMelody().get(i).size()));
+
+            List<Integer> offspring2 = new ArrayList<>(parents.getRight().getMelody().get(i).subList(0, idx1));
+            offspring2.addAll(parents.getLeft().getMelody().get(i).subList(idx1, idx2));
+            offspring2.addAll(parents.getRight().getMelody().get(i).subList(idx2, parents.getRight().getMelody().get(i).size()));
 
             offspringMelody1.add(offspring1);
             offspringMelody2.add(offspring2);

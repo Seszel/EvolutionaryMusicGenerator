@@ -114,7 +114,7 @@ public class PopulationNSGA_II extends Population {
     }
 
 
-    public void createOffsprings(List<Pair<Individual, Individual>> matingPool, ImmutableList<Integer> representation, String crossoverType, Pair<String, Double> mutationType) {
+    public void createOffsprings(List<Pair<Individual, Individual>> matingPool, ImmutableList<Integer> representation, String crossoverType, Pair<String, Double> mutationType, int generationNumber) {
         List<Individual> offsprings = new ArrayList<>();
 
         Pair<Genome, Genome> offspringsCrossover;
@@ -122,8 +122,8 @@ public class PopulationNSGA_II extends Population {
             Pair<Genome, Genome> genomePair = new MutablePair<>(individualPair.getLeft().getGenome(), individualPair.getRight().getGenome());
             offspringsCrossover = Crossover.crossover(crossoverType, genomePair);
             Individual individual1, individual2;
-            individual1 = new Individual(Mutation.mutation(mutationType,offspringsCrossover.getLeft(), representation));
-            individual2 = new Individual(Mutation.mutation(mutationType, offspringsCrossover.getRight(), representation));
+            individual1 = new Individual(Mutation.mutation(mutationType,offspringsCrossover.getLeft(), representation, generationNumber));
+            individual2 = new Individual(Mutation.mutation(mutationType, offspringsCrossover.getRight(), representation, generationNumber));
 
             individual1.repairIndividual(representation);
             individual2.repairIndividual(representation);

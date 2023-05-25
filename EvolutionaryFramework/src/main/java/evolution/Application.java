@@ -24,11 +24,14 @@ public class Application {
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
     private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("A", "MAJOR");
-    private static final String CROSSOVER_TYPE = "ONE_POINT_CROSSOVER";
-    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.8);
+//    private static final String CROSSOVER_TYPE = "ONE_POINT_CROSSOVER";
+    private static final String CROSSOVER_TYPE = "TWO_POINT_CROSSOVER";
+//    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.8);
+//    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("BAR_ORDER", 0.8);
+    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("BAR_ORDER_AND_SIMPLE", 1.0);
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 5000;
+    private static final int NUMBER_OF_GENERATIONS = 200;
     private static final int NUMBER_OF_ITERATIONS = 1;
 //    private static final List<String> CRITERIA = List.of("STABILITY");
 //    private static final List<String> CRITERIA = List.of("TENSION");
@@ -38,7 +41,7 @@ public class Application {
         put("STABILITY", new ImmutablePair<>(-123.0,240.0));
         put("TENSION", new ImmutablePair<>(-45.0,117.0));
     }};
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, POP_SIZE/100);
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 2);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
     private static final boolean PLAY = false;
 

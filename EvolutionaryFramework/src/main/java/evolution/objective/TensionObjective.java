@@ -172,5 +172,7 @@ public class TensionObjective extends Objective{
 
         return ( fitness - min ) / ( max - min );
 
+//        return fitness;
+
     }
 }
