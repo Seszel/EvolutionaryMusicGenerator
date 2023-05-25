@@ -16,6 +16,7 @@ import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -29,11 +30,13 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                   Pair<String, String> melodyKey, String crossoverType,
                   Pair<String, Double> mutationType, String selectionType,
                   String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
-                  List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName, boolean play,
-                  int numberOfNeighbours) {
+                  List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
+                  Pair<Boolean, Integer> saveToJSON, String folderName, boolean play, int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey, crossoverType, mutationType,
-                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName, play);
+                selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration,
+                criteria, criteriaRanges,
+                saveToJSON, folderName, play);
 
         this.numberOfNeighbours = numberOfNeighbours;
     }
@@ -55,7 +58,9 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION,
                         chordProgression)
                 .addParam(EvaluationParameters.ParamName.MELODY_KEY,
-                        melodyKey);
+                        melodyKey)
+                .addParam(EvaluationParameters.ParamName.CRITERIA_RANGES,
+                        criteriaRanges);
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
 
         PopulationMOEA_D population = new PopulationMOEA_D(

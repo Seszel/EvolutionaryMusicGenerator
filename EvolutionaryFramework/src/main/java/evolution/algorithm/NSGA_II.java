@@ -14,6 +14,7 @@ import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,13 +25,14 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                    String representationType, List<String> chordProgression,
                    Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType,
                    String selectionType, String matingPoolSelectionType,
-                   int numberOfGenerations, int numberOfIteration, List<String> criteria,
+                   int numberOfGenerations, int numberOfIteration, List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
                    Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
                 crossoverType, mutationType, selectionType,
-                matingPoolSelectionType, numberOfGenerations, numberOfIteration, criteria, saveToJSON, folderName, play);
+                matingPoolSelectionType, numberOfGenerations, numberOfIteration,
+                criteria, criteriaRanges, saveToJSON, folderName, play);
     }
 
     @Override
@@ -50,7 +52,9 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                 .addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION,
                         chordProgression)
                 .addParam(EvaluationParameters.ParamName.MELODY_KEY,
-                        melodyKey);
+                        melodyKey)
+                .addParam(EvaluationParameters.ParamName.CRITERIA_RANGES,
+                        criteriaRanges);
         PopulationNSGA_II population = new PopulationNSGA_II(
                 popSize, representationType, criteria,
                 numberOfBars, maxNumberOfNotes,

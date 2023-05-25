@@ -2,6 +2,7 @@ package evolution.algorithm;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.HashMap;
 import java.util.List;
 
 abstract class AEvolutionaryAlgorithm implements Runnable {
@@ -18,6 +19,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
     protected final int numberOfGenerations;
     protected final int numberOfIteration;
     protected final List<String> criteria;
+    protected final HashMap<String,Pair<Double, Double>> criteriaRanges;
     protected final Pair<Boolean, Integer> saveToJSON;
     protected final String folderName;
     protected final boolean play;
@@ -27,7 +29,8 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
                                      Pair<String, String> melodyKey, String crossoverType,
                                      Pair<String, Double> mutationType, String selectionType,
                                      String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
-                                     List<String> criteria, Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
+                                     List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
+                                     Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
         this.popSize = popSize;
         this.numberOfBars = numberOfBars;
         this.maxNumberOfNotes = maxNumberOfNotes;
@@ -41,6 +44,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
         this.numberOfGenerations = numberOfGenerations;
         this.numberOfIteration = numberOfIteration;
         this.criteria = criteria;
+        this.criteriaRanges = criteriaRanges;
         this.saveToJSON = saveToJSON;
         this.folderName = folderName;
         this.play = play;

@@ -13,6 +13,7 @@ public class EvaluationParameters extends Representation {
         CHORD_PROGRESSION_PATTERN,
         MELODY_KEY,
         CHORD_PROGRESSION,
+        CRITERIA_RANGES
 
     }
     public HashMap<ParamName, Object> parameters = new HashMap<>();

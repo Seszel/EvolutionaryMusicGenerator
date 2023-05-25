@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TensionObjective extends Objective{
 
-    final String name = "TENSION";
+    static final String name = "TENSION";
 
     public static Double evaluate(Individual individual, EvaluationParameters pack) {
 
@@ -27,6 +27,9 @@ public class TensionObjective extends Objective{
         @SuppressWarnings("unchecked")
         var melodyKey = (Pair<String, String>) pack.parameters
                 .get(EvaluationParameters.ParamName.MELODY_KEY);
+        @SuppressWarnings("unchecked")
+        var criteriaRanges = (HashMap<String, Pair<Double, Double>>) pack.parameters
+                .get(EvaluationParameters.ParamName.CRITERIA_RANGES);
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
@@ -164,8 +167,10 @@ public class TensionObjective extends Objective{
             }
         }
 
+        double min = criteriaRanges.get(name).getLeft();
+        double max = criteriaRanges.get(name).getRight();
 
-        return fitness;
+        return ( fitness - min ) / ( max - min );
 
     }
 }

@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class StabilityObjective extends Objective{
+public class StabilityObjective extends Objective {
 
-    final String name = "STABILITY";
+    static final String name = "STABILITY";
 
     public static Double evaluate(Individual individual, EvaluationParameters pack) {
 
@@ -32,6 +32,9 @@ public class StabilityObjective extends Objective{
         @SuppressWarnings("unchecked")
         var melodyKey = (Pair<String, String>) pack.parameters
                 .get(EvaluationParameters.ParamName.MELODY_KEY);
+        @SuppressWarnings("unchecked")
+        var criteriaRanges = (HashMap<String, Pair<Double, Double>>) pack.parameters
+                .get(EvaluationParameters.ParamName.CRITERIA_RANGES);
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
@@ -190,7 +193,10 @@ public class StabilityObjective extends Objective{
             }
         }
 
-        return fitness;
+        double min = criteriaRanges.get(name).getLeft();
+        double max = criteriaRanges.get(name).getRight();
+
+        return ( fitness - min ) / ( max - min );
 
     }
 }

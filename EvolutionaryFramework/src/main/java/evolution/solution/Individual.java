@@ -5,6 +5,7 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Evaluator;
 import evolution.music.Genome;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
