@@ -16,6 +16,7 @@ import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -83,9 +84,14 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
         List<Integer> generations = IntStream.rangeClosed(1, numberOfGenerations)
                 .boxed().collect(Collectors.toList());
 
-        for (Integer g : ProgressBar.wrap(generations, "Iteration: " + (numberOfIteration + 1))) {
-            for (int p = 0; p < popSize; p++) {
+        List<Integer> populationIndexes = IntStream.range(0, popSize)
+                                                    .boxed()
+                                                    .collect(Collectors.toList());
 
+        for (Integer g : ProgressBar.wrap(generations, "Iteration: " + (numberOfIteration + 1))) {
+//            for (int p = 0; p < popSize; p++) {
+            Collections.shuffle(populationIndexes);
+            for (Integer p : populationIndexes){
                 Pair<Individual, Individual> parentsIndexes = MatingPoolSelection.randomFromNeighbourhood(numberOfNeighbours, population, p);
                 Pair<Genome, Genome> parents = new MutablePair<>(parentsIndexes.getLeft().getGenome(), parentsIndexes.getRight().getGenome());
                 Random random = new Random();
@@ -110,7 +116,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 population.updateNeighboursSolutions(p, offspring);
                 population.updateExternalPopulation(offspring);
             }
-            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 1 || g == numberOfGenerations)) {
+            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == numberOfGenerations)) {
                 stats.updateStats(g, population.getExternalPopulation());
             }
         }

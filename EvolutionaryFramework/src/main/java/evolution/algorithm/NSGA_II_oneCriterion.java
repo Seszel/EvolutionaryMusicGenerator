@@ -86,7 +86,7 @@ public class NSGA_II_oneCriterion extends AEvolutionaryAlgorithm {
                     new ArrayList<>(population.getPopulation().subList(0, popSize))
             );
 
-            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 1 || g == numberOfGenerations)) {
+            if (saveToJSON.getLeft() && (g % saveToJSON.getRight() == 0 || g == numberOfGenerations)) {
                 stats.updateStats(g, population.getPopulation());
             }
 

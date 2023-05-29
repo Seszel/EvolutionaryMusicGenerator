@@ -27,7 +27,8 @@ public class Mutation {
         double randomNumber;
         int mutation;
         for (int i = 0; i < genome.getMelody().size(); i++) {
-            if (randomObj.nextDouble() <= (probability * Math.exp(-0.02 * generationNumber) ) ) {
+//            if (randomObj.nextDouble() <= (probability * Math.exp(-0.02 * generationNumber) ) ) {
+            if (randomObj.nextDouble() <= (probability ) ) {
                 int idx = Util.getRandomNumber(0, genome.getMelody().get(i).size() - 1);
                 randomNumber = randomObj.nextDouble();
                 if (randomNumber <= 0.1) {
@@ -48,7 +49,8 @@ public class Mutation {
 
         Random randomObj = new Random();
         int idx1, idx2;
-        if (randomObj.nextDouble() <= probability * Math.exp(-0.02 * generationNumber)  ) {
+//        if (randomObj.nextDouble() <= probability * Math.exp(-0.02 * generationNumber)  ) {
+        if (randomObj.nextDouble() <= probability  ) {
             idx1 = Util.getRandomNumber(0, genome.getMelody().size()-1);
             do {
                 idx2 = Util.getRandomNumber(0, genome.getMelody().size()-1);
