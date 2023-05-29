@@ -6,17 +6,43 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class Crossover {
-    public static Pair<Genome, Genome> crossover(String crossoverType, Pair<Genome, Genome> parents) {
-        switch (crossoverType) {
+    public static Pair<Genome, Genome> crossover(double crossoverProbability, List<Pair<String, Double>> crossoverType, Pair<Genome, Genome> parents) {
+        Random randomObj = new Random();
+
+        List<Pair<String, Double>> mutableList = new ArrayList<>(crossoverType);
+        mutableList.sort(Comparator.comparing(Pair::getValue));
+
+        double randomProbability = randomObj.nextDouble();
+        String crossoverName = "";
+
+        for (int i=0; i<mutableList.size(); i++){
+            if (randomProbability < mutableList.get(i).getRight()){
+                crossoverName = mutableList
+                        .subList(i,mutableList.size())
+                        .get(new Random().nextInt(mutableList.size()-i))
+                        .getLeft();
+                break;
+            }
+        }
+
+        double randomCrossoverProbability = randomObj.nextDouble();
+        if (randomCrossoverProbability > crossoverProbability){
+            crossoverName = "NO_CROSSOVER";
+        }
+
+        switch (crossoverName) {
             case "ONE_POINT_CROSSOVER":
                 return onePointCrossover(parents);
             case "TWO_POINT_CROSSOVER":
                 return twoPointCrossover(parents);
+            case "NO_CROSSOVER":
             default:
-                return null;
+                return parents;
         }
     }
 

@@ -27,14 +27,17 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
     private final int numberOfNeighbours;
 
     public MOEA_D(int popSize, int numberOfBars, int maxNumberOfNotes,
-                  String representationType, List<String> chordProgression,
-                  Pair<String, String> melodyKey, String crossoverType,
-                  Pair<String, Double> mutationType, String selectionType,
-                  String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
+                  String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
+                  double crossoverProbability, List<Pair<String, Double>> crossoverType,
+                  double mutationProbability, List<Pair<String, Double>> mutationType,
+                  String selectionType, String matingPoolSelectionType,
+                  int numberOfGenerations, int numberOfIteration,
                   List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
                   Pair<Boolean, Integer> saveToJSON, String folderName, boolean play, int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
-                chordProgression, melodyKey, crossoverType, mutationType,
+                chordProgression, melodyKey,
+                crossoverProbability, crossoverType,
+                mutationProbability, mutationType,
                 selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration,
                 criteria, criteriaRanges,
                 saveToJSON, folderName, play);
@@ -47,8 +50,10 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 
         StatsMOEA_D stats = new StatsMOEA_D("MOEA/D", popSize,
                 numberOfBars, maxNumberOfNotes, representationType,
-                chordProgression, melodyKey, crossoverType,
-                mutationType, selectionType, matingPoolSelectionType,
+                chordProgression, melodyKey,
+                crossoverProbability, crossoverType,
+                mutationProbability, mutationType,
+                selectionType, matingPoolSelectionType,
                 numberOfGenerations, criteria, folderName, numberOfNeighbours);
 
         System.out.println("Algorithm MOEA/D is working, iteration: " + (numberOfIteration + 1));
@@ -97,16 +102,16 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 Random random = new Random();
                 Individual offspring;
 
-                Pair<Genome, Genome> offsprings = Crossover.crossover(getCrossoverType(), parents);
+                Pair<Genome, Genome> offsprings = Crossover.crossover(getCrossoverProbability(), getCrossoverType(), parents);
                 if (random.nextDouble() <= 0.5) {
                     assert offsprings != null;
                     offspring = new Individual(
-                            Mutation.mutation(getMutationType(),
+                            Mutation.mutation(getMutationProbability(), getMutationType(),
                                     offsprings.getLeft(), representation, g));
                 } else {
                     assert offsprings != null;
                     offspring = new Individual(
-                            Mutation.mutation(getMutationType(),
+                            Mutation.mutation(getMutationProbability(), getMutationType(),
                                     offsprings.getRight(), representation, g));
                 }
                 offspring.repairIndividual(representation);

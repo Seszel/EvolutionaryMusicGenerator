@@ -22,16 +22,19 @@ import java.util.stream.IntStream;
 public class NSGA_II extends AEvolutionaryAlgorithm {
 
     public NSGA_II(int popSize, int numberOfBars, int maxNumberOfNotes,
-                   String representationType, List<String> chordProgression,
-                   Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType,
+                   String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
+                   double crossoverProbability, List<Pair<String, Double>> crossoverType,
+                   double mutationProbability, List<Pair<String, Double>> mutationType,
                    String selectionType, String matingPoolSelectionType,
                    int numberOfGenerations, int numberOfIteration, List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
                    Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
-                crossoverType, mutationType, selectionType,
-                matingPoolSelectionType, numberOfGenerations, numberOfIteration,
+                crossoverProbability, crossoverType,
+                mutationProbability, mutationType,
+                selectionType, matingPoolSelectionType,
+                numberOfGenerations, numberOfIteration,
                 criteria, criteriaRanges, saveToJSON, folderName, play);
     }
 
@@ -40,8 +43,10 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 
         StatsNSGA_II stats = new StatsNSGA_II("NSGA-II", popSize,
                 numberOfBars, maxNumberOfNotes, representationType,
-                chordProgression, melodyKey, crossoverType,
-                mutationType, selectionType, matingPoolSelectionType,
+                chordProgression, melodyKey,
+                crossoverProbability, crossoverType,
+                mutationProbability, mutationType,
+                selectionType, matingPoolSelectionType,
                 numberOfGenerations, criteria, folderName);
 
         System.out.println("Algorithm NSGA_II is working, iteration: " + (numberOfIteration + 1));
@@ -77,7 +82,10 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
             var matingPool = MatingPoolSelection.tournament(
                     (int)(0.5*popSize), popSize, population
             );
-            population.createOffsprings(matingPool, representation, getCrossoverType(), getMutationType(), g);
+            population.createOffsprings(matingPool, representation,
+                    getCrossoverProbability(), getCrossoverType(),
+                    getMutationProbability(), getMutationType(),
+                    g);
 
             population.changePopulation();
 

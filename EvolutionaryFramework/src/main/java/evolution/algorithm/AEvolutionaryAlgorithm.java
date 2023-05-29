@@ -12,8 +12,10 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
     protected final String representationType;
     protected final List<String> chordProgression;
     protected final Pair<String, String> melodyKey;
-    protected final String crossoverType;
-    protected final Pair<String, Double> mutationType;
+    protected double crossoverProbability;
+    protected final List<Pair<String, Double>> crossoverType;
+    protected double mutationProbability;
+    protected final List<Pair<String, Double>> mutationType;
     protected final String selectionType;
     protected final String matingPoolSelectionType;
     protected final int numberOfGenerations;
@@ -25,10 +27,11 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
     protected final boolean play;
 
     protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes,
-                                     String representationType, List<String> chordProgression,
-                                     Pair<String, String> melodyKey, String crossoverType,
-                                     Pair<String, Double> mutationType, String selectionType,
-                                     String matingPoolSelectionType, int numberOfGenerations, int numberOfIteration,
+                                     String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
+                                     double crossoverProbability, List<Pair<String, Double>> crossoverType,
+                                     double mutationProbability, List<Pair<String, Double>> mutationType,
+                                     String selectionType, String matingPoolSelectionType,
+                                     int numberOfGenerations, int numberOfIteration,
                                      List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
                                      Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
         this.popSize = popSize;
@@ -37,7 +40,9 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
         this.representationType = representationType;
         this.chordProgression = chordProgression;
         this.melodyKey = melodyKey;
+        this.crossoverProbability = crossoverProbability;
         this.crossoverType = crossoverType;
+        this.mutationProbability = mutationProbability;
         this.mutationType = mutationType;
         this.selectionType = selectionType;
         this.matingPoolSelectionType = matingPoolSelectionType;
@@ -52,12 +57,20 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
 
     public abstract void run();
 
-    public String getCrossoverType() {
+    public List<Pair<String, Double>> getCrossoverType() {
         return crossoverType;
     }
 
-    public Pair<String, Double> getMutationType() {
+    public List<Pair<String, Double>> getMutationType() {
         return mutationType;
+    }
+
+    public double getCrossoverProbability(){
+        return crossoverProbability;
+    }
+
+    public double getMutationProbability() {
+        return mutationProbability;
     }
 
     public String getSelectionType() {

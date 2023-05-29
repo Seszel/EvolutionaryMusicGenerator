@@ -128,19 +128,19 @@ public class PopulationMOEA_D extends Population {
 
         if (!leszczu) {
 
-            externalPopulation.add(offspring);
+//            externalPopulation.add(offspring);
 
-//            if (externalPopulation.size() != 0) {
-//                for (Individual individual : externalPopulation){
-//                    if (offspring.getGenome().getMelody().equals(individual.getGenome().getMelody())) {
-//                        clone = true;
-//                        break;
-//                        }
-//                    }
-//            }
-//            if (!clone) {
-//                externalPopulation.add(offspring);
-//            }
+            if (externalPopulation.size() != 0) {
+                for (Individual individual : externalPopulation){
+                    if (offspring.getGenome().getMelody().equals(individual.getGenome().getMelody())) {
+                        clone = true;
+                        break;
+                        }
+                    }
+            }
+            if (!clone) {
+                externalPopulation.add(offspring);
+            }
         }
     }
 

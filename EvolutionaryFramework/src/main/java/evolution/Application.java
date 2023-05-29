@@ -18,20 +18,26 @@ public class Application {
 //    private static final String ALGORITHM = "NSGA_II";
 //    private static final String ALGORITHM = "NSGA_II_oneCriterion";
     private static final String ALGORITHM = "MOEA_D";
-    private static final int POP_SIZE = 100;
+    private static final int POP_SIZE = 50;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
     private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("A", "MAJOR");
-    private static final String CROSSOVER_TYPE = "ONE_POINT_CROSSOVER";
-//    private static final String CROSSOVER_TYPE = "TWO_POINT_CROSSOVER";
-//    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("SIMPLE", 0.8);
-//    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("BAR_ORDER", 0.8);
-    private static final Pair<String, Double> MUTATION_TYPE = new ImmutablePair<>("BAR_ORDER_AND_SIMPLE", 0.8);
+    private static final double CROSSOVER_PROBABILITY = 0.9;
+    private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
+            new ImmutablePair<>("ONE_POINT_CROSSOVER", 0.9),
+            new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.1)
+    );
+    private static final double MUTATION_PROBABILITY = 0.5;
+    private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
+            new ImmutablePair<>("BAR_ORDER_AND_SIMPLE", 1.0),
+            new ImmutablePair<>("SIMPLE", 0.8),
+            new ImmutablePair<>("BAR_ORDER", 0.2)
+    );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 50;
+    private static final int NUMBER_OF_GENERATIONS = 100;
     private static final int NUMBER_OF_ITERATIONS = 1;
 //    private static final List<String> CRITERIA = List.of("STABILITY");
 //    private static final List<String> CRITERIA = List.of("TENSION");
@@ -70,7 +76,9 @@ public class Application {
                             REPRESENTATION_TYPE,
                             CHORD_PROGRESSION,
                             MELODY_KEY,
+                            CROSSOVER_PROBABILITY,
                             CROSSOVER_TYPE,
+                            MUTATION_PROBABILITY,
                             MUTATION_TYPE,
                             SELECTION_TYPE,
                             MATING_POOL_SELECTION_TYPE,
@@ -99,7 +107,9 @@ public class Application {
                             REPRESENTATION_TYPE,
                             CHORD_PROGRESSION,
                             MELODY_KEY,
+                            CROSSOVER_PROBABILITY,
                             CROSSOVER_TYPE,
+                            MUTATION_PROBABILITY,
                             MUTATION_TYPE,
                             SELECTION_TYPE,
                             MATING_POOL_SELECTION_TYPE,
@@ -129,7 +139,9 @@ public class Application {
                             REPRESENTATION_TYPE,
                             CHORD_PROGRESSION,
                             MELODY_KEY,
+                            CROSSOVER_PROBABILITY,
                             CROSSOVER_TYPE,
+                            MUTATION_PROBABILITY,
                             MUTATION_TYPE,
                             SELECTION_TYPE,
                             MATING_POOL_SELECTION_TYPE,

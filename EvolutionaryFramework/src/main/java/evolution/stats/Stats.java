@@ -19,8 +19,10 @@ public abstract class Stats {
     protected final String representationType;
     protected final List<String> chordProgression;
     protected final Pair<String, String> melodyKey;
-    protected final String crossoverType;
-    protected final Pair<String, Double> mutationType;
+    protected final double crossoverProbability;
+    protected final List<Pair<String, Double>> crossoverType;
+    protected final double mutationProbability;
+    protected final List<Pair<String, Double>> mutationType;
     protected final String selectionType;
     protected final String matingPoolSelectionType;
     protected final int numberOfGenerations;
@@ -30,12 +32,14 @@ public abstract class Stats {
 
     public Stats(String algorithmName, int popSize, int numberOfBars, int maxNumberOfNotes,
                  String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
-                 String crossoverType, Pair<String, Double> mutationType, String selectionType,
+                 double crossoverProbability, List<Pair<String, Double>> crossoverType, double mutationProbability, List<Pair<String, Double>> mutationType, String selectionType,
                  String matingPoolSelectionType, int numberOfGenerations, List<String> criteria, String folderName) {
         this.algorithmName = algorithmName;
         this.popSize = popSize;
         this.representationType = representationType;
+        this.crossoverProbability = crossoverProbability;
         this.crossoverType = crossoverType;
+        this.mutationProbability = mutationProbability;
         this.mutationType = mutationType;
         this.selectionType = selectionType;
         this.matingPoolSelectionType = matingPoolSelectionType;

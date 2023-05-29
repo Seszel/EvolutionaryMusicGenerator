@@ -22,17 +22,20 @@ public class NSGA_II_oneCriterion extends AEvolutionaryAlgorithm {
 
 
     public NSGA_II_oneCriterion(int popSize, int numberOfBars, int maxNumberOfNotes,
-                   String representationType, List<String> chordProgression,
-                   Pair<String, String> melodyKey, String crossoverType, Pair<String, Double> mutationType,
-                   String selectionType, String matingPoolSelectionType,
-                   int numberOfGenerations, int numberOfIteration,
-                   List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
-                   Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
+                                String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
+                                double crossoverProbability, List<Pair<String, Double>> crossoverType,
+                                double mutationProbability, List<Pair<String, Double>> mutationType,
+                                String selectionType, String matingPoolSelectionType,
+                                int numberOfGenerations, int numberOfIteration,
+                                List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
+                                Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
-                crossoverType, mutationType, selectionType,
-                matingPoolSelectionType, numberOfGenerations, numberOfIteration,
+                crossoverProbability, crossoverType,
+                mutationProbability, mutationType,
+                selectionType, matingPoolSelectionType,
+                numberOfGenerations, numberOfIteration,
                 criteria, criteriaRanges, saveToJSON, folderName, play);
     }
 
@@ -41,8 +44,10 @@ public class NSGA_II_oneCriterion extends AEvolutionaryAlgorithm {
 
         StatsNSGA_II_oneCriterion stats = new StatsNSGA_II_oneCriterion("NSGA-II one criterion", popSize,
                 numberOfBars, maxNumberOfNotes, representationType,
-                chordProgression, melodyKey, crossoverType,
-                mutationType, selectionType, matingPoolSelectionType,
+                chordProgression, melodyKey,
+                crossoverProbability, crossoverType,
+                mutationProbability, mutationType,
+                selectionType, matingPoolSelectionType,
                 numberOfGenerations, criteria, folderName);
 
         System.out.println("Algorithm NSGA_II for " + criteria.get(0) + " criterion is working, iteration: " + (numberOfIteration + 1));
@@ -73,7 +78,10 @@ public class NSGA_II_oneCriterion extends AEvolutionaryAlgorithm {
 
             var matingPool = MatingPoolSelection.tournament((int)(0.5*popSize), popSize, population
             );
-            population.createOffsprings(matingPool, representation, getCrossoverType(), getMutationType(), g);
+            population.createOffsprings(matingPool, representation,
+                    getCrossoverProbability(), getCrossoverType(),
+                    getMutationProbability(), getMutationType(),
+                    g);
 
             population.changePopulation();
 

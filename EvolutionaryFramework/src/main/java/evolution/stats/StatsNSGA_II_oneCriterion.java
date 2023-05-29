@@ -17,10 +17,12 @@ public class StatsNSGA_II_oneCriterion extends Stats {
     public StatsNSGA_II_oneCriterion(String algorithmName, int popSize,
                                      int numberOfBars, int maxNumberOfNotes, String representationType,
                                      List<String> chordProgression, Pair<String, String> melodyKey,
-                                     String crossoverType, Pair<String, Double> mutationType, String selectionType, String matingPoolSelectionType,
+                                     double crossoverProbability, List<Pair<String, Double>> crossoverType,
+                                     double mutationProbability, List<Pair<String, Double>> mutationType,
+                                     String selectionType, String matingPoolSelectionType,
                                      int numberOfGenerations, List<String> criteria, String folderName) {
         super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey,
-                crossoverType, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
+                crossoverProbability, crossoverType, mutationProbability, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
         this.populationForGeneration = new HashMap<>();
     }
 
@@ -50,9 +52,21 @@ public class StatsNSGA_II_oneCriterion extends Stats {
         metaParameters.put("chordProgression", StringUtils.join(chordProgression, ", "));
         metaParameters.put("melodyKeyValue", melodyKey.getLeft());
         metaParameters.put("melodyKeyType", melodyKey.getRight());
-        metaParameters.put("crossoverType", crossoverType);
-        metaParameters.put("mutationType", mutationType.getLeft());
-        metaParameters.put("mutationProbability", mutationType.getRight());
+
+        metaParameters.put("crossoverProbability", crossoverProbability);
+        JSONObject crossoverObject = new JSONObject();
+        for (Pair<String, Double> stringDoublePair : crossoverType){
+            crossoverObject.put(stringDoublePair.getLeft(), stringDoublePair.getRight());
+        }
+        metaParameters.put("crossoverType", crossoverObject);
+
+        metaParameters.put("mutationProbability", mutationProbability);
+        JSONObject mutationObject = new JSONObject();
+        for (Pair<String, Double> stringDoublePair : mutationType) {
+            mutationObject.put(stringDoublePair.getLeft(), stringDoublePair.getRight());
+        }
+        metaParameters.put("mutationType", mutationObject);
+
         metaParameters.put("selectionType", selectionType);
         metaParameters.put("matingPoolSelectionType", matingPoolSelectionType);
         metaParameters.put("numberOfGenerations", numberOfGenerations);
