@@ -45,6 +45,10 @@ public class Evaluator {
                 return DescendingMelodyLineObjective.evaluate(individual, pack);
             case "ASCENDING_MELODY_LINE":
                 return AscendingMelodyLineObjective.evaluate(individual, pack);
+            case "SIMPLE_RHYTHM":
+                return SimpleRhythmObjective.evaluate(individual, pack);
+            case "COMPLICATED_RHYTHM":
+                return ComplicatedRhythmObjective.evaluate(individual, pack);
             default:
                 return null;
         }

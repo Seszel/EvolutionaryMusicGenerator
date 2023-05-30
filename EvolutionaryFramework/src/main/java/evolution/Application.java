@@ -37,13 +37,14 @@ public class Application {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 1000;
+    private static final int NUMBER_OF_GENERATIONS = 100;
     private static final int NUMBER_OF_ITERATIONS = 1;
 //    private static final List<String> CRITERIA = List.of("NON_PERFECT_INTERVAL", "PERFECT_INTERVAL");
 //    private static final List<String> CRITERIA = List.of("SKIP_MOTION", "STEP_MOTION");
 //    private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TONE");
 //    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
-    private static final List<String> CRITERIA = List.of("DESCENDING_MELODY_LINE", "ASCENDING_MELODY_LINE");
+//    private static final List<String> CRITERIA = List.of("DESCENDING_MELODY_LINE", "ASCENDING_MELODY_LINE");
+    private static final List<String> CRITERIA = List.of("SIMPLE_RHYTHM", "COMPLICATED_RHYTHM");
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
         put("STABILITY", new ImmutablePair<>(-123.0,240.0));
@@ -56,10 +57,12 @@ public class Application {
         put("NON_PERFECT_INTERVAL", new ImmutablePair<>(0.0,1.0));
         put("ASCENDING_MELODY_LINE", new ImmutablePair<>(0.0,1.0));
         put("DESCENDING_MELODY_LINE", new ImmutablePair<>(0.0,1.0));
+        put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
+        put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
     }};
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
-    private static final boolean PLAY = false;
+    private static final boolean PLAY = true;
 
     public static void main(String[] args) {
         runAlgorithm();
