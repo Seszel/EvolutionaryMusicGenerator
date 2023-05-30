@@ -9,7 +9,6 @@ import evolution.population.PopulationNSGA_II;
 import evolution.solution.Individual;
 import evolution.stats.StatsNSGA_II;
 import evolution.util.Util;
-import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.Pair;
 

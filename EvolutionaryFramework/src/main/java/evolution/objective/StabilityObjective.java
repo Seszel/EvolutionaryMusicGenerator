@@ -3,7 +3,6 @@ package evolution.objective;
 import evolution.music.Representation;
 import evolution.solution.Individual;
 import evolution.util.Util;
-import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;

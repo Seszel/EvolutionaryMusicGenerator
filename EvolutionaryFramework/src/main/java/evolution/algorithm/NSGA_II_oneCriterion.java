@@ -7,7 +7,6 @@ import evolution.objective.EvaluationParameters;
 import evolution.operator.MatingPoolSelection;
 import evolution.population.PopulationNSGA_II;
 import evolution.stats.StatsNSGA_II_oneCriterion;
-import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.Pair;
 

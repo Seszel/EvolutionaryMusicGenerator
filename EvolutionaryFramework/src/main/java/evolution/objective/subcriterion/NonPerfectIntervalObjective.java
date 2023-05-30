@@ -5,7 +5,7 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.solution.Individual;
 import evolution.util.Util;
-import lombok.var;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;

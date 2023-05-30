@@ -4,7 +4,6 @@ import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.solution.Individual;
-import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;

@@ -2,7 +2,6 @@ package evolution.objective;
 
 import evolution.objective.subcriterion.*;
 import evolution.solution.Individual;
-import lombok.var;
 
 import java.util.HashMap;
 import java.util.List;

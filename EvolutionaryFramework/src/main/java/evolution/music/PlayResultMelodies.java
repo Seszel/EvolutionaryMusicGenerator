@@ -17,7 +17,7 @@ public class PlayResultMelodies {
             System.out.println(individual.getGenome().getMelody());
 //            System.out.println(individual.getFitnessByName("TENSION"));
 //            System.out.println(individual.getFitnessByName("STABILITY"));
-//            System.out.println(individual.getFitnessByName("CHORD_TONE"));
+            System.out.println(individual.getFitnessByName("CHORD_TONE"));
 //            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
 //            System.out.println(individual.getFitnessByName("STEP_MOTION"));
 //            System.out.println(individual.getFitnessByName("SKIP_MOTION"));
@@ -25,8 +25,8 @@ public class PlayResultMelodies {
 //            System.out.println(individual.getFitnessByName("NON_PERFECT_INTERVAL"));
 //            System.out.println(individual.getFitnessByName("DESCENDING_MELODY_LINE"));
 //            System.out.println(individual.getFitnessByName("ASCENDING_MELODY_LINE"));
-            System.out.println(individual.getFitnessByName("SIMPLE_RHYTHM"));
-            System.out.println(individual.getFitnessByName("COMPLICATED_RHYTHM"));
+//            System.out.println(individual.getFitnessByName("SIMPLE_RHYTHM"));
+//            System.out.println(individual.getFitnessByName("COMPLICATED_RHYTHM"));
 
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){
@@ -46,7 +46,7 @@ public class PlayResultMelodies {
                     .setInstrument("Piano")
                     .setVoice(1);
 //            player.play(chords, pattern);
-            player.play(pattern);
+//            player.play(pattern);
         }
     }
 }

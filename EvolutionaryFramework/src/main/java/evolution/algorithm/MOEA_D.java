@@ -11,7 +11,6 @@ import evolution.operator.Mutation;
 import evolution.population.PopulationMOEA_D;
 import evolution.solution.Individual;
 import evolution.stats.StatsMOEA_D;
-import lombok.var;
 import me.tongfei.progressbar.ProgressBar;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -107,12 +106,12 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                     assert offsprings != null;
                     offspring = new Individual(
                             Mutation.mutation(getMutationProbability(), getMutationType(),
-                                    offsprings.getLeft(), representation, g));
+                                    offsprings.getLeft(), representation, g, params));
                 } else {
                     assert offsprings != null;
                     offspring = new Individual(
                             Mutation.mutation(getMutationProbability(), getMutationType(),
-                                    offsprings.getRight(), representation, g));
+                                    offsprings.getRight(), representation, g, params));
                 }
                 offspring.repairIndividual(representation);
                 offspring.getGenome().setMelodyJFugue(maxNumberOfNotes);
