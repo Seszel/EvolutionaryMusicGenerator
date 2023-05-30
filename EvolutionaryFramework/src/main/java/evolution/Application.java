@@ -15,9 +15,9 @@ import java.util.List;
 
 public class Application {
 
-//    private static final String ALGORITHM = "NSGA_II";
+    private static final String ALGORITHM = "NSGA_II";
 //    private static final String ALGORITHM = "NSGA_II_oneCriterion";
-    private static final String ALGORITHM = "MOEA_D";
+//    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
@@ -31,17 +31,16 @@ public class Application {
     );
     private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("BAR_ORDER_AND_SIMPLE", 1.0),
-            new ImmutablePair<>("SIMPLE", 0.0),
+            new ImmutablePair<>("BAR_ORDER_AND_SIMPLE", 0.0),
+            new ImmutablePair<>("SIMPLE", 1.0),
             new ImmutablePair<>("BAR_ORDER", 0.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 100;
     private static final int NUMBER_OF_ITERATIONS = 1;
-//    private static final List<String> CRITERIA = List.of("STABILITY");
-//    private static final List<String> CRITERIA = List.of("TENSION");
-private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TONE");
+    private static final List<String> CRITERIA = List.of("SKIP_MOTION", "CHORD_TONE", "NON_CHORD_TONE");
+//private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TONE");
 //    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
@@ -49,6 +48,8 @@ private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TO
         put("TENSION", new ImmutablePair<>(-45.0,117.0));
         put("CHORD_TONE", new ImmutablePair<>(0.0,1.0));
         put("NON_CHORD_TONE", new ImmutablePair<>(0.0,1.0));
+        put("STEP_MOTION", new ImmutablePair<>(0.0,1.0));
+        put("SKIP_MOTION", new ImmutablePair<>(0.0,1.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;

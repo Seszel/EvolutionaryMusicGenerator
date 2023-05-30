@@ -32,6 +32,10 @@ public class Evaluator {
                 return ChordToneObjective.evaluate(individual, pack);
             case "NON_CHORD_TONE":
                 return NonChordToneObjective.evaluate(individual, pack);
+            case "STEP_MOTION":
+                return StepMotionObjective.evaluate(individual, pack);
+            case "SKIP_MOTION":
+                return SkipMotionObjective.evaluate(individual, pack);
             default:
                 return null;
         }

@@ -17,8 +17,10 @@ public class PlayResultMelodies {
             System.out.println(individual.getGenome().getMelody());
 //            System.out.println(individual.getFitnessByName("TENSION"));
 //            System.out.println(individual.getFitnessByName("STABILITY"));
-            System.out.println(individual.getFitnessByName("CHORD_TONE"));
-            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
+//            System.out.println(individual.getFitnessByName("CHORD_TONE"));
+//            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
+            System.out.println(individual.getFitnessByName("STEP_MOTION"));
+            System.out.println(individual.getFitnessByName("SKIP_MOTION"));
 
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){

@@ -62,9 +62,9 @@ public class ChordToneObjective extends Objective {
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
-//        return ( fitness - min ) / ( max - min );
+        return ( fitness - min ) / ( max - min );
 
-        return fitness;
+//        return fitness;
 
     }
 
