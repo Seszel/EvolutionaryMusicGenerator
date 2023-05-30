@@ -1,6 +1,7 @@
-package evolution.objective;
+package evolution.objective.subcriterion;
 
 import evolution.music.Representation;
+import evolution.objective.EvaluationParameters;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import lombok.var;
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ChordToneObjective extends Objective {
+public class StepMotionObjective {
 
-    static final String name = "CHORD_TONE";
+    static final String name = "STEP_MOTION";
 
 
     public static Double evaluate(Individual individual, EvaluationParameters pack) {
@@ -36,29 +37,17 @@ public class ChordToneObjective extends Objective {
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
+        List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
+        melodyArray.removeAll(List.of(-1, 0));
 
-
-        int count = 0;
-        int noteValue;
-        double toFitness = 0;
-        for (int i = 0; i < melody.size(); i++) {
-            for (int j = 0; j < melody.get(i).size(); j++) {
-                noteValue = melody.get(i).get(j);
-                if (noteValue != 0) {
-                    if (count != 0){
-                        fitness += toFitness*((double)count/melody.get(i).size());
-                        toFitness = 0;
-                    }
-                    if (chrProgPattern.get(0).get(chrProg.get(i)).contains(Math.abs(noteValue - melodyKeyVal) % 12)) {
-                        toFitness += 1;
-                    }
-                    count = 1;
-                } else {
-                    count += 1;
-                }
+        for (int i = 1; i < melodyArray.size(); i++){
+            if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) <= 2){
+                fitness += 1;
             }
         }
-        fitness /= melody.size();
+        fitness /= melodyArray.size();
+
+
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
@@ -67,5 +56,4 @@ public class ChordToneObjective extends Objective {
 //        return fitness;
 
     }
-
 }

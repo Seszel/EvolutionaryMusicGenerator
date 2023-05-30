@@ -1,6 +1,7 @@
-package evolution.objective;
+package evolution.objective.subcriterion;
 
 import evolution.music.Representation;
+import evolution.objective.EvaluationParameters;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import lombok.var;
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class StepMotionObjective {
+public class SkipMotionObjective {
 
-    static final String name = "STEP_MOTION";
+    static final String name = "SKIP_MOTION";
 
 
     public static Double evaluate(Individual individual, EvaluationParameters pack) {
@@ -36,17 +37,16 @@ public class StepMotionObjective {
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
+
         List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
 
         for (int i = 1; i < melodyArray.size(); i++){
-            if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) <= 2){
+            if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) > 2){
                 fitness += 1;
             }
         }
         fitness /= melodyArray.size();
-
-
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();

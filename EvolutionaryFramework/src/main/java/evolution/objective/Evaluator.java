@@ -1,5 +1,9 @@
 package evolution.objective;
 
+import evolution.objective.subcriterion.ChordToneObjective;
+import evolution.objective.subcriterion.NonChordToneObjective;
+import evolution.objective.subcriterion.SkipMotionObjective;
+import evolution.objective.subcriterion.StepMotionObjective;
 import evolution.solution.Individual;
 import lombok.var;
 
