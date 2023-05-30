@@ -2,6 +2,7 @@ package evolution.operator;
 
 import evolution.music.Genome;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -14,8 +15,14 @@ public class Crossover {
     public static Pair<Genome, Genome> crossover(double crossoverProbability, List<Pair<String, Double>> crossoverType, Pair<Genome, Genome> parents) {
         Random randomObj = new Random();
 
+        double maxDouble = crossoverType.stream()
+                .mapToDouble(Pair::getValue)
+                .max()
+                .orElse(Double.MIN_VALUE);
+
         List<Pair<String, Double>> mutableList = new ArrayList<>(crossoverType);
         mutableList.sort(Comparator.comparing(Pair::getValue));
+        mutableList.replaceAll(pair -> new ImmutablePair<>(pair.getKey(), pair.getValue() / maxDouble));
 
         double randomProbability = randomObj.nextDouble();
         String crossoverName = "";

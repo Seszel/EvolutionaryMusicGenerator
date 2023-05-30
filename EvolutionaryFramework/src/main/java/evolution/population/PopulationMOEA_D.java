@@ -56,7 +56,6 @@ public class PopulationMOEA_D extends Population {
 
     public void setWeightVectors() {
         List<Pair<Integer, List<Double>>> weightVectors = new ArrayList<>();
-        double normalization;
         for (int i = 0; i < popSize; i++) {
             List<Double> temp = new ArrayList<>();
                 temp.add((double)i);

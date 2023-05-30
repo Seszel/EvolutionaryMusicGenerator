@@ -3,6 +3,7 @@ package evolution.operator;
 import com.google.common.collect.ImmutableList;
 import evolution.music.Genome;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
@@ -11,8 +12,17 @@ public class Mutation {
     public static Genome mutation(double mutationProbability, List<Pair<String, Double>> mutationType, Genome genome, ImmutableList<Integer> representation, int generationNumber) {
         Random randomObj = new Random();
 
+        double maxDouble = mutationType.stream()
+                .mapToDouble(Pair::getValue)
+                .max()
+                .orElse(Double.MIN_VALUE);
+
+
         List<Pair<String, Double>> mutableList = new ArrayList<>(mutationType);
+
         mutableList.sort(Comparator.comparing(Pair::getValue));
+        mutableList.replaceAll(pair -> new ImmutablePair<>(pair.getKey(), pair.getValue() / maxDouble));
+
         double randomProbability = randomObj.nextDouble();
         String mutationName = "";
         for (int i=0; i<mutableList.size(); i++){

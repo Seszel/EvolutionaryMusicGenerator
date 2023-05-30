@@ -37,7 +37,7 @@ public class Application {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 100;
+    private static final int NUMBER_OF_GENERATIONS = 1000;
     private static final int NUMBER_OF_ITERATIONS = 1;
 //    private static final List<String> CRITERIA = List.of("STABILITY");
 //    private static final List<String> CRITERIA = List.of("TENSION");
