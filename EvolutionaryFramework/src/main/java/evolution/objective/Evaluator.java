@@ -1,9 +1,6 @@
 package evolution.objective;
 
-import evolution.objective.subcriterion.ChordToneObjective;
-import evolution.objective.subcriterion.NonChordToneObjective;
-import evolution.objective.subcriterion.SkipMotionObjective;
-import evolution.objective.subcriterion.StepMotionObjective;
+import evolution.objective.subcriterion.*;
 import evolution.solution.Individual;
 import lombok.var;
 
@@ -40,6 +37,10 @@ public class Evaluator {
                 return StepMotionObjective.evaluate(individual, pack);
             case "SKIP_MOTION":
                 return SkipMotionObjective.evaluate(individual, pack);
+            case "PERFECT_INTERVAL":
+                return PerfectIntervalObjective.evaluate(individual, pack);
+            case "NON_PERFECT_INTERVAL":
+                return NonPerfectIntervalObjective.evaluate(individual, pack);
             default:
                 return null;
         }

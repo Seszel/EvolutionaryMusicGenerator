@@ -39,8 +39,9 @@ public class Application {
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 100;
     private static final int NUMBER_OF_ITERATIONS = 1;
-    private static final List<String> CRITERIA = List.of("SKIP_MOTION", "CHORD_TONE", "NON_CHORD_TONE");
-//private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TONE");
+    private static final List<String> CRITERIA = List.of("NON_PERFECT_INTERVAL", "PERFECT_INTERVAL");
+//    private static final List<String> CRITERIA = List.of("SKIP_MOTION", "STEP_MOTION");
+//    private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TONE");
 //    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
@@ -50,6 +51,8 @@ public class Application {
         put("NON_CHORD_TONE", new ImmutablePair<>(0.0,1.0));
         put("STEP_MOTION", new ImmutablePair<>(0.0,1.0));
         put("SKIP_MOTION", new ImmutablePair<>(0.0,1.0));
+        put("PERFECT_INTERVAL", new ImmutablePair<>(0.0,1.0));
+        put("NON_PERFECT_INTERVAL", new ImmutablePair<>(0.0,1.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
