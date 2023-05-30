@@ -2,6 +2,7 @@ package evolution.objective.subcriterion;
 
 import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
+import evolution.objective.Objective;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import lombok.var;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SkipMotionObjective {
+public class SkipMotionObjective extends Objective {
 
     static final String name = "SKIP_MOTION";
 

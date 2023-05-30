@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NonPerfectIntervalObjective extends Objective {
+public class DescendingMelodyLineObjective extends Objective {
 
-    static final String name = "NON_PERFECT_INTERVAL";
+    static final String name = "DESCENDING_MELODY_LINE";
 
 
     public static Double evaluate(Individual individual, EvaluationParameters pack) {
@@ -42,14 +42,14 @@ public class NonPerfectIntervalObjective extends Objective {
         List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
 
-        List<Integer> dissonances = List.of(1, 2, 6, 10, 11);
-        int interval;
-        for (int i = 1; i < melodyArray.size(); i++) {
-            interval = Math.abs(melodyArray.get(i - 1) - melodyArray.get(i));
-            if (dissonances.contains(interval)) {
-                fitness += 1.0/melodyArray.size();
+        for (int i = 1; i < melodyArray.size() - 1; i++){
+            if (melodyArray.get(i-1) - melodyArray.get(i) > 0){
+                if (melodyArray.get(i) - melodyArray.get(i+1) > 0) {
+                    fitness += 1;
+                }
             }
         }
+        fitness /= melodyArray.size();
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();

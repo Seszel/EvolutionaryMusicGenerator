@@ -21,8 +21,10 @@ public class PlayResultMelodies {
 //            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
 //            System.out.println(individual.getFitnessByName("STEP_MOTION"));
 //            System.out.println(individual.getFitnessByName("SKIP_MOTION"));
-            System.out.println(individual.getFitnessByName("PERFECT_INTERVAL"));
-            System.out.println(individual.getFitnessByName("NON_PERFECT_INTERVAL"));
+//            System.out.println(individual.getFitnessByName("PERFECT_INTERVAL"));
+//            System.out.println(individual.getFitnessByName("NON_PERFECT_INTERVAL"));
+            System.out.println(individual.getFitnessByName("DESCENDING_MELODY_LINE"));
+            System.out.println(individual.getFitnessByName("ASCENDING_MELODY_LINE"));
 
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){

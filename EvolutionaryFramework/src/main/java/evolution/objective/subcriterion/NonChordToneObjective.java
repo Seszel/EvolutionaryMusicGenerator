@@ -2,6 +2,7 @@ package evolution.objective.subcriterion;
 
 import evolution.music.Representation;
 import evolution.objective.EvaluationParameters;
+import evolution.objective.Objective;
 import evolution.solution.Individual;
 import lombok.var;
 import org.apache.commons.lang3.tuple.Pair;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NonChordToneObjective {
+public class NonChordToneObjective extends Objective {
 
     static final String name = "NON_CHORD_TONE";
 

@@ -41,6 +41,10 @@ public class Evaluator {
                 return PerfectIntervalObjective.evaluate(individual, pack);
             case "NON_PERFECT_INTERVAL":
                 return NonPerfectIntervalObjective.evaluate(individual, pack);
+            case "DESCENDING_MELODY_LINE":
+                return DescendingMelodyLineObjective.evaluate(individual, pack);
+            case "ASCENDING_MELODY_LINE":
+                return AscendingMelodyLineObjective.evaluate(individual, pack);
             default:
                 return null;
         }
