@@ -23,10 +23,17 @@ public class Evaluator {
     public static Double evaluate(Individual individual,
                                   String criterion,
                                   EvaluationParameters pack) {
-
-        if ("STABILITY".equals(criterion)) {
-            return StabilityObjective.evaluate(individual, pack);
+        switch(criterion) {
+            case "STABILITY":
+                return StabilityObjective.evaluate(individual, pack);
+            case "TENSION":
+                return TensionObjective.evaluate(individual, pack);
+            case "CHORD_TONE":
+                return ChordToneObjective.evaluate(individual, pack);
+            case "NON_CHORD_TONE":
+                return NonChordToneObjective.evaluate(individual, pack);
+            default:
+                return null;
         }
-        return TensionObjective.evaluate(individual, pack);
     }
 }

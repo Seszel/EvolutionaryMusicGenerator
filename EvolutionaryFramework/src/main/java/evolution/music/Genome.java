@@ -25,18 +25,21 @@ public class Genome {
         List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         for (int i = 0; i < melodyArray.size(); i++) {
             if (i == 0) {
-                pattern.append(melodyArray.get(i));
-            } else {
-                if (melodyArray.get(i) == -1) {
-                    durationValue = (double) count / maxNumberOfNotes;
-                    pattern.append("/").append(durationValue).append(" ");
-                    count = 1;
+                if (melodyArray.get(i) == -1){
                     pattern.append("R");
-                } else if (melodyArray.get(i) != 0) {
+                } else {
+                    pattern.append(melodyArray.get(i));
+                }
+            } else {
+                if (melodyArray.get(i) != 0) {
                     durationValue = (double) count / maxNumberOfNotes;
                     pattern.append("/").append(durationValue).append(" ");
                     count = 1;
-                    pattern.append(melodyArray.get(i));
+                    if (melodyArray.get(i) == -1){
+                        pattern.append("R");
+                    } else {
+                        pattern.append(melodyArray.get(i));
+                    }
                     if (i == melodyArray.size() - 1) {
                         durationValue = (double) count / maxNumberOfNotes;
                         pattern.append("/").append(durationValue).append(" ");

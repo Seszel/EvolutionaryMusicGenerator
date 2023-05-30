@@ -18,7 +18,7 @@ public class Application {
 //    private static final String ALGORITHM = "NSGA_II";
 //    private static final String ALGORITHM = "NSGA_II_oneCriterion";
     private static final String ALGORITHM = "MOEA_D";
-    private static final int POP_SIZE = 50;
+    private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
@@ -29,23 +29,26 @@ public class Application {
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 0.9),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.1)
     );
-    private static final double MUTATION_PROBABILITY = 0.5;
+    private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("BAR_ORDER_AND_SIMPLE", 1.0),
-            new ImmutablePair<>("SIMPLE", 0.8),
-            new ImmutablePair<>("BAR_ORDER", 0.2)
+            new ImmutablePair<>("SIMPLE", 0.0),
+            new ImmutablePair<>("BAR_ORDER", 0.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 1000;
+    private static final int NUMBER_OF_GENERATIONS = 100;
     private static final int NUMBER_OF_ITERATIONS = 1;
 //    private static final List<String> CRITERIA = List.of("STABILITY");
 //    private static final List<String> CRITERIA = List.of("TENSION");
-    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
+private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TONE");
+//    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
         put("STABILITY", new ImmutablePair<>(-123.0,240.0));
         put("TENSION", new ImmutablePair<>(-45.0,117.0));
+        put("CHORD_TONE", new ImmutablePair<>(0.0,1.0));
+        put("NON_CHORD_TONE", new ImmutablePair<>(0.0,1.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;

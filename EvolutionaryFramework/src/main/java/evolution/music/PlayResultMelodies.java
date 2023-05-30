@@ -14,8 +14,11 @@ public class PlayResultMelodies {
             Player player = new Player();
 
             System.out.println(individual.getGenome().getMelodyJFugue());
-            System.out.println(individual.getFitnessByName("TENSION"));
-            System.out.println(individual.getFitnessByName("STABILITY"));
+            System.out.println(individual.getGenome().getMelody());
+//            System.out.println(individual.getFitnessByName("TENSION"));
+//            System.out.println(individual.getFitnessByName("STABILITY"));
+            System.out.println(individual.getFitnessByName("CHORD_TONE"));
+            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
 
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){

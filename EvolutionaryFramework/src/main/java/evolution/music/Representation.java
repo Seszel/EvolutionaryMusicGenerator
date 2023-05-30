@@ -16,7 +16,10 @@ public class Representation {
 //            System.out.println("Representation f1");
             ArrayList<Integer> reprList = new ArrayList<>();
             // C4 - C7
-            for (int i = 48; i < 85; i++) {
+//            for (int i = 48; i < 85; i++) {
+//                reprList.add(i);
+//            }
+            for (int i = 50; i < 75; i++) {
                 reprList.add(i);
             }
 //            reprList.add(0);
