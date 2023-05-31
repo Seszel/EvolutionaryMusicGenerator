@@ -97,94 +97,132 @@ public class Mutation {
                                                          int melodyKeyVal){
         Random randomObj = new Random();
 
-        int idx, closestNumber,
-            neighbourRight1, neighbourRight2,
-            neighbourLeft1, neighbourLeft2,
-            oldNote;
+        int idx, idxLocal, closestNumber, oldNote, maxNumberOfNotes, idxCounter, chordNote, modulo;
+        int neighbourRight1 = 0;
+        int neighbourRight2 = 0;
+        int neighbourLeft1 = 0;
+        int neighbourLeft2 = 0;
         int newNote = 0;
-        int maxNumberOfNotes = genome.getMelody().get(0).size();
-//        boolean nL1 = false, nL2 = false, nR1 = false, nR2 = false;
+        boolean nL1 = false, nL2 = false, nR1 = false, nR2 = false;
+        int reprMax = representation
+                .stream()
+                .mapToInt(v -> v)
+                .max()
+                .orElseThrow();
+        int reprMin = representation
+                .stream()
+                .mapToInt(v -> v)
+                .min()
+                .orElseThrow();
 
-        for (int i = 0; i < genome.getMelody().size(); i++) {
+        List<List<Integer>> melodyArray = new ArrayList<>();
+        for (List<Integer> sublist : genome.getMelody()) {
+            List<Integer> copiedSublist = new ArrayList<>(sublist);
+            melodyArray.add(copiedSublist);
+        }
+
+        melodyArray.forEach(list -> list.removeIf(num -> num == 0 || num == -1));
+
+        for (int i = 0; i < melodyArray.size(); i++) {
             List<Integer> chordNotes = chrProgPattern.get(0).get(chrProg.get(i));
-            idx = Util.getRandomNumber(0, maxNumberOfNotes);
-            oldNote = genome.getMelody().get(i).get(idx);
-            if (oldNote != 0 && oldNote != -1) {
+            maxNumberOfNotes = melodyArray.get(i).size();
+            if (maxNumberOfNotes == 0) {
+                System.out.println("Hello");
+                System.out.println(i);
+            }
+            idxLocal = Util.getRandomNumber(0, maxNumberOfNotes);
+            oldNote = melodyArray.get(i).get(idxLocal);
+            if (idxLocal < maxNumberOfNotes - 1 ){
+                nR1 = true;
+                neighbourRight1 = melodyArray.get(i).get(idxLocal+1);
+            }
+            if (idxLocal < maxNumberOfNotes - 2){
+                nR2 = true;
+                neighbourRight2 = melodyArray.get(i).get(idxLocal+2);
+            }
+            if (idxLocal > 1){
+                nL2 = true;
+                neighbourLeft2 = melodyArray.get(i).get(idxLocal-2);
+            }
+            if (idxLocal > 0){
+                nL1 = true;
+                neighbourLeft1 = melodyArray.get(i).get(idxLocal-1);
+            }
 
-                neighbourRight1 = genome.getMelody().get(i).get(idx+1);
-                neighbourRight2 = genome.getMelody().get(i).get(idx+2);
-                neighbourLeft1 = genome.getMelody().get(i).get(idx-1);
-                neighbourLeft2 = genome.getMelody().get(i).get(idx-2);
+            if (!chordNotes.contains(Math.abs(neighbourRight1 - melodyKeyVal) % 12) && nR1 && nR2){
+                if (!chordNotes.contains(Math.abs(neighbourRight2 - melodyKeyVal) % 12)){
 
-//                if (idx < maxNumberOfNotes - 2){
-//                    nR2 = true;
-//                    nR1 = true;
-//                    neighbourRight1 = genome.getMelody().get(i).get(idx+1);
-//                    neighbourRight2 = genome.getMelody().get(i).get(idx+2);
-//                } else if (idx < maxNumberOfNotes - 1){
-//                    nR1 = true;
-//                    neighbourRight1 = genome.getMelody().get(i).get(idx+1);
-//                } else if (idx > 1){
-//                    nL1 = true;
-//                    nL2 = true;
-//                    neighbourLeft1 = genome.getMelody().get(i).get(idx-1);
-//                    neighbourLeft2 = genome.getMelody().get(i).get(idx-2);
-//                }
-//                else if (idx > 0){
-//                    nL1 = true;
-//                    neighbourLeft1 = genome.getMelody().get(i).get(idx-1);
-//                }
+                    chordNote = chordNotes.get(new Random().nextInt(chordNotes.size()));
+                    modulo = (oldNote - melodyKeyVal) % 12;
 
-                if (!chordNotes.contains(Math.abs(neighbourRight1 - melodyKeyVal) % 12)){
-                    if (!chordNotes.contains(Math.abs(neighbourRight2 - melodyKeyVal) % 12)){
-
-                        newNote = chordNotes.get(new Random().nextInt(chordNotes.size()));
+                    if (randomObj.nextDouble()<0.5){
+                        newNote = oldNote + (chordNote - modulo);
+                    } else {
+                        newNote = oldNote - (12 - (chordNote - modulo));
                     }
-                } else if (!chordNotes.contains(Math.abs(neighbourLeft2 - melodyKeyVal) % 12)) {
-                    if (!chordNotes.contains(Math.abs(neighbourLeft1 - melodyKeyVal) % 12)){
+
+
+                }
+            } else if (!chordNotes.contains(Math.abs(neighbourLeft2 - melodyKeyVal) % 12) && nL1 && nL2) {
+                if (!chordNotes.contains(Math.abs(neighbourLeft1 - melodyKeyVal) % 12)){
+
+                    final int nonChordNote = Math.abs(neighbourLeft1 - melodyKeyVal) % 12;
+                    closestNumber = chordNotes.stream()
+                            .min(Comparator.comparingInt(a -> Math.abs(a - nonChordNote)))
+                            .orElseThrow();
+                    newNote = neighbourLeft1 + (closestNumber-nonChordNote);
+                }
+            } else if (!chordNotes.contains(Math.abs(neighbourLeft1 - melodyKeyVal) % 12) && nL1 && nR1) {
+                if (!chordNotes.contains(Math.abs(neighbourRight1 - melodyKeyVal) % 12)) {
+
+                    if (randomObj.nextDouble() < 0.5){
 
                         final int nonChordNote = Math.abs(neighbourLeft1 - melodyKeyVal) % 12;
                         closestNumber = chordNotes.stream()
                                 .min(Comparator.comparingInt(a -> Math.abs(a - nonChordNote)))
                                 .orElseThrow();
-                        newNote = chordNotes.get(neighbourLeft1 + (closestNumber-nonChordNote));
+                        newNote = neighbourLeft1 + (closestNumber-nonChordNote);
+
+                    } else {
+
+                        final int nonChordNote = Math.abs(neighbourRight1 - melodyKeyVal) % 12;
+                        closestNumber = chordNotes.stream()
+                                .min(Comparator.comparingInt(a -> Math.abs(a - nonChordNote)))
+                                .orElseThrow();
+                        newNote = neighbourRight1 + (closestNumber-nonChordNote);
                     }
-                } else if (!chordNotes.contains(Math.abs(neighbourLeft1 - melodyKeyVal) % 12)) {
-                    if (!chordNotes.contains(Math.abs(neighbourRight1 - melodyKeyVal) % 12)) {
-
-                        if (randomObj.nextDouble() < 0.5){
-
-                            final int nonChordNote = Math.abs(neighbourLeft1 - melodyKeyVal) % 12;
-                            closestNumber = chordNotes.stream()
-                                    .min(Comparator.comparingInt(a -> Math.abs(a - nonChordNote)))
-                                    .orElseThrow();
-                            newNote = chordNotes.get(neighbourLeft1 + (closestNumber-nonChordNote));
-                        } else {
-
-                            final int nonChordNote = Math.abs(neighbourRight1 - melodyKeyVal) % 12;
-                            closestNumber = chordNotes.stream()
-                                    .min(Comparator.comparingInt(a -> Math.abs(a - nonChordNote)))
-                                    .orElseThrow();
-                            newNote = chordNotes.get(neighbourRight1 + (closestNumber-nonChordNote));
+                }
+            } else if (maxNumberOfNotes < 3 || idxLocal == maxNumberOfNotes || idxLocal == 0){
+                newNote = representation.get(Util.getRandomNumber(0, representation.size() - 1));
+            } else {
+                List<Integer> generatedNumbers = new ArrayList<>();
+                for (int k = reprMin; k <= reprMax; k++) {
+                    if (Math.abs(k - neighbourLeft1) <= 14 && Math.abs(k - neighbourRight1) <= 14) {
+                        if (Math.abs(k-oldNote) > 9){
+                            generatedNumbers.add(k);
                         }
                     }
-                } else {
-                    newNote = 0;
-//                    double randomProbability = randomObj.nextDouble();
-//                    if (randomProbability < (double)1/3){
-//
-//                    } else if (randomProbability < (double)2/3){
-//
-//                    } else {
-//
-//                    }
-                    genome.getMelody().get(i).set(idx, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
                 }
-                genome.getMelody().get(i).set(idx, newNote);
-            } else {
-                genome.getMelody().get(i).set(idx, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
+                newNote = generatedNumbers.isEmpty() ?
+                        representation.get(Util.getRandomNumber(0, representation.size() - 1))
+                        : generatedNumbers.get(new Random().nextInt(generatedNumbers.size()));
             }
 
+            idxCounter = -1;
+            idx = 0;
+            for (int j=0; j<genome.getMelody().get(i).size(); j++){
+                if (genome.getMelody().get(i).get(j) != 0 && genome.getMelody().get(i).get(j) != -1){
+                    idxCounter += 1;
+                }
+                if (idxCounter == idxLocal){
+                    idx = j;
+                    break;
+                }
+                if (j==genome.getMelody().get(i).size()-1){
+                    idx = j;
+                }
+            }
+            genome.getMelody().get(i).set(idx, newNote);
         }
         return genome;
     }

@@ -98,14 +98,9 @@ public class Individual {
     }
 
     public void repairIndividual(ImmutableList<Integer> representation) {
-        Random randomObj = new Random();
         for (List<Integer> bar : genome.getMelody()) {
             if (bar.get(0) == 0) {
-                if (randomObj.nextDouble() <= 0.1) {
-                    bar.set(0, -1);
-                } else {
-                    bar.set(0, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
-                }
+                bar.set(0, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
             }
         }
     }

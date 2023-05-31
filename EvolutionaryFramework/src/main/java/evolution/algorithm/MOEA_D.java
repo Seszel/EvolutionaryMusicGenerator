@@ -104,11 +104,13 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 Pair<Genome, Genome> offsprings = Crossover.crossover(getCrossoverProbability(), getCrossoverType(), parents);
                 if (random.nextDouble() <= 0.5) {
                     assert offsprings != null;
+                    offsprings.getLeft().repairIndividualGenome(representation);
                     offspring = new Individual(
                             Mutation.mutation(getMutationProbability(), getMutationType(),
                                     offsprings.getLeft(), representation, g, params));
                 } else {
                     assert offsprings != null;
+                    offsprings.getRight().repairIndividualGenome(representation);
                     offspring = new Individual(
                             Mutation.mutation(getMutationProbability(), getMutationType(),
                                     offsprings.getRight(), representation, g, params));

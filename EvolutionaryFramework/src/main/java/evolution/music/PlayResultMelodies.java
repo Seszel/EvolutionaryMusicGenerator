@@ -18,7 +18,7 @@ public class PlayResultMelodies {
 //            System.out.println(individual.getFitnessByName("TENSION"));
 //            System.out.println(individual.getFitnessByName("STABILITY"));
             System.out.println(individual.getFitnessByName("CHORD_TONE"));
-//            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
+            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
 //            System.out.println(individual.getFitnessByName("STEP_MOTION"));
 //            System.out.println(individual.getFitnessByName("SKIP_MOTION"));
 //            System.out.println(individual.getFitnessByName("PERFECT_INTERVAL"));
@@ -45,8 +45,12 @@ public class PlayResultMelodies {
                     .setTempo(90)
                     .setInstrument("Piano")
                     .setVoice(1);
-//            player.play(chords, pattern);
+            Pattern music = new Pattern(chords, pattern);
+
+//            player.play(chords);
 //            player.play(pattern);
+            player.play(chords, pattern);
+//            player.play(music);
         }
     }
 }

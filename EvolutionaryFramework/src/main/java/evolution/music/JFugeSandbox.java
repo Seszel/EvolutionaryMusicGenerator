@@ -24,7 +24,7 @@ public class JFugeSandbox {
         }
 
         Pattern chords = new ChordProgression("I V vi IV")
-                .setKey("A")
+                .setKey("C")
                 .allChordsAs(durationOfChords.toString())
                 .getPattern()
                 .setVoice(0)
@@ -33,8 +33,8 @@ public class JFugeSandbox {
 
         Pattern melody = new Pattern("X[Volume]=13000"
         +
-                "57/0.0625 50/0.0625 73/0.3125 61/0.5 69/0.0625 64/0.5625 71/0.375 50/0.0625 69/0.25 66/0.125 61/0.3125 69/0.25 53/0.0625 66/0.625 52/0.1875 69/0.125 55/0.0625"
-                )
+                "52/0.75 55/0.125 60/0.0625 52/0.0625 50/0.5625 62/0.3125 59/0.0625 59/0.0625 57/0.625 52/0.25 36/0.0625 57/0.0625 48/0.0625 60/0.5 48/0.3125 57/0.0625 R/0.0625"
+        )
                 .setTempo(90)
                 .setInstrument("Piano")
                 .setVoice(1);

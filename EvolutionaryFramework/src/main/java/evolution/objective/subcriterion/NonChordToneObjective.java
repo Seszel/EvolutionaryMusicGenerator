@@ -57,6 +57,10 @@ public class NonChordToneObjective extends Objective {
                 } else {
                     count += 1;
                 }
+                if (j == (melody.get(i).size()-1) && noteValue == 0){
+                    fitness += toFitness*((double)count/melody.get(i).size());
+                    toFitness = 0;
+                }
             }
         }
         fitness /= melody.size();

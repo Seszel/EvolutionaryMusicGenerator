@@ -23,7 +23,7 @@ public class Application {
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
-    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("A", "MAJOR");
+    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
     private static final double CROSSOVER_PROBABILITY = 0.9;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 0.9),
@@ -31,11 +31,11 @@ public class Application {
     );
     private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 1.0),
+            new ImmutablePair<>("SIMPLE", 0.0),
             new ImmutablePair<>("BAR_ORDER", 0.0),
             new ImmutablePair<>("ADD_ZERO", 0.0),
             new ImmutablePair<>("ADD_REST", 0.0),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 0.0)
+            new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";

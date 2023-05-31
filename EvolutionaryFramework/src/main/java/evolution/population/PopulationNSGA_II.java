@@ -125,6 +125,8 @@ public class PopulationNSGA_II extends Population {
         for (Pair<Individual, Individual> individualPair : matingPool) {
             Pair<Genome, Genome> genomePair = new MutablePair<>(individualPair.getLeft().getGenome(), individualPair.getRight().getGenome());
             offspringsCrossover = Crossover.crossover(crossoverProbability, crossoverType, genomePair);
+            offspringsCrossover.getRight().repairIndividualGenome(representation);
+            offspringsCrossover.getLeft().repairIndividualGenome(representation);
             Individual individual1, individual2;
             individual1 = new Individual(Mutation.mutation(mutationProbability, mutationType,offspringsCrossover.getLeft(), representation, generationNumber, evalParams));
             individual2 = new Individual(Mutation.mutation(mutationProbability, mutationType, offspringsCrossover.getRight(), representation, generationNumber, evalParams));
