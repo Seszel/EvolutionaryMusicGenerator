@@ -31,11 +31,11 @@ public class Application {
     );
     private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 0.0),
+            new ImmutablePair<>("SIMPLE", 5.0),
             new ImmutablePair<>("BAR_ORDER", 0.0),
             new ImmutablePair<>("ADD_ZERO", 0.0),
-            new ImmutablePair<>("ADD_REST", 0.0),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
+            new ImmutablePair<>("ADD_REST", 2.0),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 3.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
