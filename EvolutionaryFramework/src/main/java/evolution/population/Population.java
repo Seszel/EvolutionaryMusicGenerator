@@ -41,6 +41,7 @@ public abstract class Population {
             Genome genome = new Genome();
             assert representation != null;
             genome.initializeMelody(representation, representationType, numberOfBars, maxNumberOfNotes);
+            genome.repairIndividualGenome(representation);
             genome.setMelodyJFugue(maxNumberOfNotes);
             Individual individual = new Individual(genome);
 

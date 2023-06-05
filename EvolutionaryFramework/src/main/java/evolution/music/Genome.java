@@ -40,12 +40,12 @@ public class Genome {
                     } else {
                         pattern.append(melodyArray.get(i));
                     }
-                    if (i == melodyArray.size() - 1) {
-                        durationValue = (double) count / maxNumberOfNotes;
-                        pattern.append("/").append(durationValue).append(" ");
-                    }
                 } else {
                     count += 1;
+                }
+                if (i == melodyArray.size() - 1) {
+                    durationValue = (double) count / maxNumberOfNotes;
+                    pattern.append("/").append(durationValue).append(" ");
                 }
             }
         }

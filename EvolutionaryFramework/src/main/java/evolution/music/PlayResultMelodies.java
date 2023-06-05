@@ -41,16 +41,16 @@ public class PlayResultMelodies {
                     .setInstrument("Piano")
                     .setTempo(90);
 
-            Pattern pattern = new Pattern("X[Volume]=15000" + individual.getGenome().getMelodyJFugue())
+            Pattern melody = new Pattern(individual.getGenome().getMelodyJFugue())
                     .setTempo(90)
                     .setInstrument("Piano")
                     .setVoice(1);
-            Pattern music = new Pattern(chords, pattern);
+            Pattern music = new Pattern().add(chords).add(melody);
 
 //            player.play(chords);
 //            player.play(pattern);
-            player.play(chords, pattern);
-//            player.play(music);
+//            player.play(chords, pattern);
+            player.play(music);
         }
     }
 }

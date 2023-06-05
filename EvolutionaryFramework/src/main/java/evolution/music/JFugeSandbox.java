@@ -17,6 +17,7 @@ public class JFugeSandbox {
 
 
         Player player = new Player();
+//        player.play("67/0.875 67/0.0625 67/0.0625 67/0.75 71/0.0625 59/0.0625 62/0.0625 55/0.0625 64/0.875 72/0.0625 60/0.0625 69/0.8125 60/0.0625 36/0.0625 65/0.0625 ");
 
         StringBuilder durationOfChords = new StringBuilder();
         for (int i=0; i<4; i++){
@@ -31,17 +32,14 @@ public class JFugeSandbox {
                 .setInstrument("Piano")
                 .setTempo(90);
 
-        Pattern melody = new Pattern("X[Volume]=13000"
-        +
-                "52/0.75 55/0.125 60/0.0625 52/0.0625 50/0.5625 62/0.3125 59/0.0625 59/0.0625 57/0.625 52/0.25 36/0.0625 57/0.0625 48/0.0625 60/0.5 48/0.3125 57/0.0625 R/0.0625"
-        )
+        Pattern mel = new Pattern("67/0.875 67/0.0625 67/0.0625 67/0.75 71/0.0625 59/0.0625 62/0.0625 55/0.0625 64/0.875 72/0.0625 60/0.0625 69/0.8125 60/0.0625 36/0.0625 65/0.0625 ")
                 .setTempo(90)
                 .setInstrument("Piano")
                 .setVoice(1);
 
-        Pattern music = new Pattern(chords, melody);
-//        player.play(melody);
+        Pattern music = new Pattern().add(chords).add(mel);
         player.play(music);
+
 
 
 
