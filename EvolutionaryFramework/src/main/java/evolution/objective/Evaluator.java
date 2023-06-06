@@ -1,5 +1,9 @@
 package evolution.objective;
 
+import evolution.objective.criterion.ComplicatedAndEnigmatic;
+import evolution.objective.criterion.SimpleAndObvious;
+import evolution.objective.criterion.StabilityObjective;
+import evolution.objective.criterion.TensionObjective;
 import evolution.objective.subcriterion.*;
 import evolution.solution.Individual;
 
@@ -50,6 +54,10 @@ public class Evaluator {
                 return ComplicatedRhythmObjective.evaluate(individual, pack);
             case "UNDESIRABLE_PROPERTIES_MELODY":
                 return UndesirablePropertiesMelodyObjective.evaluate(individual, pack);
+            case "SIMPLE_AND_OBVIOUS":
+                return SimpleAndObvious.evaluate(individual, pack);
+            case "COMPLICATED_AND_ENIGMATIC":
+                return ComplicatedAndEnigmatic.evaluate(individual, pack);
             default:
                 return null;
         }

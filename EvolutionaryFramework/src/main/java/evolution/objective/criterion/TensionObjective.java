@@ -1,6 +1,8 @@
-package evolution.objective;
+package evolution.objective.criterion;
 
 import evolution.music.Representation;
+import evolution.objective.EvaluationParameters;
+import evolution.objective.Objective;
 import evolution.solution.Individual;
 import evolution.util.Util;
 import org.apache.commons.lang3.tuple.Pair;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TensionObjective extends Objective{
+public class TensionObjective extends Objective {
 
     static final String name = "TENSION";
 

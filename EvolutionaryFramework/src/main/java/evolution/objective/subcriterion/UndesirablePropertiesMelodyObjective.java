@@ -44,12 +44,12 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         // Rule 1
 
         double UT = 0;
-        int noteValue, nextNoteValue, closestNumber, properNote;
+        int noteValue, nextNoteValue;
 
         int numberOfBars = melody.size();
         int numberOfNotes = melody.get(0).size();
         int numberOfCurrentBar = -1;
-        int idx, idx1;
+        int idx, idx1, tempValue;
 
         List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
 
@@ -59,6 +59,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                 .collect(Collectors.toList());
 
         List<Integer> chordNotes, chordNotes2;
+
 
         for (int i=0; i<strongBeatsIdx.size() - 1; i++){
             if (i%(numberOfNotes/4) == 0){
@@ -76,30 +77,30 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                 chordNotes2 = chordNotes;
             }
 
+            tempValue = 0;
             if (noteValue != 0 && noteValue != -1){
                 if (!chordNotes.contains(Math.abs(noteValue - melodyKeyVal) % 12)){
-                    UT += 1;
                     if (nextNoteValue != 0 && nextNoteValue != -1) {
                         if (!chordNotes2.contains(Math.abs(nextNoteValue - melodyKeyVal) % 12)) {
-                            UT += 1;
-                        } else {
-                            final int nonChordNote = Math.abs(noteValue - melodyKeyVal) % 12;
-                            closestNumber = chordNotes2.stream()
-                                    .min(Comparator.comparingInt(a -> Math.abs(a - nonChordNote)))
-                                    .orElseThrow();
-                            properNote = noteValue + (closestNumber - nonChordNote);
-                            if (nextNoteValue != properNote) {
-                                UT += 1;
-                            }
+                            tempValue += 1;
+                        }
+                        if ( Math.abs(nextNoteValue - noteValue) - 2 >= 0 ) {
+                            tempValue += 1;
                         }
                     }
                 }
             }
+            UT += tempValue;
         }
 
         fitness += UT/(2*strongBeatsIdx.size());
 
+
         // Rule2
+
+
+
+
 
 
 

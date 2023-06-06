@@ -16,8 +16,8 @@ import java.util.List;
 public class Application {
 
 //    private static final String ALGORITHM = "NSGA_II";
-    private static final String ALGORITHM = "NSGA_II_oneCriterion";
-//    private static final String ALGORITHM = "MOEA_D";
+//    private static final String ALGORITHM = "NSGA_II_oneCriterion";
+    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
@@ -30,12 +30,12 @@ public class Application {
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.0),
             new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
     );
-    private static final double MUTATION_PROBABILITY = 0.8;
+    private static final double MUTATION_PROBABILITY = 0.2;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 0.0),
+            new ImmutablePair<>("SIMPLE", 1.0),
             new ImmutablePair<>("BAR_ORDER", 0.0),
             new ImmutablePair<>("ADD_ZERO", 0.0),
-            new ImmutablePair<>("ADD_REST", 0.0),
+            new ImmutablePair<>("ADD_REST", 0.5),
             new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
     );
     private static final String SELECTION_TYPE = "";
@@ -48,7 +48,13 @@ public class Application {
 //    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
 //    private static final List<String> CRITERIA = List.of("DESCENDING_MELODY_LINE", "ASCENDING_MELODY_LINE");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_RHYTHM", "COMPLICATED_RHYTHM");
-    private static final List<String> CRITERIA = List.of("UNDESIRABLE_PROPERTIES_MELODY");
+//    private static final List<String> CRITERIA = List.of("UNDESIRABLE_PROPERTIES_MELODY");
+//private static final List<String> CRITERIA = List.of("STEP_MOTION", "CHORD_TONE", "PERFECT_INTERVAL", "ASCENDING_MELODY_LINE");
+    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
+//    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS");
+//    private static final List<String> CRITERIA = List.of("COMPLICATED_AND_ENIGMATIC");
+
+
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
         put("STABILITY", new ImmutablePair<>(-123.0,240.0));
@@ -64,10 +70,12 @@ public class Application {
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-1.0,0.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,7.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,7.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
-    private static final boolean PLAY = true;
+    private static final boolean PLAY = false;
 
     public static void main(String[] args) {
         runAlgorithm();
