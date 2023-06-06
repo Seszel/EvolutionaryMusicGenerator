@@ -48,6 +48,8 @@ public class Evaluator {
                 return SimpleRhythmObjective.evaluate(individual, pack);
             case "COMPLICATED_RHYTHM":
                 return ComplicatedRhythmObjective.evaluate(individual, pack);
+            case "UNDESIRABLE_PROPERTIES_MELODY":
+                return UndesirablePropertiesMelodyObjective.evaluate(individual, pack);
             default:
                 return null;
         }

@@ -32,11 +32,11 @@ public class Application {
     );
     private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 5.0),
+            new ImmutablePair<>("SIMPLE", 0.0),
             new ImmutablePair<>("BAR_ORDER", 0.0),
             new ImmutablePair<>("ADD_ZERO", 0.0),
-            new ImmutablePair<>("ADD_REST", 2.0),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 3.0)
+            new ImmutablePair<>("ADD_REST", 0.0),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
@@ -48,7 +48,7 @@ public class Application {
 //    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
 //    private static final List<String> CRITERIA = List.of("DESCENDING_MELODY_LINE", "ASCENDING_MELODY_LINE");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_RHYTHM", "COMPLICATED_RHYTHM");
-    private static final List<String> CRITERIA = List.of("CHORD_TONE");
+    private static final List<String> CRITERIA = List.of("UNDESIRABLE_PROPERTIES_MELODY");
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
         put("STABILITY", new ImmutablePair<>(-123.0,240.0));
@@ -63,6 +63,7 @@ public class Application {
         put("DESCENDING_MELODY_LINE", new ImmutablePair<>(0.0,1.0));
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
+        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-1.0,0.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
