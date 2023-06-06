@@ -135,7 +135,7 @@ public class Mutation {
 
             for (int j=idxLocal-1; j>=0; j--){
                 if (!nL1 || !nL2){
-                    if (barNotes.get(j)!=0){
+                    if (barNotes.get(j)!=0 && barNotes.get(j)!=-1){
                         if (!nL1){
                             neighbourLeft1 = barNotes.get(j);
                             nL1 = true;
@@ -151,7 +151,7 @@ public class Mutation {
             }
             for (int j=idxLocal+1; j<melodyArray.size(); j++){
                 if (!nR1 || !nR2){
-                    if (barNotes.get(j)!=0){
+                    if (barNotes.get(j)!=0 && barNotes.get(j)!=-1){
                         if (!nR1){
                             neighbourRight1 = barNotes.get(j);
                             nR1 = true;
@@ -214,7 +214,7 @@ public class Mutation {
                 List<Integer> generatedNumbers = new ArrayList<>();
                 for (int k = reprMin; k <= reprMax; k++) {
                     if (Math.abs(k - neighbourLeft1) <= 14 && Math.abs(k - neighbourRight1) <= 14) {
-                        if (Math.abs(k-oldNote) > 9){
+                        if (Math.abs(k-oldNote) > 14){
                             generatedNumbers.add(k);
                         }
                     }

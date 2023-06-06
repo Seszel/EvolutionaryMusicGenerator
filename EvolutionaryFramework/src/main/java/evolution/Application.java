@@ -26,8 +26,9 @@ public class Application {
     private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
     private static final double CROSSOVER_PROBABILITY = 0.9;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
-            new ImmutablePair<>("ONE_POINT_CROSSOVER", 0.9),
-            new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.1)
+            new ImmutablePair<>("ONE_POINT_CROSSOVER", 0.0),
+            new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.0),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
     );
     private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(

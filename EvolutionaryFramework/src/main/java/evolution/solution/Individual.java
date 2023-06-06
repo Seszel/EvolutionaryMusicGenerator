@@ -99,7 +99,7 @@ public class Individual {
 
     public void repairIndividual(ImmutableList<Integer> representation) {
         for (List<Integer> bar : genome.getMelody()) {
-            if (bar.get(0) == 0) {
+            if (bar.get(0) == 0 || bar.get(0) == -1) {
                 bar.set(0, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
             }
         }

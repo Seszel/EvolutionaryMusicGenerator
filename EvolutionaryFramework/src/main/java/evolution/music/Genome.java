@@ -97,7 +97,7 @@ public class Genome {
 
     public void repairIndividualGenome(ImmutableList<Integer> representation) {
         for (List<Integer> bar : getMelody()) {
-            if (bar.get(0) == 0) {
+            if (bar.get(0) == 0 || bar.get(0) == -1) {
                 bar.set(0, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
             }
         }
