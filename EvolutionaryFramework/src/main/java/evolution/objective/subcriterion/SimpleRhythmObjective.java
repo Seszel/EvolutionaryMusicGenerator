@@ -86,7 +86,7 @@ public class SimpleRhythmObjective extends Objective {
         double fitnessSameRhythm = 0;
         double fitnessDuration = 0;
         int countSimilarPossibilities = 0;
-        List<Integer> powersOfTwo = IntStream.rangeClosed(0, (int)Math.sqrt(melody.get(0).size()))
+        List<Integer> powersOfTwo = IntStream.rangeClosed(2, (int)Math.sqrt(melody.get(0).size()))
                 .mapToObj(i -> (int) Math.pow(2, i))
                 .collect(Collectors.toList());
         for (int i=0; i<durations.size(); i++){
@@ -110,9 +110,11 @@ public class SimpleRhythmObjective extends Objective {
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
-        return ( fitness - min ) / ( max - min );
+//        return ( fitness - min ) / ( max - min );
 
-//        return fitness;
+        fitness += UndesirablePropertiesMelodyObjective.evaluate(individual, pack);
+
+        return fitness;
 
     }
 

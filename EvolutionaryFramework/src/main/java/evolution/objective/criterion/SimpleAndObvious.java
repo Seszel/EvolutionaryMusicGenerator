@@ -2,10 +2,7 @@ package evolution.objective.criterion;
 
 import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
-import evolution.objective.subcriterion.ChordToneObjective;
-import evolution.objective.subcriterion.DescendingMelodyLineObjective;
-import evolution.objective.subcriterion.PerfectIntervalObjective;
-import evolution.objective.subcriterion.StepMotionObjective;
+import evolution.objective.subcriterion.*;
 import evolution.solution.Individual;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -24,14 +21,14 @@ public class SimpleAndObvious extends Objective {
 
         double fitness = 0;
 
-        List<Double> weights = List.of(3.0, 2.0, 1.0, 1.0);
+        List<Double> weights = List.of(3.0, 2.0, 1.0, 1.0, 0.5, 100.0);
 
         double chordToneFitness = ChordToneObjective.evaluate(individual, pack);
         double stepMotionFitness = StepMotionObjective.evaluate(individual, pack);
         double descendingMelodyLineFitness = DescendingMelodyLineObjective.evaluate(individual, pack);
         double perfectIntervalFitness = PerfectIntervalObjective.evaluate(individual, pack);
-        // rhytm to do
-        // penalty to do
+        double simpleRhythmFitness =SimpleRhythmObjective.evaluate(individual,pack);
+        double undesirablePropertiesMelodyFitness = UndesirablePropertiesMelodyObjective.evaluate(individual,pack);
 
         for (int i = 0; i < weights.size(); i++){
             switch (i){
@@ -46,6 +43,12 @@ public class SimpleAndObvious extends Objective {
                     break;
                 case 3:
                     fitness += weights.get(i)*perfectIntervalFitness;
+                    break;
+                case 4:
+                    fitness += weights.get(i)*simpleRhythmFitness;
+                    break;
+                case 5:
+                    fitness += weights.get(i)*undesirablePropertiesMelodyFitness;
                     break;
             }
         }

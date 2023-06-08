@@ -298,7 +298,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         fitness += BL/(updatedMelodyArray.size() - 1);
 
 
-        return  fitness ;
+        return  -fitness ;
 
 
     }

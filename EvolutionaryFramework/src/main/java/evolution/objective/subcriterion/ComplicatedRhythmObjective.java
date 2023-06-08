@@ -39,7 +39,7 @@ public class ComplicatedRhythmObjective extends Objective {
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
 
-        return fitness;
+        return -fitness;
 
     }
 
