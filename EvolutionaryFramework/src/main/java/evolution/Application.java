@@ -51,7 +51,7 @@ public class Application {
     private static final List<String> CRITERIA = List.of("UNDESIRABLE_PROPERTIES_MELODY");
 //private static final List<String> CRITERIA = List.of("STEP_MOTION", "CHORD_TONE", "PERFECT_INTERVAL", "ASCENDING_MELODY_LINE");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
-//    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS");
+//    private static final List<String> CRITERIA = List.of("NON_CHORD_TONE");
 //    private static final List<String> CRITERIA = List.of("COMPLICATED_AND_ENIGMATIC");
 
 

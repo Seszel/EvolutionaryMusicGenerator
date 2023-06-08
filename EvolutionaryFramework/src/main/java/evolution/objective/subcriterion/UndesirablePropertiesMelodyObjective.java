@@ -101,7 +101,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
             UT += tempValue;
         }
 
-        MNC += UT/(2*strongBeatsIdx.size());
+        MNC += UT/(strongBeatsIdx.size());
 
 
         // Rule2
@@ -175,11 +175,61 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
             }
         }
 
-        MNC +=  NCC / (4 * numberOfSounds) ;
+        MNC +=  NCC / (numberOfSounds) ;
 
-        MNC /= 3;
+        // Rule 3
 
-        return - fitness/MNC ;
+        List<List<Integer>> updatedMelody = melody.stream()
+                .map(nestedList -> nestedList.stream()
+                        .filter(n -> n != 0 && n != -1)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+
+        int intervalLeft, intervalRight;
+        double NCL = 0;
+        skippedFirstNote = false;
+        numberOfSounds = 0;
+
+        for (int i=0; i<updatedMelody.size(); i++){
+            for (int j=0; j<updatedMelody.get(i).size(); j++){
+                if (!skippedFirstNote){
+                    skippedFirstNote = true;
+                    continue;
+                }
+                if (i == updatedMelody.size()-1 &&  j == updatedMelody.get(i).size()-1){
+                    break;
+                }
+                numberOfSounds += 1;
+                if (!chrProgPattern.get(0).get(chrProg.get((i))).contains(Math.abs(updatedMelody.get(i).get(j) - melodyKeyVal) % 12) ){
+                    if (j-1 < 0){
+                        intervalLeft = Math.abs(updatedMelody.get(i-1).get(updatedMelody.get(i-1).size()-1) - updatedMelody.get(i).get(j));
+                    } else {
+                        intervalLeft = Math.abs(updatedMelody.get(i).get(j - 1) - updatedMelody.get(i).get(j));
+                    }
+                    if (j+1 > updatedMelody.get(i).size()-1){
+                        intervalRight = Math.abs(updatedMelody.get(i).get(j) - updatedMelody.get(i+1).get(0));
+                    } else {
+                        intervalRight = Math.abs(updatedMelody.get(i).get(j) - updatedMelody.get(i).get(j+1));
+                    }
+
+                    if (4 - intervalLeft >=0 ){
+                        NCL += 1;
+                    }
+                    if (4 - intervalRight >=0 ){
+                        NCL += 1;
+                    }
+                }
+            }
+        }
+
+        MNC += NCL / numberOfSounds;
+
+
+        fitness += MNC / 8 ;
+
+
+
+        return  - fitness ;
 
 
     }
