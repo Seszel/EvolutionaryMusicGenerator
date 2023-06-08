@@ -30,7 +30,7 @@ public class Application {
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.0),
             new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
     );
-    private static final double MUTATION_PROBABILITY = 0.2;
+    private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 1.0),
             new ImmutablePair<>("BAR_ORDER", 0.0),

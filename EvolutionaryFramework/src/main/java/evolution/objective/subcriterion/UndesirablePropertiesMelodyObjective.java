@@ -46,12 +46,14 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
+        //*********************************************************************************************************************//
 
         double MNC = 0;
 
-        // Rule 1
+        // Rule 1 ////////////////////////////////////////////////////////////////////////////////////////
 
         double UT = 0;
+        double AN = 0;
         int noteValue, nextNoteValue;
 
         int numberOfBars = melody.size();
@@ -69,10 +71,28 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         List<Integer> chordNotes, chordNotes2;
 
 
-        for (int i=0; i< strongBeatsIdx.size() - 1; i++){
+        for (int i=0; i < strongBeatsIdx.size(); i++){
             if (i%(numberOfNotes/4) == 0){
                 numberOfCurrentBar += 1;
             }
+
+            ///// AN
+            if (i == strongBeatsIdx.size() - 1) {
+                idx = strongBeatsIdx.get(i);
+                noteValue = melodyArray.get(idx);
+                chordNotes = chrProgPattern.get(0).get(chrProg.get(numberOfCurrentBar));
+                if (noteValue != 0 && noteValue != -1) {
+                    if (!chordNotes.contains(Math.abs(noteValue - melodyKeyVal) % 12)) {
+                        if (chordNotes.contains(Math.abs((noteValue - 1) - melodyKeyVal) % 12)) {
+                            AN += 1;
+                        }
+                    }
+
+                }
+                break;
+            }
+            ////////
+
             idx = strongBeatsIdx.get(i);
             noteValue = melodyArray.get(idx);
             idx1 = strongBeatsIdx.get(i+1);
@@ -96,15 +116,20 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                             tempValue += 1;
                         }
                     }
+                    // AN
+                    if( chordNotes.contains(Math.abs( (noteValue - 1) - melodyKeyVal) % 12)) {
+                        AN += 1;
+                    }
+                    ///////
                 }
             }
             UT += tempValue;
         }
 
-        MNC += UT/(strongBeatsIdx.size());
+        MNC += UT/(strongBeatsIdx.size()-1);
 
 
-        // Rule2
+        // Rule 2 ////////////////////////////////////////////////////////////////
 
         double NCC = 0;
         numberOfCurrentBar = -1;
@@ -177,7 +202,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
 
         MNC +=  NCC / (numberOfSounds) ;
 
-        // Rule 3
+        // Rule 3 ////////////////////////////////////////////////////////////////
 
         List<List<Integer>> updatedMelody = melody.stream()
                 .map(nestedList -> nestedList.stream()
@@ -189,9 +214,15 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         double NCL = 0;
         skippedFirstNote = false;
         numberOfSounds = 0;
+        int countChordNotes, countNotes;
+        double ON = 0;
 
         for (int i=0; i<updatedMelody.size(); i++){
+            countNotes = 0; ///ON
+            countChordNotes = 0; //ON
             for (int j=0; j<updatedMelody.get(i).size(); j++){
+                countNotes += 1; /// ON
+
                 if (!skippedFirstNote){
                     skippedFirstNote = true;
                     continue;
@@ -219,7 +250,17 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                         NCL += 1;
                     }
                 }
+                //// ON
+                else {
+                    countChordNotes += 1;
+                }
+                //////
             }
+            /// ON
+            if (0.5 - ((double)countChordNotes/countNotes) >= 0){
+                ON += 1;
+            }
+            ////
         }
 
         MNC += NCL / numberOfSounds;
@@ -227,9 +268,37 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
 
         fitness += MNC / 8 ;
 
+        //*********************************************************************************************************************//
+
+        // in rule 1
+        fitness += AN / strongBeatsIdx.size();
+
+        //*********************************************************************************************************************//
+        // in rule 3
+
+        fitness += ON / melody.size();
+
+        //*********************************************************************************************************************//
 
 
-        return  - fitness ;
+        double BL = 0;
+
+        List<Integer> updatedMelodyArray = melodyArray.stream()
+                .filter(n -> n != -1 && n != 0)
+                .collect(Collectors.toList());
+
+        for (int i=0; i<updatedMelodyArray.size()-1; i++){
+            noteValue = updatedMelodyArray.get(i);
+            nextNoteValue = updatedMelodyArray.get(i+1);
+            if (16 - Math.abs(noteValue - nextNoteValue) < 0){
+                BL += 1;
+            }
+        }
+
+        fitness += BL/(updatedMelodyArray.size() - 1);
+
+
+        return  fitness ;
 
 
     }
