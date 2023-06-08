@@ -16,8 +16,8 @@ import java.util.List;
 public class Application {
 
 //    private static final String ALGORITHM = "NSGA_II";
-//    private static final String ALGORITHM = "NSGA_II_oneCriterion";
-    private static final String ALGORITHM = "MOEA_D";
+    private static final String ALGORITHM = "NSGA_II_oneCriterion";
+//    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 100;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
@@ -48,9 +48,9 @@ public class Application {
 //    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
 //    private static final List<String> CRITERIA = List.of("DESCENDING_MELODY_LINE", "ASCENDING_MELODY_LINE");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_RHYTHM", "COMPLICATED_RHYTHM");
-//    private static final List<String> CRITERIA = List.of("UNDESIRABLE_PROPERTIES_MELODY");
+    private static final List<String> CRITERIA = List.of("UNDESIRABLE_PROPERTIES_MELODY");
 //private static final List<String> CRITERIA = List.of("STEP_MOTION", "CHORD_TONE", "PERFECT_INTERVAL", "ASCENDING_MELODY_LINE");
-    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
+//    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS");
 //    private static final List<String> CRITERIA = List.of("COMPLICATED_AND_ENIGMATIC");
 
@@ -75,7 +75,7 @@ public class Application {
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
-    private static final boolean PLAY = false;
+    private static final boolean PLAY = true;
 
     public static void main(String[] args) {
         runAlgorithm();

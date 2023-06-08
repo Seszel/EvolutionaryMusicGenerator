@@ -27,9 +27,9 @@ public class PlayResultMelodies {
 //            System.out.println(individual.getFitnessByName("ASCENDING_MELODY_LINE"));
 //            System.out.println(individual.getFitnessByName("SIMPLE_RHYTHM"));
 //            System.out.println(individual.getFitnessByName("COMPLICATED_RHYTHM"));
-//            System.out.println(individual.getFitnessByName("UNDESIRABLE_PROPERTIES_MELODY"));
-            System.out.println(individual.getFitnessByName("SIMPLE_AND_OBVIOUS"));
-            System.out.println(individual.getFitnessByName("COMPLICATED_AND_ENIGMATIC"));
+            System.out.println(individual.getFitnessByName("UNDESIRABLE_PROPERTIES_MELODY"));
+//            System.out.println(individual.getFitnessByName("SIMPLE_AND_OBVIOUS"));
+//            System.out.println(individual.getFitnessByName("COMPLICATED_AND_ENIGMATIC"));
 
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){
