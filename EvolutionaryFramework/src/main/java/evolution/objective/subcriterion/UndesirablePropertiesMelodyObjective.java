@@ -297,10 +297,11 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
 
         fitness += BL/(updatedMelodyArray.size() - 1);
 
+        double min = criteriaRanges.get(name).getLeft();
+        double max = criteriaRanges.get(name).getRight();
+        return (- fitness - min ) / ( max - min );
 
-        return  -fitness ;
-
-
+//        return - fitness;
     }
 
 

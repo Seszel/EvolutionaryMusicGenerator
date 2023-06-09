@@ -17,14 +17,13 @@ public class JFugeSandbox {
 
 
         Player player = new Player();
-//        player.play("67/0.875 67/0.0625 67/0.0625 67/0.75 71/0.0625 59/0.0625 62/0.0625 55/0.0625 64/0.875 72/0.0625 60/0.0625 69/0.8125 60/0.0625 36/0.0625 65/0.0625 ");
 
         StringBuilder durationOfChords = new StringBuilder();
         for (int i=0; i<4; i++){
             durationOfChords.append("$").append(i).append("w ");
         }
 
-        Pattern chords = new ChordProgression("I V vi IV")
+        Pattern chords = new ChordProgression("i iv v i")
                 .setKey("C")
                 .allChordsAs(durationOfChords.toString())
                 .getPattern()
@@ -34,7 +33,7 @@ public class JFugeSandbox {
 
         Pattern mel = new Pattern(
 
-                "50/0.125 60/0.75 62/0.0625 72/0.0625 62/0.5 52/0.125 50/0.1875 60/0.0625 67/0.0625 69/0.0625 74/0.3125 72/0.25 65/0.25 60/0.0625 50/0.0625 52/0.0625 59/0.125 64/0.0625 69/0.6875 74/0.0625 53/0.0625 "
+                "60/0.125 48/0.25 60/0.125 67/0.125 72/0.0625 65/0.0625 60/0.125 51/0.0625 63/0.0625 56/0.125 56/0.25 56/0.0625 68/0.125 79/0.0625 80/0.125 68/0.0625 72/0.0625 60/0.125 62/0.125 74/0.25 74/0.125 62/0.125 62/0.0625 62/0.0625 50/0.125 55/0.0625 67/0.0625 72/0.125 79/0.25 67/0.125 63/0.125 51/0.0625 62/0.0625 55/0.125 60/0.0625 48/0.0625 "
 
         )
 

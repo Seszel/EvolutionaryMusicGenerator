@@ -41,11 +41,11 @@ public class SimpleAndObvious extends Objective {
                 + weights.get("UNDESIRABLE_PROPERTIES_MELODY") * undesirablePropertiesMelodyFitness;
 
 
-//        double min = criteriaRanges.get(name).getLeft();
-//        double max = criteriaRanges.get(name).getRight();
-//        return ( fitness - min ) / ( max - min );
+        double min = criteriaRanges.get(name).getLeft();
+        double max = criteriaRanges.get(name).getRight();
+        return ( fitness - min ) / ( max - min );
 
-        return fitness;
+//        return fitness;
     }
 
 }

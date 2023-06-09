@@ -54,7 +54,5 @@ public class DescendingMelodyLineObjective extends Objective {
         double max = criteriaRanges.get(name).getRight();
         return ( fitness - min ) / ( max - min );
 
-//        return fitness;
-
     }
 }

@@ -5,6 +5,7 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.solution.Individual;
 
+import evolution.util.Util;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -40,21 +41,25 @@ public class SimpleRhythmObjective extends Objective {
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
-        int noteValue;
+
+        List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
+
+        List<Integer> strongBeatsIdx = IntStream.range(0, melodyArray.size())
+                .filter(i -> i % 4 == 0)
+                .boxed()
+                .collect(Collectors.toList());
+
         double fitnessBeat = 0;
-        for (int i=0; i<melody.size(); i++){
-            for (int j=0; j<melody.get(i).size(); j += melody.get(i).size()/4 ){
-                noteValue = melody.get(i).get(j);
-                if (noteValue != 0 && noteValue != -1){
-                    fitnessBeat += 1;
-                }
+
+        for (int beat : strongBeatsIdx){
+            if (melodyArray.get(beat) != 0){
+                fitnessBeat += 1;
             }
         }
 
-        fitnessBeat /= melody.size()*(melody.get(0).size()/4.0);
+        fitnessBeat /= strongBeatsIdx.size();
 
-
-
+        int noteValue;
         List<List<Integer>> durations = new ArrayList<>();
         int lengthOfNote;
 
@@ -83,18 +88,50 @@ public class SimpleRhythmObjective extends Objective {
             durations.add(barDurations);
         }
 
-        double fitnessSameRhythm = 0;
+        List<Integer> durationsArray = Util.flattenListOfListsStream(durations);
+
+        int leftNote, rightNote, note;
+        boolean left;
         double fitnessDuration = 0;
-        int countSimilarPossibilities = 0;
-        List<Integer> powersOfTwo = IntStream.rangeClosed(2, (int)Math.sqrt(melody.get(0).size()))
-                .mapToObj(i -> (int) Math.pow(2, i))
-                .collect(Collectors.toList());
-        for (int i=0; i<durations.size(); i++){
-            for (int j=1; j<durations.get(i).size(); j++) {
-                if (powersOfTwo.contains(durations.get(i).get(j))){
-                    fitnessDuration += 1.0*durations.get(i).get(j)/melody.get(i).size();
+        for (int i=1; i<durationsArray.size()-1; i++){
+
+            left = false;
+            leftNote = durationsArray.get(i-1);
+            note = durationsArray.get(i);
+            rightNote = durationsArray.get(i+1);
+
+            if (leftNote >= note){
+                if ((double)leftNote / note <= 2){
+                    left = true;
+                }
+            } else {
+                if ((double)note / leftNote <= 2){
+                    left = true;
                 }
             }
+            if (left){
+                if (rightNote >= note){
+                    if ((double)rightNote / note <= 2){
+                        fitnessDuration += 1;
+                    }
+                } else {
+                    if ((double)note / rightNote <= 2){
+                        fitnessDuration += 1;
+                    }
+                }
+            }
+        }
+
+        fitnessDuration /= durationsArray.size()-2;
+
+        double fitnessNumberOfNotes = 0;
+        if(durationsArray.size() <= 0.5 * melodyArray.size()){
+            fitnessNumberOfNotes +=1;
+        }
+
+        double fitnessSameRhythm = 0;
+        int countSimilarPossibilities = 0;
+        for (int i=0; i< durations.size(); i++){
             for (int k=i+1; k< durations.size(); k++){
                 countSimilarPossibilities += 1;
                 if (durations.get(i).equals(durations.get(k))){
@@ -102,19 +139,13 @@ public class SimpleRhythmObjective extends Objective {
                 }
             }
         }
-        fitnessDuration /= durations.size();
         fitnessSameRhythm = fitnessSameRhythm / countSimilarPossibilities;
 
-
-        fitness = (1.0*fitnessBeat + 0.75*fitnessDuration + 0.5*fitnessSameRhythm) / 2.25;
+        fitness += (fitnessBeat + fitnessDuration + 0.0*fitnessNumberOfNotes + fitnessSameRhythm)/3.0;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
-//        return ( fitness - min ) / ( max - min );
-
-        fitness += UndesirablePropertiesMelodyObjective.evaluate(individual, pack);
-
-        return fitness;
+        return ( fitness - min ) / ( max - min );
 
     }
 
