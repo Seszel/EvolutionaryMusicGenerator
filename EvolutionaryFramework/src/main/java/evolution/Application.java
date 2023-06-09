@@ -22,15 +22,32 @@ public class Application {
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
-    private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
-    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
+//    private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
+//    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
+//private static final List<String> CHORD_PROGRESSION = List.of("III", "iv", "i", "i");
+    private static final List<String> CHORD_PROGRESSION = List.of("i", "iv", "v", "i");
+    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MINOR");
+    private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
+        put("CHORD_TONE", 3.0);
+        put("NON_CHORD_TONE", 3.0);
+        put("STEP_MOTION", 2.0);
+        put("SKIP_MOTION", 2.0);
+        put("DESCENDING_MELODY_LINE", 1.0);
+        put("ASCENDING_MELODY_LINE", 1.0);
+        put("PERFECT_INTERVAL", 3.0);
+        put("NON_PERFECT_INTERVAL", 3.0);
+        put("SIMPLE_RHYTHM", 0.0);
+        put("COMPLICATED_RHYTHM", 0.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 10.0);
+    }
+    };
     private static final double CROSSOVER_PROBABILITY = 0.9;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 0.0),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.0),
             new ImmutablePair<>("MUSICAL_CONTEXT", 1.0)
     );
-    private static final double MUTATION_PROBABILITY = 0.2;
+    private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
             new ImmutablePair<>("BAR_ORDER", 0.0),
@@ -52,8 +69,7 @@ public class Application {
 //private static final List<String> CRITERIA = List.of("STEP_MOTION", "CHORD_TONE", "PERFECT_INTERVAL", "ASCENDING_MELODY_LINE");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS");
-//    private static final List<String> CRITERIA = List.of("SIMPLE_RHYTHM");
-
+//    private static final List<String> CRITERIA = List.of("COMPLICATED_AND_ENIGMATIC");
 
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
@@ -102,6 +118,7 @@ public class Application {
                             REPRESENTATION_TYPE,
                             CHORD_PROGRESSION,
                             MELODY_KEY,
+                            WEIGHTS,
                             CROSSOVER_PROBABILITY,
                             CROSSOVER_TYPE,
                             MUTATION_PROBABILITY,
@@ -133,6 +150,7 @@ public class Application {
                             REPRESENTATION_TYPE,
                             CHORD_PROGRESSION,
                             MELODY_KEY,
+                            WEIGHTS,
                             CROSSOVER_PROBABILITY,
                             CROSSOVER_TYPE,
                             MUTATION_PROBABILITY,
@@ -165,6 +183,7 @@ public class Application {
                             REPRESENTATION_TYPE,
                             CHORD_PROGRESSION,
                             MELODY_KEY,
+                            WEIGHTS,
                             CROSSOVER_PROBABILITY,
                             CROSSOVER_TYPE,
                             MUTATION_PROBABILITY,

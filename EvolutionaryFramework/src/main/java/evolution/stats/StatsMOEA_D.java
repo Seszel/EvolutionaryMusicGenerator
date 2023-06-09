@@ -17,13 +17,13 @@ public class StatsMOEA_D extends Stats {
 
     public StatsMOEA_D(String algorithmName, int popSize,
                        int numberOfBars, int maxNumberOfNotes,
-                       String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
+                       String representationType, List<String> chordProgression, Pair<String, String> melodyKey, HashMap<String, Double> weights,
                        double crossoverProbability, List<Pair<String, Double>> crossoverType,
                        double mutationProbability, List<Pair<String, Double>> mutationType,
                        String selectionType, String matingPoolSelectionType,
                        int numberOfGenerations, List<String> criteria, String folderName,
                        int numberOfNeighbours) {
-        super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey, crossoverProbability, crossoverType, mutationProbability, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
+        super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey, weights, crossoverProbability, crossoverType, mutationProbability, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
         this.numberOfNeighbours = numberOfNeighbours;
     }
 

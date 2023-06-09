@@ -16,13 +16,13 @@ public class StatsNSGA_II_oneCriterion extends Stats {
 
     public StatsNSGA_II_oneCriterion(String algorithmName, int popSize,
                                      int numberOfBars, int maxNumberOfNotes, String representationType,
-                                     List<String> chordProgression, Pair<String, String> melodyKey,
+                                     List<String> chordProgression, Pair<String, String> melodyKey, HashMap<String, Double> weights,
                                      double crossoverProbability, List<Pair<String, Double>> crossoverType,
                                      double mutationProbability, List<Pair<String, Double>> mutationType,
                                      String selectionType, String matingPoolSelectionType,
                                      int numberOfGenerations, List<String> criteria, String folderName) {
         super(algorithmName, popSize, numberOfBars, maxNumberOfNotes, representationType, chordProgression, melodyKey,
-                crossoverProbability, crossoverType, mutationProbability, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
+                weights, crossoverProbability, crossoverType, mutationProbability, mutationType, selectionType, matingPoolSelectionType, numberOfGenerations, criteria, folderName);
         this.populationForGeneration = new HashMap<>();
     }
 

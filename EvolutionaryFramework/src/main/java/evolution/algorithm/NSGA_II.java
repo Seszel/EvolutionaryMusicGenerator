@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 public class NSGA_II extends AEvolutionaryAlgorithm {
 
     public NSGA_II(int popSize, int numberOfBars, int maxNumberOfNotes,
-                   String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
+                   String representationType, List<String> chordProgression, Pair<String, String> melodyKey, HashMap<String, Double> weights,
                    double crossoverProbability, List<Pair<String, Double>> crossoverType,
                    double mutationProbability, List<Pair<String, Double>> mutationType,
                    String selectionType, String matingPoolSelectionType,
@@ -30,7 +30,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 
         super(popSize, numberOfBars, maxNumberOfNotes,
                 representationType, chordProgression, melodyKey,
-                crossoverProbability, crossoverType,
+                weights, crossoverProbability, crossoverType,
                 mutationProbability, mutationType,
                 selectionType, matingPoolSelectionType,
                 numberOfGenerations, numberOfIteration,
@@ -42,7 +42,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
 
         StatsNSGA_II stats = new StatsNSGA_II("NSGA-II", popSize,
                 numberOfBars, maxNumberOfNotes, representationType,
-                chordProgression, melodyKey,
+                chordProgression, melodyKey, weights,
                 crossoverProbability, crossoverType,
                 mutationProbability, mutationType,
                 selectionType, matingPoolSelectionType,
@@ -58,7 +58,9 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
                 .addParam(EvaluationParameters.ParamName.MELODY_KEY,
                         melodyKey)
                 .addParam(EvaluationParameters.ParamName.CRITERIA_RANGES,
-                        criteriaRanges);
+                        criteriaRanges)
+                .addParam(EvaluationParameters.ParamName.WEIGHTS,
+                        weights);
         PopulationNSGA_II population = new PopulationNSGA_II(
                 popSize, representationType, criteria,
                 numberOfBars, maxNumberOfNotes,

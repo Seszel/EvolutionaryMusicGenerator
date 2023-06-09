@@ -266,7 +266,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         MNC += NCL / numberOfSounds;
 
 
-        fitness += MNC / 8 ;
+        fitness += MNC;
 
         //*********************************************************************************************************************//
 

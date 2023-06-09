@@ -5,6 +5,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 import org.jfugue.theory.ChordProgression;
+import org.jfugue.theory.Key;
+import org.jfugue.theory.Note;
+import org.jfugue.theory.Scale;
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class PlayResultMelodies {
             System.out.println(individual.getGenome().getMelody());
 //            System.out.println(individual.getFitnessByName("TENSION"));
 //            System.out.println(individual.getFitnessByName("STABILITY"));
-//            System.out.println(individual.getFitnessByName("CHORD_TONE"));
+            System.out.println(individual.getFitnessByName("CHORD_TONE"));
 //            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
 //            System.out.println(individual.getFitnessByName("STEP_MOTION"));
 //            System.out.println(individual.getFitnessByName("SKIP_MOTION"));
@@ -36,7 +39,13 @@ public class PlayResultMelodies {
                 durationOfChords.append("$").append(i).append("w ");
             }
 
-            Pattern chords = new ChordProgression(chordProgression.toString())
+
+            StringBuilder ChrPrg = new StringBuilder();
+            for (String elem : chordProgression){
+                ChrPrg.append(elem).append(" ");
+            }
+
+            Pattern chords = new ChordProgression(ChrPrg.toString())
                     .setKey(melodyKey.getKey())
                     .allChordsAs(durationOfChords.toString())
                     .getPattern()
@@ -52,7 +61,6 @@ public class PlayResultMelodies {
 
 //            player.play(chords);
 //            player.play(pattern);
-//            player.play(chords, pattern);
             player.play(music);
         }
     }

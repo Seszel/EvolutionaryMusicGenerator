@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Stats {
@@ -19,6 +20,7 @@ public abstract class Stats {
     protected final String representationType;
     protected final List<String> chordProgression;
     protected final Pair<String, String> melodyKey;
+    protected final HashMap<String, Double> weights;
     protected final double crossoverProbability;
     protected final List<Pair<String, Double>> crossoverType;
     protected final double mutationProbability;
@@ -32,11 +34,13 @@ public abstract class Stats {
 
     public Stats(String algorithmName, int popSize, int numberOfBars, int maxNumberOfNotes,
                  String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
-                 double crossoverProbability, List<Pair<String, Double>> crossoverType, double mutationProbability, List<Pair<String, Double>> mutationType, String selectionType,
+                 HashMap<String, Double> weights, double crossoverProbability, List<Pair<String, Double>> crossoverType,
+                 double mutationProbability, List<Pair<String, Double>> mutationType, String selectionType,
                  String matingPoolSelectionType, int numberOfGenerations, List<String> criteria, String folderName) {
         this.algorithmName = algorithmName;
         this.popSize = popSize;
         this.representationType = representationType;
+        this.weights = weights;
         this.crossoverProbability = crossoverProbability;
         this.crossoverType = crossoverType;
         this.mutationProbability = mutationProbability;

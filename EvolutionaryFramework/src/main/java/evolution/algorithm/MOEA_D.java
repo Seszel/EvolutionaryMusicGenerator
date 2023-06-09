@@ -26,7 +26,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
     private final int numberOfNeighbours;
 
     public MOEA_D(int popSize, int numberOfBars, int maxNumberOfNotes,
-                  String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
+                  String representationType, List<String> chordProgression, Pair<String, String> melodyKey, HashMap<String, Double> weights,
                   double crossoverProbability, List<Pair<String, Double>> crossoverType,
                   double mutationProbability, List<Pair<String, Double>> mutationType,
                   String selectionType, String matingPoolSelectionType,
@@ -35,7 +35,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                   Pair<Boolean, Integer> saveToJSON, String folderName, boolean play, int numberOfNeighbours) {
         super(popSize, numberOfBars, maxNumberOfNotes, representationType,
                 chordProgression, melodyKey,
-                crossoverProbability, crossoverType,
+                weights, crossoverProbability, crossoverType,
                 mutationProbability, mutationType,
                 selectionType, matingPoolSelectionType, numberOfGenerations, numberOfIteration,
                 criteria, criteriaRanges,
@@ -49,7 +49,7 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
 
         StatsMOEA_D stats = new StatsMOEA_D("MOEA/D", popSize,
                 numberOfBars, maxNumberOfNotes, representationType,
-                chordProgression, melodyKey,
+                chordProgression, melodyKey, weights,
                 crossoverProbability, crossoverType,
                 mutationProbability, mutationType,
                 selectionType, matingPoolSelectionType,
@@ -65,7 +65,9 @@ public class MOEA_D extends AEvolutionaryAlgorithm {
                 .addParam(EvaluationParameters.ParamName.MELODY_KEY,
                         melodyKey)
                 .addParam(EvaluationParameters.ParamName.CRITERIA_RANGES,
-                        criteriaRanges);
+                        criteriaRanges)
+                .addParam(EvaluationParameters.ParamName.WEIGHTS,
+                        weights);
         ImmutableList<Integer> representation = Representation.getReprInt(representationType);
 
         PopulationMOEA_D population = new PopulationMOEA_D(

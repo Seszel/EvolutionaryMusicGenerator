@@ -12,6 +12,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
     protected final String representationType;
     protected final List<String> chordProgression;
     protected final Pair<String, String> melodyKey;
+    protected final HashMap<String, Double> weights;
     protected double crossoverProbability;
     protected final List<Pair<String, Double>> crossoverType;
     protected double mutationProbability;
@@ -28,11 +29,11 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
 
     protected AEvolutionaryAlgorithm(int popSize, int numberOfBars, int maxNumberOfNotes,
                                      String representationType, List<String> chordProgression, Pair<String, String> melodyKey,
-                                     double crossoverProbability, List<Pair<String, Double>> crossoverType,
+                                     HashMap<String, Double> weights, double crossoverProbability, List<Pair<String, Double>> crossoverType,
                                      double mutationProbability, List<Pair<String, Double>> mutationType,
                                      String selectionType, String matingPoolSelectionType,
                                      int numberOfGenerations, int numberOfIteration,
-                                     List<String> criteria, HashMap<String,Pair<Double, Double>> criteriaRanges,
+                                     List<String> criteria, HashMap<String, Pair<Double, Double>> criteriaRanges,
                                      Pair<Boolean, Integer> saveToJSON, String folderName, boolean play) {
         this.popSize = popSize;
         this.numberOfBars = numberOfBars;
@@ -40,6 +41,7 @@ abstract class AEvolutionaryAlgorithm implements Runnable {
         this.representationType = representationType;
         this.chordProgression = chordProgression;
         this.melodyKey = melodyKey;
+        this.weights = weights;
         this.crossoverProbability = crossoverProbability;
         this.crossoverType = crossoverType;
         this.mutationProbability = mutationProbability;
