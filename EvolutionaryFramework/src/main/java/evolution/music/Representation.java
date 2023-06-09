@@ -141,7 +141,49 @@ public class Representation {
         diatonicChords.add(diatonicChordsChordTone);
 
         HashMap<String, List<Integer>> diatonicChordsTensionNote = new HashMap<>();
+
+        diatonicChordsTensionNote.put("i", List.of(2, 5, 9, 10));
+        diatonicChordsTensionNote.put("ii-", List.of(10, 11, 0));
+        diatonicChordsTensionNote.put("III", List.of(5, 0, 1, 2));
+        diatonicChordsTensionNote.put("iv", List.of(7, 10, 2, 3));
+        diatonicChordsTensionNote.put("v", List.of(9, 0, 4, 5));
+        diatonicChordsTensionNote.put("VI", List.of(10, 5, 6, 7));
+        diatonicChordsTensionNote.put("VII", List.of(0, 7, 8, 9));
+
+        // harmonic minor
+        diatonicChordsTensionNote.put("III+", List.of(10));
+        diatonicChordsTensionNote.put("V", List.of(9, 4, 5, 6));
+        diatonicChordsTensionNote.put("vii-", List.of(7, 8, 9));
+
+        // melodic minor
+        diatonicChordsTensionNote.put("ii", List.of(2, 5, 9));
+        diatonicChordsTensionNote.put("IV", List.of(7,2,3,4));
+        diatonicChordsTensionNote.put("vi-", List.of(5, 6, 7));
+
+        diatonicChords.add(diatonicChordsTensionNote);
+
+
         HashMap<String, List<Integer>> diatonicChordsAvoidNote = new HashMap<>();
+
+        diatonicChordsAvoidNote.put("i", List.of(8));
+        diatonicChordsAvoidNote.put("ii-", List.of(7));
+        diatonicChordsAvoidNote.put("III", List.of(8));
+        diatonicChordsAvoidNote.put("iv", List.of(1));
+        diatonicChordsAvoidNote.put("v", List.of(3));
+        diatonicChordsAvoidNote.put("VI", List.of(1));
+        diatonicChordsAvoidNote.put("VII", List.of(3));
+
+        // harmonic minor
+        diatonicChordsAvoidNote.put("III+", List.of(5, 9));
+        diatonicChordsAvoidNote.put("V", List.of(0));
+        diatonicChordsAvoidNote.put("vii-", List.of(4));
+
+        // melodic minor
+        diatonicChordsAvoidNote.put("ii", List.of(2, 5, 9));
+        diatonicChordsAvoidNote.put("IV", List.of(10));
+        diatonicChordsAvoidNote.put("vi-", List.of(2));
+
+        diatonicChords.add(diatonicChordsAvoidNote);
 
         ChordProgressionMinor = diatonicChords;
     }
