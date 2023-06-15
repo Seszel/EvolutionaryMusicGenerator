@@ -6,17 +6,18 @@ import evolution.objective.criterion.StabilityObjective;
 import evolution.objective.criterion.TensionObjective;
 import evolution.objective.subcriterion.*;
 import evolution.solution.Individual;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class Evaluator {
 
-    public static HashMap<String, Double> evaluate(Individual individual,
-                                  List<String> criterionNames,
-                                  EvaluationParameters pack) {
+    public static HashMap<String, Pair<Double, Double>> evaluate(Individual individual,
+                                                                 List<String> criterionNames,
+                                                                 EvaluationParameters pack) {
 
-        var eval = new HashMap<String, Double>();
+        HashMap<String, Pair<Double, Double>> eval = new HashMap<>();
         for(String criterion : criterionNames){
             eval.put(criterion, evaluate(individual, criterion, pack));
         }
@@ -24,9 +25,9 @@ public class Evaluator {
         return eval;
     }
 
-    public static Double evaluate(Individual individual,
-                                  String criterion,
-                                  EvaluationParameters pack) {
+    public static Pair<Double, Double> evaluate(Individual individual,
+                                       String criterion,
+                                       EvaluationParameters pack) {
         switch(criterion) {
             case "STABILITY":
                 return StabilityObjective.evaluate(individual, pack);

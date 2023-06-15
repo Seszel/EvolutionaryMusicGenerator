@@ -5,6 +5,7 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ public class StabilityObjective extends Objective {
 
     static final String name = "STABILITY";
 
-    public static Double evaluate(Individual individual, EvaluationParameters pack) {
+    public static Pair<Double, Double> evaluate(Individual individual, EvaluationParameters pack) {
 
         double fitness = 0;
+        double penalty = 0;
 
 
         List<List<Integer>> melody = individual.getGenome().getMelody();
@@ -196,10 +198,9 @@ public class StabilityObjective extends Objective {
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
+        return new ImmutablePair<>(( fitness - min ) / ( max - min ), penalty);
 
-        return ( fitness - min ) / ( max - min );
-
-//        return fitness;
+//        return new ImmutablePair<>(fitness, penalty);
 
     }
 }

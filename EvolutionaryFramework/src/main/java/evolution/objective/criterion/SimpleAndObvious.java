@@ -4,16 +4,17 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.objective.subcriterion.*;
 import evolution.solution.Individual;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
-import java.util.List;
+
 
 public class SimpleAndObvious extends Objective {
 
     static final String name = "SIMPLE_AND_OBVIOUS";
 
-    public static Double evaluate(Individual individual, EvaluationParameters pack) {
+    public static Pair<Double, Double> evaluate(Individual individual, EvaluationParameters pack) {
 
         @SuppressWarnings("unchecked")
         var criteriaRanges = (HashMap<String, Pair<Double, Double>>) pack.parameters
@@ -24,28 +25,33 @@ public class SimpleAndObvious extends Objective {
                 .get(EvaluationParameters.ParamName.WEIGHTS);
 
         double fitness = 0;
+        double penalty = 0;
 
 
-        double chordToneFitness = ChordToneObjective.evaluate(individual, pack);
-        double stepMotionFitness = StepMotionObjective.evaluate(individual, pack);
-        double descendingMelodyLineFitness = DescendingMelodyLineObjective.evaluate(individual, pack);
-        double perfectIntervalFitness = PerfectIntervalObjective.evaluate(individual, pack);
-        double simpleRhythmFitness = SimpleRhythmObjective.evaluate(individual,pack);
-        double undesirablePropertiesMelodyFitness = UndesirablePropertiesMelodyObjective.evaluate(individual,pack);
+        Pair<Double, Double> chordToneFitness = ChordToneObjective.evaluate(individual, pack);
+        Pair<Double, Double> stepMotionFitness = StepMotionObjective.evaluate(individual, pack);
+        Pair<Double, Double> descendingMelodyLineFitness = DescendingMelodyLineObjective.evaluate(individual, pack);
+        Pair<Double, Double> perfectIntervalFitness = PerfectIntervalObjective.evaluate(individual, pack);
+        Pair<Double, Double> simpleRhythmFitness = SimpleRhythmObjective.evaluate(individual,pack);
+        Pair<Double, Double> undesirablePropertiesMelodyFitness = UndesirablePropertiesMelodyObjective.evaluate(individual,pack);
 
-        fitness += weights.get("CHORD_TONE") * chordToneFitness
-                + weights.get("STEP_MOTION") * stepMotionFitness
-                + weights.get("DESCENDING_MELODY_LINE") * descendingMelodyLineFitness
-                + weights.get("PERFECT_INTERVAL") * perfectIntervalFitness
-                + weights.get("SIMPLE_RHYTHM") * simpleRhythmFitness
-                + weights.get("UNDESIRABLE_PROPERTIES_MELODY") * undesirablePropertiesMelodyFitness;
+        fitness += weights.get("CHORD_TONE") * chordToneFitness.getKey()
+                + weights.get("STEP_MOTION") * stepMotionFitness.getKey()
+                + weights.get("DESCENDING_MELODY_LINE") * descendingMelodyLineFitness.getKey()
+                + weights.get("PERFECT_INTERVAL") * perfectIntervalFitness.getKey()
+                + weights.get("SIMPLE_RHYTHM") * simpleRhythmFitness.getKey()
+                + weights.get("UNDESIRABLE_PROPERTIES_MELODY") * undesirablePropertiesMelodyFitness.getKey();
 
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
-        return ( fitness - min ) / ( max - min );
 
-//        return fitness;
+        penalty = undesirablePropertiesMelodyFitness.getKey() * weights.get("UNDESIRABLE_PROPERTIES_MELODY") / max;
+
+        return new ImmutablePair<>(( fitness - min ) / ( max - min ), penalty);
+
+//        return new ImmutablePair<>(fitness, penalty);
+
     }
 
 }

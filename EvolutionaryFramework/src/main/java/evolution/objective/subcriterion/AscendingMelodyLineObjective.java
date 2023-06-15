@@ -5,6 +5,7 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -16,9 +17,10 @@ public class AscendingMelodyLineObjective extends Objective {
     static final String name = "ASCENDING_MELODY_LINE";
 
 
-    public static Double evaluate(Individual individual, EvaluationParameters pack) {
+    public static Pair<Double, Double> evaluate(Individual individual, EvaluationParameters pack) {
 
         double fitness = 0;
+        double penalty = 0;
 
         List<List<Integer>> melody = individual.getGenome().getMelody();
 
@@ -34,6 +36,10 @@ public class AscendingMelodyLineObjective extends Objective {
         @SuppressWarnings("unchecked")
         var criteriaRanges = (HashMap<String, Pair<Double, Double>>) pack.parameters
                 .get(EvaluationParameters.ParamName.CRITERIA_RANGES);
+
+        @SuppressWarnings("unchecked")
+        var weights = (HashMap<String, Double>) pack.parameters
+                .get(EvaluationParameters.ParamName.WEIGHTS);
 
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
@@ -52,8 +58,9 @@ public class AscendingMelodyLineObjective extends Objective {
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
-        return ( fitness - min ) / ( max - min );
+        return new ImmutablePair<>(( fitness - min ) / ( max - min ), penalty);
 
+//        return new ImmutablePair<>(fitness, penalty);
 
     }
 

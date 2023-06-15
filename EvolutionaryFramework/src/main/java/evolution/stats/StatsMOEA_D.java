@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StatsMOEA_D extends Stats {
 
@@ -31,7 +32,7 @@ public class StatsMOEA_D extends Stats {
     public void updateStats(int generationNumber, List<Individual> externalPopulation) {
         List<Individual> populationToJSON = new ArrayList<>();
         for (Individual i : externalPopulation) {
-            Individual newI = new Individual(i.getGenome(), i.getFitness());
+            Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getPenalty());
             populationToJSON.add(newI);
         }
         externalPopulationForGeneration.put(generationNumber, populationToJSON);
@@ -53,6 +54,10 @@ public class StatsMOEA_D extends Stats {
         metaParameters.put("chordProgression", StringUtils.join(chordProgression, ", "));
         metaParameters.put("melodyKeyValue", melodyKey.getLeft());
         metaParameters.put("melodyKeyType", melodyKey.getRight());
+
+        JSONObject weightsObject = new JSONObject();
+        weightsObject.putAll(weights);
+        metaParameters.put("weightsValues", weightsObject);
 
         metaParameters.put("crossoverProbability", crossoverProbability);
         JSONObject crossoverObject = new JSONObject();
@@ -95,6 +100,7 @@ public class StatsMOEA_D extends Stats {
                     fitnessDetails.put(criterion, fitness.get(criterion));
                 }
                 individualDetails.put("fitness", fitnessDetails);
+                individualDetails.put("penalty", individual.getPenalty());
 
                 externalPopulationIndividuals.add(individualDetails);
             }

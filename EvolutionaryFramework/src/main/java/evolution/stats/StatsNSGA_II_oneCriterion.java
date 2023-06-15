@@ -30,7 +30,7 @@ public class StatsNSGA_II_oneCriterion extends Stats {
     public void updateStats(int generationNumber, List<Individual> population) {
         List<Individual> populationToJSON = new ArrayList<>();
         for (Individual i : population) {
-            Individual newI = new Individual(i.getGenome(), i.getFitness());
+            Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getPenalty());
             populationToJSON.add(newI);
         }
         populationForGeneration.put(generationNumber, populationToJSON);
@@ -52,6 +52,10 @@ public class StatsNSGA_II_oneCriterion extends Stats {
         metaParameters.put("chordProgression", StringUtils.join(chordProgression, ", "));
         metaParameters.put("melodyKeyValue", melodyKey.getLeft());
         metaParameters.put("melodyKeyType", melodyKey.getRight());
+
+        JSONObject weightsObject = new JSONObject();
+        weightsObject.putAll(weights);
+        metaParameters.put("weightsValues", weightsObject);
 
         metaParameters.put("crossoverProbability", crossoverProbability);
         JSONObject crossoverObject = new JSONObject();
@@ -96,6 +100,7 @@ public class StatsNSGA_II_oneCriterion extends Stats {
                     fitnessDetails.put(criterion, fitness.get(criterion));
                 }
                 individualDetails.put("fitness", fitnessDetails);
+                individualDetails.put("penalty", individual.getPenalty());
                 if (i == 0) {
                     generationObject.put("bestIndividual", individualDetails);
                 }

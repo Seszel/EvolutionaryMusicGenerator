@@ -5,10 +5,10 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +25,10 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         return chrProgPattern.get(0).get(chrProg.get((idx/numberOfNotes)));
     }
 
-    public static Double evaluate(Individual individual, EvaluationParameters pack) {
+    public static Pair<Double, Double> evaluate(Individual individual, EvaluationParameters pack) {
 
         double fitness = 0;
+        double penalty = 0;
 
         List<List<Integer>> melody = individual.getGenome().getMelody();
 
@@ -299,9 +300,10 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
-        return (- fitness - min ) / ( max - min );
+        final double v = (- fitness - min) / (max - min);
+        return new ImmutablePair<>(v, v);
 
-//        return - fitness;
+//        return new ImmutablePair<>(fitness, penalty);
     }
 
 

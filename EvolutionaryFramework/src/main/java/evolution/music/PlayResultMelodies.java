@@ -5,9 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 import org.jfugue.theory.ChordProgression;
-import org.jfugue.theory.Key;
-import org.jfugue.theory.Note;
-import org.jfugue.theory.Scale;
 
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class PlayResultMelodies {
 //            System.out.println(individual.getFitnessByName("ASCENDING_MELODY_LINE"));
 //            System.out.println(individual.getFitnessByName("SIMPLE_RHYTHM"));
 //            System.out.println(individual.getFitnessByName("COMPLICATED_RHYTHM"));
-//            System.out.println(individual.getFitnessByName("UNDESIRABLE_PROPERTIES_MELODY"));
+            System.out.println(individual.getFitnessByName("UNDESIRABLE_PROPERTIES_MELODY"));
             System.out.println(individual.getFitnessByName("SIMPLE_AND_OBVIOUS"));
             System.out.println(individual.getFitnessByName("COMPLICATED_AND_ENIGMATIC"));
 

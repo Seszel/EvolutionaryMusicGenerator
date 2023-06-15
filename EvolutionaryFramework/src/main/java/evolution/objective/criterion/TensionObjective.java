@@ -5,6 +5,7 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Objective;
 import evolution.solution.Individual;
 import evolution.util.Util;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ public class TensionObjective extends Objective {
 
     static final String name = "TENSION";
 
-    public static Double evaluate(Individual individual, EvaluationParameters pack) {
+    public static Pair<Double, Double> evaluate(Individual individual, EvaluationParameters pack) {
 
         List<List<Integer>> melody = individual.getGenome().getMelody();
         double fitness = 0;
+        double penalty = 0;
+
         @SuppressWarnings("unchecked")
         var chProgPattern = (ArrayList<HashMap<String, List<Integer>>>) pack.parameters
                 .get(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN);
@@ -170,10 +173,9 @@ public class TensionObjective extends Objective {
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
+        return new ImmutablePair<>(( fitness - min ) / ( max - min ), penalty);
 
-        return ( fitness - min ) / ( max - min );
-
-//        return fitness;
+//        return new ImmutablePair<>(fitness, penalty);
 
     }
 }

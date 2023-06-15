@@ -5,16 +5,15 @@ import evolution.objective.EvaluationParameters;
 import evolution.objective.Evaluator;
 import evolution.music.Genome;
 import evolution.util.Util;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class Individual {
     final private Genome genome;
     final private HashMap<String, Double> fitness = new HashMap<>();
+    private double penalty;
     private int frontRank;
     private double crowdingDistance = 0;
 
@@ -22,18 +21,20 @@ public class Individual {
         this.genome = genome;
     }
 
-    public Individual(Genome genome, HashMap<String, Double> fitness, int frontRank){
+    public Individual(Genome genome, HashMap<String, Double> fitness, double penalty, int frontRank){
         for (String criterion : fitness.keySet() ){
             this.fitness.put(criterion, fitness.get(criterion));
         }
+        this.penalty = penalty;
         this.genome = genome;
         this.frontRank = frontRank;
     }
 
-    public Individual(Genome genome, HashMap<String, Double> fitness){
+    public Individual(Genome genome, HashMap<String, Double> fitness, double penalty){
         for (String criterion : fitness.keySet() ){
             this.fitness.put(criterion, fitness.get(criterion));
         }
+        this.penalty = penalty;
         this.genome = genome;
     }
 
@@ -50,8 +51,16 @@ public class Individual {
 
     public void setFitness(List<String> criteria, EvaluationParameters evalParams){
 
+        boolean penaltyBool = false;
         for(String criterion : criteria){
-            this.fitness.put(criterion, Evaluator.evaluate(this, criterion, evalParams));
+            var evaluation = Evaluator.evaluate(this, criterion, evalParams);
+            assert evaluation != null;
+            this.fitness.put(criterion, evaluation.getKey());
+            if (!penaltyBool) {
+                this.penalty = evaluation.getValue();
+                penaltyBool = true;
+            }
+
         }
     }
 
@@ -103,5 +112,13 @@ public class Individual {
                 bar.set(0, representation.get(Util.getRandomNumber(0, representation.size() - 1)));
             }
         }
+    }
+
+    public double getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(double penalty) {
+        this.penalty = penalty;
     }
 }

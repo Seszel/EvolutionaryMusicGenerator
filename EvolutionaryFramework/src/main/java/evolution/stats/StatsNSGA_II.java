@@ -31,7 +31,7 @@ public class StatsNSGA_II extends Stats {
         List<Individual> populationToJSON = new ArrayList<>();
         for (Individual i : population) {
 //            if (i.getFrontRank() > 10){break;}
-            Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getFrontRank());
+            Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getPenalty(), i.getFrontRank());
             populationToJSON.add(newI);
         }
         frontsForGeneration.put(generationNumber, populationToJSON);
@@ -53,6 +53,10 @@ public class StatsNSGA_II extends Stats {
         metaParameters.put("chordProgression", StringUtils.join(chordProgression, ", "));
         metaParameters.put("melodyKeyValue", melodyKey.getLeft());
         metaParameters.put("melodyKeyType", melodyKey.getRight());
+
+        JSONObject weightsObject = new JSONObject();
+        weightsObject.putAll(weights);
+        metaParameters.put("weightsValues", weightsObject);
 
         metaParameters.put("crossoverProbability", crossoverProbability);
         JSONObject crossoverObject = new JSONObject();
@@ -90,6 +94,9 @@ public class StatsNSGA_II extends Stats {
 
 
         generationList = new JSONObject();
+        double quality = 0;
+        int count = 0;
+//        double fitnessTemp = 0;
 
         for (Integer generationKey : frontsForGeneration.keySet()){
             frontsList = new JSONObject();
@@ -99,7 +106,14 @@ public class StatsNSGA_II extends Stats {
 
             int rank = 1;
 
+
+
             for (int i = 0; i < generation.size(); i++) {
+
+                if (generationKey == numberOfGenerations){
+                    count += 1;
+                }
+
                 individual = generation.get(i);
 
                 if (individual.getFrontRank() != rank) {
@@ -116,8 +130,13 @@ public class StatsNSGA_II extends Stats {
                         fitness = individual.getFitness();
                         for (String criterion : criteria) {
                             fitnessDetails.put(criterion, fitness.get(criterion));
+                            if (generationKey == numberOfGenerations){
+                                quality += fitness.get(criterion);
+                            }
+
                         }
                         individualDetails.put("fitness", fitnessDetails);
+                        individualDetails.put("penalty", individual.getPenalty());
 
                         frontIndividuals.add(individualDetails);
 
@@ -133,8 +152,12 @@ public class StatsNSGA_II extends Stats {
                 fitness = individual.getFitness();
                 for (String criterion : criteria) {
                     fitnessDetails.put(criterion, fitness.get(criterion));
+                    if (generationKey == numberOfGenerations){
+                        quality += fitness.get(criterion);
+                    }
                 }
                 individualDetails.put("fitness", fitnessDetails);
+                individualDetails.put("penalty", individual.getPenalty());
 
                 frontIndividuals.add(individualDetails);
 
@@ -148,6 +171,10 @@ public class StatsNSGA_II extends Stats {
 
             }
             generationList.put("generation_" + generationKey, frontsList);
+            if (generationKey == numberOfGenerations){
+                generationList.put("qualityOfPopulation", quality/count);
+            }
+
         }
 
         structure.put("experiment", generationList);

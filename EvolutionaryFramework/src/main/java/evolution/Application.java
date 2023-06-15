@@ -15,17 +15,17 @@ import java.util.List;
 
 public class Application {
 
-//    private static final String ALGORITHM = "NSGA_II";
-    private static final String ALGORITHM = "NSGA_II_oneCriterion";
+    private static final String ALGORITHM = "NSGA_II";
+//    private static final String ALGORITHM = "NSGA_II_oneCriterion";
 //    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 100;
-    private static final int NUMBER_OF_BARS = 4;
+    private static final int NUMBER_OF_BARS = 8;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
 //    private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
 //    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
 //private static final List<String> CHORD_PROGRESSION = List.of("III", "iv", "i", "i");
-    private static final List<String> CHORD_PROGRESSION = List.of("i", "iv", "v", "i");
+    private static final List<String> CHORD_PROGRESSION = List.of("i", "iv", "v", "i", "i", "iv", "v", "i");
     private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MINOR");
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 3.0);
@@ -36,8 +36,8 @@ public class Application {
         put("ASCENDING_MELODY_LINE", 1.0);
         put("PERFECT_INTERVAL", 3.0);
         put("NON_PERFECT_INTERVAL", 3.0);
-        put("SIMPLE_RHYTHM", 5.0);
-        put("COMPLICATED_RHYTHM", 5.0);
+        put("SIMPLE_RHYTHM", 1.0);
+        put("COMPLICATED_RHYTHM", 1.0);
         put("UNDESIRABLE_PROPERTIES_MELODY", 10.0);
     }
     };
@@ -49,21 +49,21 @@ public class Application {
     );
     private static final double MUTATION_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 2.0),
+            new ImmutablePair<>("SIMPLE", 1.5),
             new ImmutablePair<>("BAR_ORDER", 0.0),
-            new ImmutablePair<>("ADD_ZERO", 0.5),
-            new ImmutablePair<>("ADD_REST", 0.1),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 2.0)
+            new ImmutablePair<>("ADD_ZERO", 1.0),
+            new ImmutablePair<>("ADD_REST", 0.5),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 3.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 500;
+    private static final int NUMBER_OF_GENERATIONS = 100;
     private static final int NUMBER_OF_ITERATIONS = 1;
-//    private static final List<String> CRITERIA = List.of("NON_PERFECT_INTERVAL", "PERFECT_INTERVAL");
-//    private static final List<String> CRITERIA = List.of("SKIP_MOTION", "STEP_MOTION");
+//    private static final List<String> CRITERIA = List.of("NON_PERFECT_INTERVAL");
+//    private static final List<String> CRITERIA = List.of("STEP_MOTION");
 //    private static final List<String> CRITERIA = List.of("NON_CHORD_TONE", "CHORD_TONE");
 //    private static final List<String> CRITERIA = List.of("STABILITY", "TENSION");
-//    private static final List<String> CRITERIA = List.of("DESCENDING_MELODY_LINE", "ASCENDING_MELODY_LINE");
+//    private static final List<String> CRITERIA = List.of("DESCENDING_MELODY_LINE");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_RHYTHM", "COMPLICATED_RHYTHM");
 //    private static final List<String> CRITERIA = List.of("SIMPLE_RHYTHM");
 //    private static final List<String> CRITERIA = List.of("COMPLICATED_RHYTHM");
@@ -88,12 +88,12 @@ public class Application {
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,24.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,24.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,20.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,20.0));
     }};
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
-    private static final boolean PLAY = true;
+    private static final boolean PLAY = false;
 
     public static void main(String[] args) {
         runAlgorithm();
