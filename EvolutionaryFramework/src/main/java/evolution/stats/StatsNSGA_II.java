@@ -30,7 +30,7 @@ public class StatsNSGA_II extends Stats {
     public void updateStats(int generationNumber, List<Individual> population) {
         List<Individual> populationToJSON = new ArrayList<>();
         for (Individual i : population) {
-//            if (i.getFrontRank() > 10){break;}
+//            if (i.getFrontRank() > 1){break;}
             Individual newI = new Individual(i.getGenome(), i.getFitness(), i.getPenalty(), i.getFrontRank());
             populationToJSON.add(newI);
         }
@@ -173,6 +173,7 @@ public class StatsNSGA_II extends Stats {
             generationList.put("generation_" + generationKey, frontsList);
             if (generationKey == numberOfGenerations){
                 generationList.put("qualityOfPopulation", quality/count);
+//                System.out.println(quality/count);
             }
 
         }

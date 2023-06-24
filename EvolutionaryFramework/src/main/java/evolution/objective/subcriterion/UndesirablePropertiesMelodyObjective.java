@@ -288,22 +288,41 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                 .filter(n -> n != -1 && n != 0)
                 .collect(Collectors.toList());
 
+        double noteRepetition = 0;
+        int count = 0;
         for (int i=0; i<updatedMelodyArray.size()-1; i++){
             noteValue = updatedMelodyArray.get(i);
             nextNoteValue = updatedMelodyArray.get(i+1);
-            if (16 - Math.abs(noteValue - nextNoteValue) < 0){
+            // note repetition
+            if (noteValue == nextNoteValue){
+                count += 1;
+            } else {
+                if (count >= 3){
+                    noteRepetition += 1 * count;
+                    count = 0;
+                }
+            }
+            /////
+            if (12 - Math.abs(noteValue - nextNoteValue) < 0){
                 BL += 1;
             }
         }
 
+        fitness += 3 * noteRepetition/(updatedMelodyArray.size());
+
         fitness += BL/(updatedMelodyArray.size() - 1);
+
+        //*********************************************************************************************************************//
+
+
+
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
-        final double v = (- fitness - min) / (max - min);
+        final double v = ( -fitness - min) / (max - min);
         return new ImmutablePair<>(v, v);
 
-//        return new ImmutablePair<>(fitness, penalty);
+//        return new ImmutablePair<>(-fitness, penalty);
     }
 
 

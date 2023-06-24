@@ -22,38 +22,39 @@ public class Application {
     private static final int NUMBER_OF_BARS = 8;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
-//    private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
-//    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
-//private static final List<String> CHORD_PROGRESSION = List.of("III", "iv", "i", "i");
+//    private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV", "I", "V", "vi", "IV");
+//    private static final List<String> CHORD_PROGRESSION = List.of("ii", "V", "I", "ii", "V", "I", "ii", "V", "I");
+//    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("D#", "MAJOR");
+//    private static final List<String> CHORD_PROGRESSION = List.of("i", "iv", "III", "VI", "i", "iv", "III", "VI");
     private static final List<String> CHORD_PROGRESSION = List.of("i", "iv", "v", "i", "i", "iv", "v", "i");
-    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MINOR");
+    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("A#", "MINOR");
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
-        put("CHORD_TONE", 3.0);
-        put("NON_CHORD_TONE", 3.0);
-        put("STEP_MOTION", 2.0);
-        put("SKIP_MOTION", 2.0);
-        put("DESCENDING_MELODY_LINE", 1.0);
-        put("ASCENDING_MELODY_LINE", 1.0);
-        put("PERFECT_INTERVAL", 3.0);
-        put("NON_PERFECT_INTERVAL", 3.0);
+        put("CHORD_TONE", 5.0);
+        put("NON_CHORD_TONE", 5.0);
+        put("STEP_MOTION", 3.0);
+        put("SKIP_MOTION", 3.0);
+        put("DESCENDING_MELODY_LINE", 3.0);
+        put("ASCENDING_MELODY_LINE", 3.0);
+        put("PERFECT_INTERVAL", 2.0);
+        put("NON_PERFECT_INTERVAL", 2.0);
         put("SIMPLE_RHYTHM", 1.0);
         put("COMPLICATED_RHYTHM", 1.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 10.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 14.0);
     }
     };
     private static final double CROSSOVER_PROBABILITY = 0.9;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
-            new ImmutablePair<>("ONE_POINT_CROSSOVER", 1.0),
-            new ImmutablePair<>("TWO_POINT_CROSSOVER", 0.0),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 2.0)
+            new ImmutablePair<>("ONE_POINT_CROSSOVER", 2.0),
+            new ImmutablePair<>("TWO_POINT_CROSSOVER", 1.0),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 4.0)
     );
-    private static final double MUTATION_PROBABILITY = 0.8;
+    private static final double MUTATION_PROBABILITY = 0.1;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 1.5),
+            new ImmutablePair<>("SIMPLE", 2.0),
             new ImmutablePair<>("BAR_ORDER", 0.0),
-            new ImmutablePair<>("ADD_ZERO", 1.0),
+            new ImmutablePair<>("ADD_ZERO", 0.5),
             new ImmutablePair<>("ADD_REST", 0.5),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 3.0)
+            new ImmutablePair<>("MUSICAL_CONTEXT", 5.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
@@ -75,8 +76,8 @@ public class Application {
 
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
-        put("STABILITY", new ImmutablePair<>(-123.0,240.0));
-        put("TENSION", new ImmutablePair<>(-45.0,117.0));
+//        put("STABILITY", new ImmutablePair<>(-123.0,240.0));
+//        put("TENSION", new ImmutablePair<>(-45.0,117.0));
         put("CHORD_TONE", new ImmutablePair<>(0.0,1.0));
         put("NON_CHORD_TONE", new ImmutablePair<>(0.0,1.0));
         put("STEP_MOTION", new ImmutablePair<>(0.0,1.0));
@@ -87,9 +88,9 @@ public class Application {
         put("DESCENDING_MELODY_LINE", new ImmutablePair<>(0.0,1.0));
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
-        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,20.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,20.0));
+        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-14.0,0.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,28.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,28.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
@@ -137,6 +138,12 @@ public class Application {
                     );
                     Thread t = new Thread(algorithm_NSGA_II);
                     t.start();
+
+//                    try {
+//                        t.join();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
                 break;
             case "MOEA_D":
@@ -170,6 +177,12 @@ public class Application {
                     );
                     Thread t = new Thread(algorithm_MOEA_D);
                     t.start();
+
+//                    try {
+//                        t.join(); // Wait for the thread to complete
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
                 break;
             case "NSGA_II_oneCriterion":
@@ -202,6 +215,12 @@ public class Application {
                     );
                     Thread t = new Thread(algorithm_NSGA_II_oneCriterion);
                     t.start();
+
+//                    try {
+//                        t.join(); // Wait for the thread to complete
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
                 break;
 
