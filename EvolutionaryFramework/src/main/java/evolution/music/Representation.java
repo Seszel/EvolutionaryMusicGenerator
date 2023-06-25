@@ -156,8 +156,8 @@ public class Representation {
         diatonicChordsTensionNote.put("vii-", List.of(7, 8, 9));
 
         // melodic minor
-        diatonicChordsTensionNote.put("ii", List.of(2, 5, 9));
-        diatonicChordsTensionNote.put("IV", List.of(7,2,3,4));
+        diatonicChordsTensionNote.put("ii", List.of(4, 7, 11, 0));
+        diatonicChordsTensionNote.put("IV", List.of(7, 2, 3, 4));
         diatonicChordsTensionNote.put("vi-", List.of(5, 6, 7));
 
         diatonicChords.add(diatonicChordsTensionNote);

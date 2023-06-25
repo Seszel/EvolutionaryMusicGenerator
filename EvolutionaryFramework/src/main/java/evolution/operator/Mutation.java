@@ -67,6 +67,10 @@ public class Mutation {
                 return addZeroMutation(genome);
             case "ADD_REST":
                 return addRestMutation(genome);
+            case "SWAP_NOTES":
+                return swapNotes(genome);
+            case "TRANSPOSE_NOTES":
+                return transposeNotes(genome);
             case "MUSICAL_CONTEXT":
                 return musicalContextMutation(genome, representation, chrProgPattern, chrProg, melodyKeyVal);
             case "NO_MUTATION":
@@ -87,6 +91,45 @@ public class Mutation {
         for (int i = 0; i < genome.getMelody().size(); i++) {
             int idx = Util.getRandomNumber(0, genome.getMelody().get(i).size() - 1);
             genome.getMelody().get(i).set(idx, -1);
+        }
+        return genome;
+    }
+
+    public static Genome swapNotes(Genome genome){
+        for (int i = 0; i < genome.getMelody().size(); i++) {
+                int idx = Util.getRandomNumber(2, genome.getMelody().get(i).size() - 1);
+                int note1 = genome.getMelody().get(i).get(idx);
+                int note2 = genome.getMelody().get(i).get(idx - 1);
+                genome.getMelody().get(i).set(idx, note2);
+                genome.getMelody().get(i).set(idx - 1, note1);
+            }
+        return genome;
+    }
+
+    public static Genome transposeNotes(Genome genome){
+        for (int i = 0; i < genome.getMelody().size(); i++) {
+            double median = genome.getMelody().get(i).stream()
+                    .filter(n -> n != 0 && n != -1)
+                    .sorted()
+                    .skip(genome.getMelody().get(i).stream().filter(n -> n != 0 && n != -1).count() / 2 - (genome.getMelody().get(i).stream().filter(n -> n != 0 && n != -1).count() % 2 == 0 ? 1 : 0))
+                    .limit(genome.getMelody().get(i).stream().filter(n -> n != 0 && n != -1).count() % 2 == 0 ? 2 : 1)
+                    .mapToDouble(Integer::doubleValue)
+                    .average()
+                    .orElse(Double.NaN);
+            int idx = Util.getRandomNumber(1, genome.getMelody().get(i).size() - 1);
+            int note1 = genome.getMelody().get(i).get(idx);
+            if (note1 == 0 || note1 == -1) {
+                do {
+                    idx -= 1;
+                    note1 = genome.getMelody().get(i).get(idx);
+                } while (note1 == 0 || note1 == -1);
+            }
+            int transpose = Util.getRandomNumber(1, 4);
+            if (note1 >= median){
+                genome.getMelody().get(i).set(idx, note1 - transpose);
+            } else {
+                genome.getMelody().get(i).set(idx, note1 + transpose);
+            }
         }
         return genome;
     }

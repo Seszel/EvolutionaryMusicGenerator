@@ -42,8 +42,13 @@ public class PlayResultMelodies {
                 ChrPrg.append(elem).append(" ");
             }
 
+            String key = melodyKey.getKey();
+            if (melodyKey.getValue().equals("MINOR")){
+                key += "min";
+            }
+
             Pattern chords = new ChordProgression(ChrPrg.toString())
-                    .setKey(melodyKey.getKey())
+                    .setKey(key)
                     .allChordsAs(durationOfChords.toString())
                     .getPattern()
                     .setVoice(0)
