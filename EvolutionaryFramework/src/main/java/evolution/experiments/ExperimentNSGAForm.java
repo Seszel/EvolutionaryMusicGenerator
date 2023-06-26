@@ -13,48 +13,61 @@ import java.util.List;
 public class ExperimentNSGAForm {
 
     private static final String ALGORITHM = "NSGA_II";
-    private static final int NUMBER_OF_BARS = 8;
+    private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
-            List.of("I", "V", "vi", "IV", "I", "V", "vi", "IV"),
-            List.of("I", "V", "vi", "IV", "I", "V", "vi", "IV"),
+            List.of("I", "V", "vi", "IV"),
+            List.of("I", "V", "vi", "IV"),
 
-            List.of("ii", "V", "I", "ii", "V", "I", "ii", "V", "I"),
-            List.of("ii", "V", "I", "ii", "V", "I", "ii", "V", "I"),
+            List.of("vi", "ii", "V", "I"),
 
-            List.of("i", "iv", "v", "i", "i", "iv", "v", "i"),
-            List.of("i", "iv", "v", "i", "i", "iv", "v", "i"),
+            List.of("I", "vi", "ii", "V"),
 
-            List.of("i", "iv", "III", "VI", "i", "iv", "III", "VI"),
-            List.of("i", "iv", "III", "VI", "i", "iv", "III", "VI")
+            List.of("I", "IV", "ii", "V"),
+
+
+            List.of("i", "iv", "VI", "V"),
+
+            List.of("i", "iv", "III", "VI"),
+
+            List.of("i", "VI", "III", "VII"),
+
+            List.of("i", "VI", "III", "iv")
+
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
-            new ImmutablePair<>("B", "MAJOR"),
-            new ImmutablePair<>("E", "MAJOR"),
-
+            new ImmutablePair<>("G", "MAJOR"),
             new ImmutablePair<>("C", "MAJOR"),
+
             new ImmutablePair<>("F#", "MAJOR"),
 
-            new ImmutablePair<>("D#", "MINOR"),
+            new ImmutablePair<>("D", "MAJOR"),
+
+            new ImmutablePair<>("A", "MAJOR"),
+
+
+            new ImmutablePair<>("D", "MINOR"),
+
+            new ImmutablePair<>("F", "MINOR"),
+
             new ImmutablePair<>("A", "MINOR"),
 
-            new ImmutablePair<>("G", "MINOR"),
-            new ImmutablePair<>("D", "MINOR")
+            new ImmutablePair<>("C", "MINOR")
     );
     private static final int POP_SIZE = 250;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
-        put("CHORD_TONE", 5.0);
-        put("NON_CHORD_TONE", 5.0);
-        put("STEP_MOTION", 3.0);
-        put("SKIP_MOTION", 3.0);
+        put("CHORD_TONE", 10.0);
+        put("NON_CHORD_TONE", 10.0);
+        put("STEP_MOTION", 4.0);
+        put("SKIP_MOTION", 4.0);
         put("DESCENDING_MELODY_LINE", 3.0);
         put("ASCENDING_MELODY_LINE", 3.0);
         put("PERFECT_INTERVAL", 2.0);
         put("NON_PERFECT_INTERVAL", 2.0);
-        put("SIMPLE_RHYTHM", 1.0);
-        put("COMPLICATED_RHYTHM", 1.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 14.0);
+        put("SIMPLE_RHYTHM", 4.0);
+        put("COMPLICATED_RHYTHM", 4.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 23.0);
     }
     };
     private static final Double CROSSOVER_PROBABILITY = 0.8;
@@ -65,10 +78,12 @@ public class ExperimentNSGAForm {
     );
     private static final Double MUTATION_PROBABILITY = 0.25;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 2.0),
-            new ImmutablePair<>("BAR_ORDER", 0.0),
+            new ImmutablePair<>("SIMPLE", 1.0),
+//            new ImmutablePair<>("BAR_ORDER", 0.0),
             new ImmutablePair<>("ADD_ZERO", 0.5),
             new ImmutablePair<>("ADD_REST", 0.5),
+            new ImmutablePair<>("SWAP_NOTES", 1.0),
+            new ImmutablePair<>("TRANSPOSE_NOTES", 1.0),
             new ImmutablePair<>("MUSICAL_CONTEXT", 5.0)
     );
     private static final String SELECTION_TYPE = "";
@@ -90,9 +105,9 @@ public class ExperimentNSGAForm {
         put("DESCENDING_MELODY_LINE", new ImmutablePair<>(0.0,1.0));
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
-        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-14.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,28.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,28.0));
+        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,46.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,46.0));
     }};
 
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);

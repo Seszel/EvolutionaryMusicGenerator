@@ -23,8 +23,8 @@ public class JFugeSandbox {
             durationOfChords.append("$").append(i).append("w ");
         }
 
-        Pattern chords = new ChordProgression("I V vi IV")
-                .setKey("D#")
+        Pattern chords = new ChordProgression("I IV ii V")
+                .setKey("A")
                 .allChordsAs(durationOfChords.toString())
                 .getPattern()
                 .setVoice(0)
@@ -33,7 +33,7 @@ public class JFugeSandbox {
 
         Pattern mel = new Pattern(
 
-                "55/0.75 63/0.0625 58/0.0625 70/0.0625 58/0.0625 65/0.75 70/0.0625 58/0.0625 53/0.0625 65/0.0625 67/0.75 55/0.0625 60/0.0625 67/0.0625 60/0.0625 68/0.0625 68/0.0625 68/0.125 68/0.375 68/0.0625 56/0.0625 68/0.0625 60/0.0625 75/0.0625 68/0.0625 "
+                "73/0.375 73/0.0625 73/0.25 64/0.0625 64/0.125 64/0.0625 64/0.0625 74/0.125 62/0.1875 57/0.1875 52/0.1875 57/0.125 62/0.0625 69/0.0625 74/0.0625 74/0.5 74/0.1875 74/0.125 71/0.0625 R/0.0625 62/0.0625 64/0.25 59/0.375 59/0.0625 71/0.0625 64/0.0625 59/0.0625 64/0.0625 71/0.0625 "
 
                 )
                 .setTempo(90)
@@ -41,13 +41,13 @@ public class JFugeSandbox {
                 .setVoice(1);
 
         Pattern music = new Pattern().add(chords).add(mel);
-        player.play(music);
+//        player.play(music);
 
 
 
 
         try {
-            File filePath = new File("random.mid");
+            File filePath = new File("Z_ankieta2/A_MAJOR_I, IV, ii, V_MAX.mid");
             MidiFileManager.savePatternToMidi(music, filePath);
         } catch (IOException ex) {
             ex.printStackTrace();
