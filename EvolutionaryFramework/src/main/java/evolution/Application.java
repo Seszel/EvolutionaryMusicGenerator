@@ -38,9 +38,9 @@ public class Application {
         put("ASCENDING_MELODY_LINE", 1.0);
         put("PERFECT_INTERVAL", 2.0);
         put("NON_PERFECT_INTERVAL", 2.0);
-        put("SIMPLE_RHYTHM", 4.0);
-        put("COMPLICATED_RHYTHM", 4.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 20.0);
+        put("SIMPLE_RHYTHM", 5.0);
+        put("COMPLICATED_RHYTHM", 5.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
     }
     };
     private static final double CROSSOVER_PROBABILITY = 0.8;
@@ -53,8 +53,8 @@ public class Application {
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
 //            new ImmutablePair<>("BAR_ORDER", 0.0),
-            new ImmutablePair<>("ADD_ZERO", 0.5),
-            new ImmutablePair<>("ADD_REST", 0.5),
+            new ImmutablePair<>("ADD_ZERO", 1.0),
+            new ImmutablePair<>("ADD_REST", 1.0),
             new ImmutablePair<>("SWAP_NOTES", 3.0),
             new ImmutablePair<>("SWAP_DURATION", 6.0),
             new ImmutablePair<>("TRANSPOSE_NOTES", 3.0),
@@ -82,8 +82,8 @@ public class Application {
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,40.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,40.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,42.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,42.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;

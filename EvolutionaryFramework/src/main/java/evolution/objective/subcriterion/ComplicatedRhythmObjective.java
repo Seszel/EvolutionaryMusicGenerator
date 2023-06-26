@@ -142,7 +142,7 @@ public class ComplicatedRhythmObjective extends Objective {
         }
         fitnessSameRhythm = fitnessSameRhythm / countSimilarPossibilities;
 
-        fitness += (fitnessBeat + fitnessDuration + 0.5*fitnessNumberOfNotes + fitnessSameRhythm)/3.5;
+        fitness += (3*fitnessBeat + 2*fitnessDuration + 0.0*fitnessNumberOfNotes + fitnessSameRhythm)/6.0;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
