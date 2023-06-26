@@ -87,7 +87,7 @@ public class Application {
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
-    private static final boolean PLAY = false;
+    private static final boolean PLAY = true;
 
     public static void main(String[] args) {
         runAlgorithm();
