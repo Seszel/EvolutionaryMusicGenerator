@@ -1,9 +1,6 @@
 package evolution.objective;
 
-import evolution.objective.criterion.ComplicatedAndEnigmatic;
-import evolution.objective.criterion.SimpleAndObvious;
-import evolution.objective.criterion.StabilityObjective;
-import evolution.objective.criterion.TensionObjective;
+import evolution.objective.criterion.*;
 import evolution.objective.subcriterion.*;
 import evolution.solution.Individual;
 import org.apache.commons.lang3.tuple.Pair;
@@ -59,6 +56,14 @@ public class Evaluator {
                 return SimpleAndObvious.evaluate(individual, pack);
             case "COMPLICATED_AND_ENIGMATIC":
                 return ComplicatedAndEnigmatic.evaluate(individual, pack);
+            case "SKIP":
+                return Skip.evaluate(individual, pack);
+            case "STEP":
+                return Step.evaluate(individual, pack);
+            case "ASCENDING":
+                return Ascending.evaluate(individual, pack);
+            case "DESCENDING":
+                return Descending.evaluate(individual, pack);
             default:
                 return null;
         }
