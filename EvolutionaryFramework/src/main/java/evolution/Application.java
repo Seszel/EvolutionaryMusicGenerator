@@ -62,7 +62,7 @@ public class Application {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 200;
+    private static final int NUMBER_OF_GENERATIONS = 250;
     private static final int NUMBER_OF_ITERATIONS = 10;
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 
