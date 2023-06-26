@@ -9,6 +9,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Mutation {
 
@@ -69,6 +71,8 @@ public class Mutation {
                 return addRestMutation(genome);
             case "SWAP_NOTES":
                 return swapNotes(genome);
+            case "SWAP_DURATION":
+                return swapDuration(genome);
             case "TRANSPOSE_NOTES":
                 return transposeNotes(genome);
             case "MUSICAL_CONTEXT":
@@ -91,6 +95,51 @@ public class Mutation {
         for (int i = 0; i < genome.getMelody().size(); i++) {
             int idx = Util.getRandomNumber(0, genome.getMelody().get(i).size() - 1);
             genome.getMelody().get(i).set(idx, -1);
+        }
+        return genome;
+    }
+
+    public static Genome swapDuration(Genome genome) {
+        int noteValue;
+        List<List<Integer>> durations = new ArrayList<>();
+        int lengthOfNote;
+
+        for (int i = 0; i < genome.getMelody().size(); i++) {
+            lengthOfNote = 0;
+            List<Integer> barDurations = new ArrayList<>();
+            for (int j = 0; j < genome.getMelody().get(i).size(); j++) {
+                noteValue = genome.getMelody().get(i).get(j);
+                if (noteValue == 0) {
+                    lengthOfNote += 1;
+                }
+                if (noteValue != 0) {
+                    if (lengthOfNote != 0) {
+                        barDurations.add(lengthOfNote);
+                        lengthOfNote = 1;
+                    } else {
+                        lengthOfNote += 1;
+                    }
+                    if (j == genome.getMelody().get(i).size() - 1) {
+                        barDurations.add(1);
+                    }
+                }
+
+            }
+            durations.add(barDurations);
+        }
+
+        for (int i = 0; i < genome.getMelody().size(); i++) {
+            if (durations.get(i).size() > 1) {
+                int idx = Util.getRandomNumber(0, durations.get(i).size() - 2);
+                int realIdx = 0;
+                for (int num : durations.get(i).subList(0, idx)) {
+                    realIdx += num;
+                }
+                int note1 = genome.getMelody().get(i).get(realIdx + durations.get(i).get(idx));
+                int note2 = genome.getMelody().get(i).get(realIdx + durations.get(i).get(idx + 1));
+                genome.getMelody().get(i).set(realIdx + durations.get(i).get(idx + 1), note1);
+                genome.getMelody().get(i).set(realIdx + durations.get(i).get(idx), note2);
+            }
         }
         return genome;
     }

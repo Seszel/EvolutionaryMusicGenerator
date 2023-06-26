@@ -15,9 +15,9 @@ import java.util.List;
 
 public class Application {
 
-//    private static final String ALGORITHM = "NSGA_II";
+    private static final String ALGORITHM = "NSGA_II";
 //    private static final String ALGORITHM = "NSGA_II_oneCriterion";
-    private static final String ALGORITHM = "MOEA_D";
+//    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 250;
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
@@ -51,13 +51,14 @@ public class Application {
     );
     private static final double MUTATION_PROBABILITY = 0.25;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 1.0),
+            new ImmutablePair<>("SIMPLE", 2.0),
 //            new ImmutablePair<>("BAR_ORDER", 0.0),
             new ImmutablePair<>("ADD_ZERO", 0.5),
             new ImmutablePair<>("ADD_REST", 0.5),
-            new ImmutablePair<>("SWAP_NOTES", 1.0),
-            new ImmutablePair<>("TRANSPOSE_NOTES", 1.0),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 5.0)
+            new ImmutablePair<>("SWAP_NOTES", 3.0),
+            new ImmutablePair<>("SWAP_DURATION", 6.0),
+            new ImmutablePair<>("TRANSPOSE_NOTES", 3.0),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 10.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
