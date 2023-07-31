@@ -49,9 +49,11 @@ public class NonPerfectIntervalObjective extends Objective {
         for (int i = 1; i < melodyArray.size(); i++) {
             interval = Math.abs(melodyArray.get(i - 1) - melodyArray.get(i));
             if (dissonances.contains(interval)) {
-                fitness += 1.0/melodyArray.size();
+                fitness += 1.0;
             }
         }
+
+        fitness /= melodyArray.size()-1;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();

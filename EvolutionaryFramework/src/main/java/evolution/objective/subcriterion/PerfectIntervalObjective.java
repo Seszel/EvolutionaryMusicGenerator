@@ -43,15 +43,16 @@ public class PerfectIntervalObjective extends Objective {
         List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
         melodyArray.removeAll(List.of(-1, 0));
 
-        List<Integer> perfectConsonances = List.of(0, 12, 5, 7);
+        List<Integer> perfectConsonances = List.of(0, 12, 5, 7, 3, 4, 8, 9);
         int interval;
         for (int i = 1; i < melodyArray.size(); i++) {
             interval = Math.abs(melodyArray.get(i - 1) - melodyArray.get(i));
             if (perfectConsonances.contains(interval)) {
-                fitness += 1.0/melodyArray.size();
+                fitness += 1.0;
             }
         }
 
+        fitness /= melodyArray.size()-1;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
