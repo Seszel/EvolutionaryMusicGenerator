@@ -24,7 +24,7 @@ public class JFugeSandbox {
         }
 
         Pattern chords = new ChordProgression("I V vi IV")
-                .setKey("D#")
+                .setKey("C")
                 .allChordsAs(durationOfChords.toString())
                 .getPattern()
                 .setVoice(0)
@@ -33,7 +33,7 @@ public class JFugeSandbox {
 
         Pattern mel = new Pattern(
 
-                "65/0.625 58/0.125 R/0.0625 55/0.0625 67/0.125 58/0.125 68/0.25 62/0.125 58/0.0625 65/0.0625 75/0.125 70/0.0625 63/0.0625 53/0.0625 58/0.0625 63/0.125 56/0.25 67/0.125 R/0.0625 67/0.0625 60/0.125 67/0.0625 60/0.0625 R/0.0625 63/0.0625 74/0.125 68/0.25 67/0.125 56/0.0625 68/0.0625 63/0.125 68/0.0625 74/0.0625 68/0.0625 56/0.0625 "
+                "61/0.125 62/0.0625 60/0.0625 62/0.0625 60/0.0625 60/0.0625 70/0.0625 68/0.0625 66/0.0625 65/0.0625 66/0.0625 64/0.0625 62/0.0625 64/0.0625 66/0.0625 67/0.125 64/0.0625 65/0.0625 65/0.0625 64/0.0625 66/0.0625 65/0.0625 61/0.0625 69/0.0625 66/0.0625 65/0.0625 66/0.0625 67/0.0625 67/0.0625 69/0.0625 67/0.125 66/0.0625 65/0.0625 65/0.0625 67/0.0625 66/0.0625 65/0.0625 65/0.0625 63/0.0625 63/0.0625 65/0.0625 65/0.0625 67/0.0625 67/0.0625 67/0.0625 66/0.0625 66/0.125 65/0.0625 63/0.0625 66/0.0625 68/0.0625 69/0.0625 68/0.0625 67/0.0625 69/0.0625 69/0.0625 69/0.0625 62/0.0625 63/0.0625 62/0.0625 "
 
                 )
                 .setTempo(90)
@@ -41,15 +41,19 @@ public class JFugeSandbox {
                 .setVoice(1);
 
 
-        player.play(chords);
+//        player.play(chords);
         Pattern music = new Pattern().add(chords).add(mel);
 //        player.play(music);
 
 
-
+//                String folderName = "";
+//        String fileName = "";
+//        String folderName = "descendingAscending/";
+        String folderName = "stepSkip/";
+        String fileName = "A_MAJOR_I, IV, ii, V_max";
 
         try {
-            File filePath = new File("A_MAJOR_I, IV, ii, V_MAX.mid");
+            File filePath = new File("../Visualization/midi/" + folderName + fileName +".mid");
             MidiFileManager.savePatternToMidi(music, filePath);
         } catch (IOException ex) {
             ex.printStackTrace();

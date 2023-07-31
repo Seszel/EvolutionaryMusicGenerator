@@ -19,17 +19,17 @@ public class PlayResultMelodies {
 //            System.out.println(individual.getFitnessByName("STABILITY"));
 //            System.out.println(individual.getFitnessByName("CHORD_TONE"));
 //            System.out.println(individual.getFitnessByName("NON_CHORD_TONE"));
-//            System.out.println(individual.getFitnessByName("STEP_MOTION"));
-//            System.out.println(individual.getFitnessByName("SKIP_MOTION"));
+            System.out.println(individual.getFitnessByName("STEP_MOTION"));
+            System.out.println(individual.getFitnessByName("SKIP_MOTION"));
 //            System.out.println(individual.getFitnessByName("PERFECT_INTERVAL"));
 //            System.out.println(individual.getFitnessByName("NON_PERFECT_INTERVAL"));
-//            System.out.println(individual.getFitnessByName("DESCENDING_MELODY_LINE"));
-//            System.out.println(individual.getFitnessByName("ASCENDING_MELODY_LINE"));
+            System.out.println(individual.getFitnessByName("DESCENDING_MELODY_LINE"));
+            System.out.println(individual.getFitnessByName("ASCENDING_MELODY_LINE"));
 //            System.out.println(individual.getFitnessByName("SIMPLE_RHYTHM"));
 //            System.out.println(individual.getFitnessByName("COMPLICATED_RHYTHM"));
-            System.out.println(individual.getFitnessByName("UNDESIRABLE_PROPERTIES_MELODY"));
-            System.out.println(individual.getFitnessByName("SIMPLE_AND_OBVIOUS"));
-            System.out.println(individual.getFitnessByName("COMPLICATED_AND_ENIGMATIC"));
+//            System.out.println(individual.getFitnessByName("UNDESIRABLE_PROPERTIES_MELODY"));
+//            System.out.println(individual.getFitnessByName("SIMPLE_AND_OBVIOUS"));
+//            System.out.println(individual.getFitnessByName("COMPLICATED_AND_ENIGMATIC"));
 
             StringBuilder durationOfChords = new StringBuilder();
             for (int i=0; i<chordProgression.size(); i++){
@@ -62,8 +62,8 @@ public class PlayResultMelodies {
             Pattern music = new Pattern().add(chords).add(melody);
 
 //            player.play(chords);
-//            player.play(pattern);
-            player.play(music);
+            player.play(melody);
+//            player.play(music);
         }
     }
 }

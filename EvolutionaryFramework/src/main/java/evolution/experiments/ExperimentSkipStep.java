@@ -21,76 +21,59 @@ public class ExperimentSkipStep {
 
             List.of("vi", "ii", "V", "I"),
 
-            List.of("I", "vi", "ii", "V"),
-
-            List.of("I", "IV", "ii", "V"),
 
 
             List.of("i", "iv", "VI", "V"),
 
-            List.of("i", "iv", "III", "VI"),
+            List.of("i", "VI", "III", "VII")
 
-            List.of("i", "VI", "III", "VII"),
-
-            List.of("i", "VI", "III", "iv")
 
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
             new ImmutablePair<>("C", "MAJOR"),
 
-            new ImmutablePair<>("G#", "MAJOR"),
-
-            new ImmutablePair<>("C#", "MAJOR"),
-
-            new ImmutablePair<>("A#", "MAJOR"),
+            new ImmutablePair<>("A", "MAJOR"),
 
 
-            new ImmutablePair<>("E", "MINOR"),
 
             new ImmutablePair<>("G", "MINOR"),
 
-            new ImmutablePair<>("B", "MINOR"),
-
-            new ImmutablePair<>("C", "MINOR")
+            new ImmutablePair<>("B", "MINOR")
     );
     private static final int POP_SIZE = 250;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("STEP_MOTION", 1.0);
         put("SKIP_MOTION", 1.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 1.0);
     }
     };
     private static final Double CROSSOVER_PROBABILITY = 0.8;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
-            new ImmutablePair<>("ONE_POINT_CROSSOVER", 2.0),
+            new ImmutablePair<>("ONE_POINT_CROSSOVER", 4.0),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 1.0),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 4.0)
+            new ImmutablePair<>("MUSICAL_CONTEXT", 0.0)
     );
     private static final Double MUTATION_PROBABILITY = 0.25;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
-            new ImmutablePair<>("SIMPLE", 2.0),
-//            new ImmutablePair<>("BAR_ORDER", 0.0),
+            new ImmutablePair<>("SIMPLE", 5.0),
+            new ImmutablePair<>("BAR_ORDER", 3.0),
             new ImmutablePair<>("ADD_ZERO", 1.0),
             new ImmutablePair<>("ADD_REST", 1.0),
             new ImmutablePair<>("SWAP_NOTES", 3.0),
-            new ImmutablePair<>("SWAP_DURATION", 6.0),
-            new ImmutablePair<>("TRANSPOSE_NOTES", 3.0),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 10.0)
+            new ImmutablePair<>("SWAP_DURATION", 3.0),
+            new ImmutablePair<>("TRANSPOSE_NOTES", 6.0),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 0.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 250;
     private static final int NUMBER_OF_ITERATIONS = 10;
 
-    private static final List<String> CRITERIA = List.of("STEP", "SKIP");
+    private static final List<String> CRITERIA = List.of("STEP_MOTION", "SKIP_MOTION");
 
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
         put("STEP_MOTION", new ImmutablePair<>(0.0,1.0));
         put("SKIP_MOTION", new ImmutablePair<>(0.0,1.0));
-        put("STEP", new ImmutablePair<>(0.0,2.0));
-        put("SKIP", new ImmutablePair<>(0.0,2.0));
-        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
     }};
 
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
