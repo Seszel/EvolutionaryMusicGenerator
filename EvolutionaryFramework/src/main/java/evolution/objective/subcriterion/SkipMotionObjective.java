@@ -44,11 +44,11 @@ public class SkipMotionObjective extends Objective {
         melodyArray.removeAll(List.of(-1, 0));
 
         for (int i = 1; i < melodyArray.size(); i++){
-            if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) > 2){
+            if (Math.abs(melodyArray.get(i-1) - melodyArray.get(i)) >= 3){
                 fitness += 1;
             }
         }
-        fitness /= melodyArray.size();
+        fitness /= melodyArray.size()-1;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();

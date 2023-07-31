@@ -47,7 +47,7 @@ public class StepMotionObjective extends Objective {
                 fitness += 1;
             }
         }
-        fitness /= melodyArray.size();
+        fitness /= melodyArray.size()-1;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
