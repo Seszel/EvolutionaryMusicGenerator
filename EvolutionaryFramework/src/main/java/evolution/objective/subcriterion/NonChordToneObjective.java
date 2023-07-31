@@ -39,19 +39,40 @@ public class NonChordToneObjective extends Objective {
         var melodyKeyVal = Representation.NotesMap.get(melodyKey.getLeft());
 
 
+        int[] countNoPauses = new int[4];
+        int noteValue;
+        for (int i = 0; i < melody.size(); i++) {
+            int j = 0;
+            while (j < melody.get(i).size()){
+                noteValue = melody.get(i).get(j);
+                if (noteValue != -1 && noteValue != 0){
+                    countNoPauses[i]++;
+                    for (int k=j+1; k<melody.get(i).size(); k++){
+                        if (melody.get(i).get(k) == 0){
+                            countNoPauses[i]++;
+                        }
+                        else {
+                            j = k-1;
+                            break;
+                        }
+                    }
+                }
+                j++;
+            }
+        }
 
         int count = 0;
-        int noteValue;
         int toFitness = 0;
         for (int i = 0; i < melody.size(); i++) {
             for (int j = 0; j < melody.get(i).size(); j++) {
                 noteValue = melody.get(i).get(j);
                 if (noteValue != 0) {
                     if (count != 0){
-                        fitness += toFitness*((double)count/melody.get(i).size());
+                        fitness += toFitness * ((double)count/countNoPauses[i]);
                         toFitness = 0;
                     }
-                    if ( (chrProgPattern.get(1).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12))
+                    if ( noteValue != -1
+                            &&  (chrProgPattern.get(1).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12))
                         || (chrProgPattern.get(2).get(chrProg.get(i)).contains((noteValue - melodyKeyVal) % 12)) ) {
                         toFitness += 1;
                     }
@@ -59,9 +80,10 @@ public class NonChordToneObjective extends Objective {
                 } else {
                     count += 1;
                 }
-                if (j == (melody.get(i).size()-1) && noteValue == 0){
-                    fitness += toFitness*((double)count/melody.get(i).size());
+                if (j == (melody.get(i).size()-1)){
+                    fitness += toFitness * ((double)count/countNoPauses[i]);
                     toFitness = 0;
+                    count = 0;
                 }
             }
         }

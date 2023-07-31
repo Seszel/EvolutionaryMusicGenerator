@@ -15,8 +15,8 @@ import java.util.List;
 
 public class Application {
 
-    private static final String ALGORITHM = "NSGA_II";
-//    private static final String ALGORITHM = "NSGA_II_oneCriterion";
+//    private static final String ALGORITHM = "NSGA_II";
+    private static final String ALGORITHM = "NSGA_II_oneCriterion";
 //    private static final String ALGORITHM = "MOEA_D";
     private static final int POP_SIZE = 250;
     private static final int NUMBER_OF_BARS = 4;
@@ -63,8 +63,10 @@ public class Application {
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 250;
-    private static final int NUMBER_OF_ITERATIONS = 10;
-    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
+    private static final int NUMBER_OF_ITERATIONS = 1;
+//    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
+//    private static final List<String> CRITERIA = List.of("CHORD_TONE");
+    private static final List<String> CRITERIA = List.of("NON_CHORD_TONE");
 
 
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
@@ -85,7 +87,7 @@ public class Application {
         put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,42.0));
         put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,42.0));
     }};
-    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
+    private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
     private static final boolean PLAY = true;
 

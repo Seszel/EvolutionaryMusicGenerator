@@ -49,7 +49,7 @@ public class NSGA_II_oneCriterion extends AEvolutionaryAlgorithm {
                 selectionType, matingPoolSelectionType,
                 numberOfGenerations, criteria, folderName);
 
-        System.out.println("Algorithm NSGA_II for " + criteria.get(0) + " criterion is working, iteration: " + (numberOfIteration + 1));
+        System.out.println("Algorithm NSGA_II one criteropnfor " + criteria.get(0) + " criterion is working, iteration: " + (numberOfIteration + 1));
 
         var params = new EvaluationParameters("JoannaParameters");
         params.addParam(EvaluationParameters.ParamName.CHORD_PROGRESSION_PATTERN,
