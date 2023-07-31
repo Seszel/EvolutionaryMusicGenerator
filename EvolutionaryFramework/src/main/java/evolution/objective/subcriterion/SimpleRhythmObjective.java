@@ -51,6 +51,11 @@ public class SimpleRhythmObjective extends Objective {
                 .boxed()
                 .collect(Collectors.toList());
 
+        List<Integer> strongBeatsIdxI = IntStream.range(0, melodyArray.size())
+                .filter(i -> i % 4 == 2)
+                .boxed()
+                .collect(Collectors.toList());
+
         double fitnessBeat = 0;
 
         for (int beat : strongBeatsIdx){
@@ -59,7 +64,13 @@ public class SimpleRhythmObjective extends Objective {
             }
         }
 
-        fitnessBeat /= strongBeatsIdx.size();
+        for (int beat : strongBeatsIdxI){
+            if (melodyArray.get(beat) == 0){
+                fitnessBeat += 1;
+            }
+        }
+
+        fitnessBeat /= strongBeatsIdx.size()+strongBeatsIdxI.size();
 
         int noteValue;
         List<List<Integer>> durations = new ArrayList<>();
@@ -131,19 +142,23 @@ public class SimpleRhythmObjective extends Objective {
             fitnessNumberOfNotes +=1;
         }
 
-        double fitnessSameRhythm = 0;
+        double fitnessSameRhythm = 0.0;
         int countSimilarPossibilities = 0;
         for (int i=0; i< durations.size(); i++){
             for (int k=i+1; k< durations.size(); k++){
                 countSimilarPossibilities += 1;
                 if (durations.get(i).equals(durations.get(k))){
-                    fitnessSameRhythm += 1;
+                    fitnessSameRhythm += 1.0;
                 }
             }
         }
-        fitnessSameRhythm = fitnessSameRhythm / countSimilarPossibilities;
+        fitnessSameRhythm /= countSimilarPossibilities;
 
-        fitness += (3*fitnessBeat + 2*fitnessDuration + 0.0*fitnessNumberOfNotes + fitnessSameRhythm)/6.0;
+        fitness += 3*fitnessBeat;
+        fitness += 2*fitnessDuration;
+        fitness += fitnessSameRhythm;
+
+        fitness /= 6;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();

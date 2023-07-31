@@ -46,6 +46,11 @@ public class ComplicatedRhythmObjective extends Objective {
         List<Integer> melodyArray = Util.flattenListOfListsStream(melody);
 
         List<Integer> strongBeatsIdx = IntStream.range(0, melodyArray.size())
+                .filter(i -> i % 4 == 0)
+                .boxed()
+                .collect(Collectors.toList());
+
+        List<Integer> strongBeatsIdxI = IntStream.range(0, melodyArray.size())
                 .filter(i -> i % 4 == 2)
                 .boxed()
                 .collect(Collectors.toList());
@@ -53,12 +58,18 @@ public class ComplicatedRhythmObjective extends Objective {
         double fitnessBeat = 0;
 
         for (int beat : strongBeatsIdx){
+            if (melodyArray.get(beat) == 0){
+                fitnessBeat += 1;
+            }
+        }
+
+        for (int beat : strongBeatsIdxI){
             if (melodyArray.get(beat) != 0){
                 fitnessBeat += 1;
             }
         }
 
-        fitnessBeat /= strongBeatsIdx.size();
+        fitnessBeat /= strongBeatsIdx.size()+strongBeatsIdxI.size();
 
         int noteValue;
         List<List<Integer>> durations = new ArrayList<>();
@@ -142,7 +153,11 @@ public class ComplicatedRhythmObjective extends Objective {
         }
         fitnessSameRhythm = fitnessSameRhythm / countSimilarPossibilities;
 
-        fitness += (3*fitnessBeat + 2*fitnessDuration + 0.0*fitnessNumberOfNotes + fitnessSameRhythm)/6.0;
+        fitness += 3*fitnessBeat;
+        fitness += 2*fitnessDuration;
+        fitness += fitnessSameRhythm;
+
+        fitness /= 6;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
