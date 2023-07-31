@@ -54,7 +54,7 @@ public class AscendingMelodyLineObjective extends Objective {
                 }
             }
         }
-        fitness /= melodyArray.size();
+        fitness /= melodyArray.size()-2;
 
         double min = criteriaRanges.get(name).getLeft();
         double max = criteriaRanges.get(name).getRight();
