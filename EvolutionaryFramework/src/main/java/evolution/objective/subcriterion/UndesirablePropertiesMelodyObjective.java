@@ -8,9 +8,7 @@ import evolution.util.Util;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -71,6 +69,17 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
 
         List<Integer> chordNotes, chordNotes2;
 
+//        int SBNcount  = 0;
+//        for (int sBI : strongBeatsIdx){
+//            if (melodyArray.get(sBI) != 0 && melodyArray.get(sBI) != -1){
+//                SBNcount += 1;
+//            }
+//        }
+
+
+
+        int countAN = 0;
+
 
         for (int i=0; i < strongBeatsIdx.size(); i++){
             if (i%(numberOfNotes/4) == 0){
@@ -113,21 +122,26 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                         if (!chordNotes2.contains(Math.abs(nextNoteValue - melodyKeyVal) % 12)) {
                             tempValue += 1;
                         }
-                        if ( Math.abs(nextNoteValue - noteValue) - 2 >= 0 ) {
+                        if ( Math.abs(nextNoteValue - noteValue)  > 2 ) {
                             tempValue += 1;
                         }
+                    } else if (nextNoteValue == 0){
+                        tempValue += 1;
                     }
-                    // AN
-                    if( chordNotes.contains(Math.abs( (noteValue - 1) - melodyKeyVal) % 12)) {
-                        AN += 1;
-                    }
-                    ///////
                 }
+                // AN
+                countAN += 1;
+                if( !chrProgPattern.get(0).get(chrProg.get(numberOfCurrentBar)).contains(Math.abs( noteValue - melodyKeyVal) % 12)
+                        && !chrProgPattern.get(1).get(chrProg.get(numberOfCurrentBar)).contains(Math.abs( noteValue - melodyKeyVal) % 12)
+                        && !chrProgPattern.get(2).get(chrProg.get(numberOfCurrentBar)).contains(Math.abs( noteValue - melodyKeyVal) % 12)) {
+                    AN += 1;
+                }
+                ///////
             }
             UT += tempValue;
         }
 
-        MNC += UT/(strongBeatsIdx.size()-1);
+        MNC += UT/(countAN - 1);
 
 
         // Rule 2 ////////////////////////////////////////////////////////////////
@@ -186,13 +200,13 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                     if (!chordNotesLeft.contains(Math.abs(noteLeft - melodyKeyVal) % 12)) {
                         tempValue += 1;
                     }
-                    if ( Math.abs(noteLeft - note) - 2 >= 0 ) {
+                    if ( Math.abs(noteLeft - note) > 2 ) {
                         tempValue += 1;
                     }
                     if (!chordNotesRight.contains(Math.abs(noteRight - melodyKeyVal) % 12)) {
                         tempValue2 += 1;
                     }
-                    if ( Math.abs(note - noteRight) - 2 >= 0 ) {
+                    if ( Math.abs(note - noteRight) > 2 ) {
                         tempValue2 += 1;
                     }
                 }
@@ -204,6 +218,46 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         MNC +=  NCC / (numberOfSounds) ;
 
         // Rule 3 ////////////////////////////////////////////////////////////////
+
+
+        List<List<Integer>> durations = new ArrayList<>();
+        int lengthOfNote;
+        boolean pause = false;
+
+        for (int i = 0; i < melody.size(); i++) {
+            lengthOfNote = 0;
+            List<Integer> barDurations = new ArrayList<>();
+            for (int j = 0; j < melody.get(i).size(); j++) {
+                noteValue = melody.get(i).get(j);
+                if (noteValue == 0){
+                    lengthOfNote += 1;
+                }
+                if (noteValue != 0){
+                    if (!pause) {
+                        if (lengthOfNote != 0) {
+                            barDurations.add(lengthOfNote);
+                            lengthOfNote = 1;
+                        } else {
+                            lengthOfNote += 1;
+                        }
+
+                    } else {
+                        lengthOfNote = 1;
+                        pause = false;
+                    }
+                }
+                if (noteValue == -1){
+                    pause = true;
+
+                } else {
+                    if (j == melody.get(i).size() - 1) {
+                        barDurations.add(1);
+                    }
+                }
+            }
+            durations.add(barDurations);
+        }
+
 
         List<List<Integer>> updatedMelody = melody.stream()
                 .map(nestedList -> nestedList.stream()
@@ -219,10 +273,11 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         double ON = 0;
 
         for (int i=0; i<updatedMelody.size(); i++){
-            countNotes = 0; ///ON
+//            countNotes = 0; ///ON
             countChordNotes = 0; //ON
             for (int j=0; j<updatedMelody.get(i).size(); j++){
-                countNotes += 1; /// ON
+
+//                countNotes += 1; /// ON
 
                 if (!skippedFirstNote){
                     skippedFirstNote = true;
@@ -244,7 +299,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                         intervalRight = Math.abs(updatedMelody.get(i).get(j) - updatedMelody.get(i).get(j+1));
                     }
 
-                    if (4 - intervalLeft >=0 ){
+                    if (intervalLeft < 4 ){
                         NCL += 1;
                     }
                     if (4 - intervalRight >=0 ){
@@ -253,12 +308,21 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                 }
                 //// ON
                 else {
-                    countChordNotes += 1;
+//                    try {
+//                        //  Block of code to try
+//                        countChordNotes += durations.get(i).get(j);
+//                    }
+//                    catch(Exception e) {
+//                        //  Block of code to handle errors
+//                        System.out.println("here");
+//                    }
+
+                    countChordNotes += durations.get(i).get(j);
                 }
                 //////
             }
             /// ON
-            if (0.5 - ((double)countChordNotes/countNotes) >= 0){
+            if (((double)countChordNotes/durations.get(i).stream().mapToInt(Integer::intValue).sum()) < 0.5){
                 ON += 1;
             }
             ////
@@ -272,7 +336,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
         //*********************************************************************************************************************//
 
         // in rule 1
-        fitness += AN / strongBeatsIdx.size();
+        fitness += AN / countAN;
 
         //*********************************************************************************************************************//
         // in rule 3
@@ -303,7 +367,7 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
                 }
             }
             /////
-            if (12 - Math.abs(noteValue - nextNoteValue) < 0){
+            if (Math.abs(noteValue - nextNoteValue) > 12){
                 BL += 1;
             }
         }
