@@ -378,6 +378,17 @@ public class UndesirablePropertiesMelodyObjective extends Objective {
 
         //*********************************************************************************************************************//
 
+        float fitnessPauses = 0;
+        for (List<Integer> dur: durations){
+            if (dur.stream().mapToInt(Integer::intValue).sum() < 0.75*melody.get(0).size()){
+                fitnessPauses += 1;
+            }
+        }
+        fitnessPauses /= melody.size();
+
+        fitness += fitnessPauses;
+
+        //*********************************************************************************************************************//
 
 
 

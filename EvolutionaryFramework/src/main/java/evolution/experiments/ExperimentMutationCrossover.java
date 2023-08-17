@@ -14,24 +14,24 @@ import java.util.Map;
 public class ExperimentMutationCrossover {
 
     private static final String ALGORITHM = "NSGA_II";
-    private static final int NUMBER_OF_BARS = 8;
+    private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
-    private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV", "I", "V", "vi", "IV");
-    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("F#", "MAJOR");
+    private static final List<String> CHORD_PROGRESSION = List.of("I", "V", "vi", "IV");
+    private static final Pair<String, String> MELODY_KEY = new ImmutablePair<>("C", "MAJOR");
     private static final int POP_SIZE = 100;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
-        put("CHORD_TONE", 5.0);
-        put("NON_CHORD_TONE", 5.0);
-        put("STEP_MOTION", 3.0);
-        put("SKIP_MOTION", 3.0);
+        put("CHORD_TONE", 10.0);
+        put("NON_CHORD_TONE", 10.0);
+        put("STEP_MOTION", 6.0);
+        put("SKIP_MOTION", 6.0);
         put("DESCENDING_MELODY_LINE", 3.0);
         put("ASCENDING_MELODY_LINE", 3.0);
-        put("PERFECT_INTERVAL", 2.0);
-        put("NON_PERFECT_INTERVAL", 2.0);
-        put("SIMPLE_RHYTHM", 1.0);
-        put("COMPLICATED_RHYTHM", 1.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 14.0);
+//        put("PERFECT_INTERVAL", 2.0);
+//        put("NON_PERFECT_INTERVAL", 2.0);
+        put("SIMPLE_RHYTHM", 6.0);
+        put("COMPLICATED_RHYTHM", 6.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 25.0);
     }
     };
     private static final List<Double> CROSSOVER_PROBABILITY = List.of(0.8, 0.85, 0.9, 0.95, 0.99);
@@ -43,10 +43,13 @@ public class ExperimentMutationCrossover {
     private static final List<Double> MUTATION_PROBABILITY = List.of(0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5);
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
-            new ImmutablePair<>("BAR_ORDER", 0.0),
-            new ImmutablePair<>("ADD_ZERO", 0.5),
-            new ImmutablePair<>("ADD_REST", 0.5),
-            new ImmutablePair<>("MUSICAL_CONTEXT", 5.0)
+//            new ImmutablePair<>("BAR_ORDER", 0.0),
+            new ImmutablePair<>("ADD_ZERO", 1.0),
+            new ImmutablePair<>("ADD_REST", 1.0),
+            new ImmutablePair<>("SWAP_NOTES", 3.0),
+            new ImmutablePair<>("SWAP_DURATION", 6.0),
+            new ImmutablePair<>("TRANSPOSE_NOTES", 3.0),
+            new ImmutablePair<>("MUSICAL_CONTEXT", 10.0)
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";

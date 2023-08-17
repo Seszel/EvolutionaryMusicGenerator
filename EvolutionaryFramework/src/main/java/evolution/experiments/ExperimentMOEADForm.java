@@ -10,77 +10,77 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExperimentNSGAForm {
+public class ExperimentMOEADForm {
 
-    private static final String ALGORITHM = "NSGA_II";
+    private static final String ALGORITHM = "MOEA_D";
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
             List.of("I", "V", "vi", "IV"),
-//            List.of("I", "V", "vi", "IV"),
-//
-//            List.of("vi", "ii", "V", "I"),
-//            List.of("vi", "ii", "V", "I"),
-//
-//            List.of("I", "vi", "ii", "V"),
-//            List.of("I", "vi", "ii", "V"),
-//
-//            List.of("I", "IV", "ii", "V"),
-//            List.of("I", "IV", "ii", "V"),
+            List.of("I", "V", "vi", "IV"),
 
-            List.of("i", "iv", "VI", "V")
-//            List.of("i", "iv", "VI", "V"),
-//
-//            List.of("i", "iv", "III", "VI"),
-//            List.of("i", "iv", "III", "VI"),
-//
-//            List.of("i", "VI", "III", "VII"),
-//            List.of("i", "VI", "III", "VII"),
-//
-//            List.of("i", "VI", "III", "iv"),
-//            List.of("i", "VI", "III", "iv")
+            List.of("vi", "ii", "V", "I"),
+            List.of("vi", "ii", "V", "I"),
+
+            List.of("I", "vi", "ii", "V"),
+            List.of("I", "vi", "ii", "V"),
+
+            List.of("I", "IV", "ii", "V"),
+            List.of("I", "IV", "ii", "V"),
+
+            List.of("i", "iv", "VI", "V"),
+            List.of("i", "iv", "VI", "V"),
+
+            List.of("i", "iv", "III", "VI"),
+            List.of("i", "iv", "III", "VI"),
+
+            List.of("i", "VI", "III", "VII"),
+            List.of("i", "VI", "III", "VII"),
+
+            List.of("i", "VI", "III", "iv"),
+            List.of("i", "VI", "III", "iv")
 
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
             new ImmutablePair<>("G", "MAJOR"),
-//            new ImmutablePair<>("C", "MAJOR"),
+            new ImmutablePair<>("C", "MAJOR"),
 
-//            new ImmutablePair<>("F#", "MAJOR"),
-//            new ImmutablePair<>("E", "MAJOR"),
-//
-//            new ImmutablePair<>("D", "MAJOR"),
-//            new ImmutablePair<>("B", "MAJOR"),
-//
-//            new ImmutablePair<>("A", "MAJOR"),
-//            new ImmutablePair<>("F", "MAJOR"),
+            new ImmutablePair<>("F#", "MAJOR"),
+            new ImmutablePair<>("E", "MAJOR"),
+
+            new ImmutablePair<>("D", "MAJOR"),
+            new ImmutablePair<>("B", "MAJOR"),
+
+            new ImmutablePair<>("A", "MAJOR"),
+            new ImmutablePair<>("F", "MAJOR"),
 
 
-            new ImmutablePair<>("D", "MINOR")
-//            new ImmutablePair<>("F#", "MINOR"),
-//
-//            new ImmutablePair<>("F", "MINOR"),
-//            new ImmutablePair<>("A#", "MINOR"),
-//
-//            new ImmutablePair<>("A", "MINOR"),
-//            new ImmutablePair<>("C#", "MINOR"),
-//
-//            new ImmutablePair<>("C", "MINOR"),
-//            new ImmutablePair<>("D#", "MINOR")
+            new ImmutablePair<>("D", "MINOR"),
+            new ImmutablePair<>("F#", "MINOR"),
+
+            new ImmutablePair<>("F", "MINOR"),
+            new ImmutablePair<>("A#", "MINOR"),
+
+            new ImmutablePair<>("A", "MINOR"),
+            new ImmutablePair<>("C#", "MINOR"),
+
+            new ImmutablePair<>("C", "MINOR"),
+            new ImmutablePair<>("D#", "MINOR")
     );
     private static final int POP_SIZE = 250;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
-        put("STEP_MOTION", 4.0);
-        put("SKIP_MOTION", 4.0);
-        put("DESCENDING_MELODY_LINE", 2.0);
-        put("ASCENDING_MELODY_LINE", 2.0);
+        put("STEP_MOTION", 6.0);
+        put("SKIP_MOTION", 6.0);
+        put("DESCENDING_MELODY_LINE", 3.0);
+        put("ASCENDING_MELODY_LINE", 3.0);
 //        put("PERFECT_INTERVAL", 2.0);
 //        put("NON_PERFECT_INTERVAL", 2.0);
-        put("SIMPLE_RHYTHM", 5.0);
-        put("COMPLICATED_RHYTHM", 5.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
+        put("SIMPLE_RHYTHM", 6.0);
+        put("COMPLICATED_RHYTHM", 6.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 25.0);
     }
     };
     private static final Double CROSSOVER_PROBABILITY = 0.8;
@@ -93,8 +93,8 @@ public class ExperimentNSGAForm {
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
 //            new ImmutablePair<>("BAR_ORDER", 0.0),
-            new ImmutablePair<>("ADD_ZERO", 0.5),
-            new ImmutablePair<>("ADD_REST", 0.5),
+            new ImmutablePair<>("ADD_ZERO", 1.0),
+            new ImmutablePair<>("ADD_REST", 1.0),
             new ImmutablePair<>("SWAP_NOTES", 3.0),
             new ImmutablePair<>("SWAP_DURATION", 6.0),
             new ImmutablePair<>("TRANSPOSE_NOTES", 3.0),
@@ -119,9 +119,9 @@ public class ExperimentNSGAForm {
         put("DESCENDING_MELODY_LINE", new ImmutablePair<>(0.0,1.0));
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
-        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-12.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,42.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,42.0));
+        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,50.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,50.0));
     }};
 
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
@@ -144,9 +144,9 @@ public class ExperimentNSGAForm {
 
 
         switch (ALGORITHM) {
-            case "NSGA_II":
+            case "MOEA_D":
                 if (SAVE_TO_JSON.getLeft()){
-                    folderName = "NSGA_II/" + folderName;
+                    folderName = "MOEA_D/" + folderName;
                     Stats.createDirectory(folderName);
                 }
                 NSGA_II[] algorithms = new NSGA_II[NUMBER_OF_ITERATIONS];

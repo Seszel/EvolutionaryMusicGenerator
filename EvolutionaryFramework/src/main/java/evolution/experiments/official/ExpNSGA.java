@@ -1,4 +1,4 @@
-package evolution.experiments;
+package evolution.experiments.official;
 
 import evolution.algorithm.NSGA_II;
 import evolution.stats.Stats;
@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExperimentNSGAForm {
+public class ExpNSGA {
 
     private static final String ALGORITHM = "NSGA_II";
     private static final int NUMBER_OF_BARS = 4;
@@ -18,55 +18,55 @@ public class ExperimentNSGAForm {
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
             List.of("I", "V", "vi", "IV"),
-//            List.of("I", "V", "vi", "IV"),
-//
-//            List.of("vi", "ii", "V", "I"),
-//            List.of("vi", "ii", "V", "I"),
-//
-//            List.of("I", "vi", "ii", "V"),
-//            List.of("I", "vi", "ii", "V"),
-//
-//            List.of("I", "IV", "ii", "V"),
-//            List.of("I", "IV", "ii", "V"),
+            List.of("I", "V", "vi", "IV"),
 
-            List.of("i", "iv", "VI", "V")
-//            List.of("i", "iv", "VI", "V"),
-//
-//            List.of("i", "iv", "III", "VI"),
-//            List.of("i", "iv", "III", "VI"),
-//
-//            List.of("i", "VI", "III", "VII"),
-//            List.of("i", "VI", "III", "VII"),
-//
-//            List.of("i", "VI", "III", "iv"),
-//            List.of("i", "VI", "III", "iv")
+            List.of("vi", "ii", "V", "I"),
+            List.of("vi", "ii", "V", "I"),
+
+            List.of("I", "vi", "ii", "V"),
+            List.of("I", "vi", "ii", "V"),
+
+            List.of("I", "IV", "ii", "V"),
+            List.of("I", "IV", "ii", "V"),
+
+            List.of("i", "iv", "VI", "V"),
+            List.of("i", "iv", "VI", "V"),
+
+            List.of("i", "iv", "III", "VI"),
+            List.of("i", "iv", "III", "VI"),
+
+            List.of("i", "VI", "III", "VII"),
+            List.of("i", "VI", "III", "VII"),
+
+            List.of("i", "VI", "III", "iv"),
+            List.of("i", "VI", "III", "iv")
 
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
             new ImmutablePair<>("G", "MAJOR"),
-//            new ImmutablePair<>("C", "MAJOR"),
+            new ImmutablePair<>("C", "MAJOR"),
 
-//            new ImmutablePair<>("F#", "MAJOR"),
-//            new ImmutablePair<>("E", "MAJOR"),
-//
-//            new ImmutablePair<>("D", "MAJOR"),
-//            new ImmutablePair<>("B", "MAJOR"),
-//
-//            new ImmutablePair<>("A", "MAJOR"),
-//            new ImmutablePair<>("F", "MAJOR"),
+            new ImmutablePair<>("F#", "MAJOR"),
+            new ImmutablePair<>("E", "MAJOR"),
+
+            new ImmutablePair<>("D", "MAJOR"),
+            new ImmutablePair<>("B", "MAJOR"),
+
+            new ImmutablePair<>("A", "MAJOR"),
+            new ImmutablePair<>("F", "MAJOR"),
 
 
-            new ImmutablePair<>("D", "MINOR")
-//            new ImmutablePair<>("F#", "MINOR"),
-//
-//            new ImmutablePair<>("F", "MINOR"),
-//            new ImmutablePair<>("A#", "MINOR"),
-//
-//            new ImmutablePair<>("A", "MINOR"),
-//            new ImmutablePair<>("C#", "MINOR"),
-//
-//            new ImmutablePair<>("C", "MINOR"),
-//            new ImmutablePair<>("D#", "MINOR")
+            new ImmutablePair<>("D", "MINOR"),
+            new ImmutablePair<>("F#", "MINOR"),
+
+            new ImmutablePair<>("F", "MINOR"),
+            new ImmutablePair<>("A#", "MINOR"),
+
+            new ImmutablePair<>("A", "MINOR"),
+            new ImmutablePair<>("C#", "MINOR"),
+
+            new ImmutablePair<>("C", "MINOR"),
+            new ImmutablePair<>("D#", "MINOR")
     );
     private static final int POP_SIZE = 250;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
@@ -93,8 +93,8 @@ public class ExperimentNSGAForm {
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
 //            new ImmutablePair<>("BAR_ORDER", 0.0),
-            new ImmutablePair<>("ADD_ZERO", 0.5),
-            new ImmutablePair<>("ADD_REST", 0.5),
+            new ImmutablePair<>("ADD_ZERO", 1.0),
+            new ImmutablePair<>("ADD_REST", 1.0),
             new ImmutablePair<>("SWAP_NOTES", 3.0),
             new ImmutablePair<>("SWAP_DURATION", 6.0),
             new ImmutablePair<>("TRANSPOSE_NOTES", 3.0),

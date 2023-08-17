@@ -154,9 +154,13 @@ public class SimpleRhythmObjective extends Objective {
         }
         fitnessSameRhythm /= countSimilarPossibilities;
 
+
         fitness += 3*fitnessBeat;
         fitness += 2*fitnessDuration;
         fitness += fitnessSameRhythm;
+
+
+
 
         fitness /= 6;
 

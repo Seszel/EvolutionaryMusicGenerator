@@ -1,4 +1,4 @@
-package evolution.experiments;
+package evolution.experiments.official;
 
 import evolution.algorithm.NSGA_II;
 import evolution.stats.Stats;
@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExperimentNSGAForm {
+public class ExpNSGA_PopGen {
 
     private static final String ALGORITHM = "NSGA_II";
     private static final int NUMBER_OF_BARS = 4;
@@ -18,57 +18,13 @@ public class ExperimentNSGAForm {
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
             List.of("I", "V", "vi", "IV"),
-//            List.of("I", "V", "vi", "IV"),
-//
-//            List.of("vi", "ii", "V", "I"),
-//            List.of("vi", "ii", "V", "I"),
-//
-//            List.of("I", "vi", "ii", "V"),
-//            List.of("I", "vi", "ii", "V"),
-//
-//            List.of("I", "IV", "ii", "V"),
-//            List.of("I", "IV", "ii", "V"),
-
             List.of("i", "iv", "VI", "V")
-//            List.of("i", "iv", "VI", "V"),
-//
-//            List.of("i", "iv", "III", "VI"),
-//            List.of("i", "iv", "III", "VI"),
-//
-//            List.of("i", "VI", "III", "VII"),
-//            List.of("i", "VI", "III", "VII"),
-//
-//            List.of("i", "VI", "III", "iv"),
-//            List.of("i", "VI", "III", "iv")
-
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
-            new ImmutablePair<>("G", "MAJOR"),
-//            new ImmutablePair<>("C", "MAJOR"),
-
-//            new ImmutablePair<>("F#", "MAJOR"),
-//            new ImmutablePair<>("E", "MAJOR"),
-//
-//            new ImmutablePair<>("D", "MAJOR"),
-//            new ImmutablePair<>("B", "MAJOR"),
-//
-//            new ImmutablePair<>("A", "MAJOR"),
-//            new ImmutablePair<>("F", "MAJOR"),
-
-
-            new ImmutablePair<>("D", "MINOR")
-//            new ImmutablePair<>("F#", "MINOR"),
-//
-//            new ImmutablePair<>("F", "MINOR"),
-//            new ImmutablePair<>("A#", "MINOR"),
-//
-//            new ImmutablePair<>("A", "MINOR"),
-//            new ImmutablePair<>("C#", "MINOR"),
-//
-//            new ImmutablePair<>("C", "MINOR"),
-//            new ImmutablePair<>("D#", "MINOR")
+            new ImmutablePair<>("C", "MAJOR"),
+            new ImmutablePair<>("A", "MINOR")
     );
-    private static final int POP_SIZE = 250;
+    private static final List<Integer> POP_SIZE = List.of(25, 50, 75, 100, 150, 250, 500, 1000);
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
@@ -83,18 +39,18 @@ public class ExperimentNSGAForm {
         put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
     }
     };
-    private static final Double CROSSOVER_PROBABILITY = 0.8;
+    private static final double CROSSOVER_PROBABILITY = 0.7;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 2.0),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 1.0),
             new ImmutablePair<>("MUSICAL_CONTEXT", 4.0)
     );
-    private static final Double MUTATION_PROBABILITY = 0.25;
+    private static final double MUTATION_PROBABILITY = 0.5;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
 //            new ImmutablePair<>("BAR_ORDER", 0.0),
-            new ImmutablePair<>("ADD_ZERO", 0.5),
-            new ImmutablePair<>("ADD_REST", 0.5),
+            new ImmutablePair<>("ADD_ZERO", 1.0),
+            new ImmutablePair<>("ADD_REST", 1.0),
             new ImmutablePair<>("SWAP_NOTES", 3.0),
             new ImmutablePair<>("SWAP_DURATION", 6.0),
             new ImmutablePair<>("TRANSPOSE_NOTES", 3.0),
@@ -102,8 +58,8 @@ public class ExperimentNSGAForm {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 250;
-    private static final int NUMBER_OF_ITERATIONS = 10;
+    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(50, 75, 100, 150, 250, 500, 1000);
+    private static final int NUMBER_OF_ITERATIONS = 20;
 
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 
@@ -129,18 +85,26 @@ public class ExperimentNSGAForm {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i< CHORD_PROGRESSION.size(); i++){
-            System.out.println("\nprogression: " + CHORD_PROGRESSION.get(i) + ", key: " + MELODY_KEY.get(i));
-            runAlgorithm(new ImmutablePair<>(CHORD_PROGRESSION.get(i), MELODY_KEY.get(i)));
-        }
 
+        for (int i = 0; i < CHORD_PROGRESSION.size(); i++) {
+            System.out.println("\nProgression: " + CHORD_PROGRESSION.get(i) + ", key: " + MELODY_KEY.get(i));
+            for (int popsize : POP_SIZE) {
+                for (int generation : NUMBER_OF_GENERATIONS) {
+                    System.out.println("\nPopsize: " + popsize + ", Generation: " + generation);
+                    runAlgorithm(
+                            new ImmutablePair<>(CHORD_PROGRESSION.get(i), MELODY_KEY.get(i)),
+                            new ImmutablePair<>(popsize, generation)
+                    );
+                }
+            }
+        }
     }
 
-    public static void runAlgorithm(Pair<List<String>, Pair<String, String>> parameters) {
+    public static void runAlgorithm(Pair<List<String>, Pair<String, String>> parameters, Pair<Integer, Integer> ON) {
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH:mm:ss");
-        String folderName = dtf.format(now);
+        String folderName = "ExpNSGA_PopGen/" + dtf.format(now);
 
 
         switch (ALGORITHM) {
@@ -154,7 +118,7 @@ public class ExperimentNSGAForm {
 
                 for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
                     algorithms[i] = new NSGA_II(
-                            POP_SIZE,
+                            ON.getKey(),
                             parameters.getKey().size(),
                             MAX_NUMBER_OF_NOTES,
                             REPRESENTATION_TYPE,
@@ -167,7 +131,7 @@ public class ExperimentNSGAForm {
                             MUTATION_TYPE,
                             SELECTION_TYPE,
                             MATING_POOL_SELECTION_TYPE,
-                            NUMBER_OF_GENERATIONS,
+                            ON.getValue(),
                             i,
                             CRITERIA,
                             CRITERIA_RANGES,
@@ -175,9 +139,9 @@ public class ExperimentNSGAForm {
                             folderName,
                             PLAY
                     );
-
                     threads[i] = new Thread(algorithms[i]);
                     threads[i].start();
+
                 }
 
                 // Wait for all threads to complete

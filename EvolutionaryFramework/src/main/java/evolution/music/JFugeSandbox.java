@@ -32,10 +32,8 @@ public class JFugeSandbox {
                 .setTempo(90);
 
         Pattern mel = new Pattern(
-
-                "61/0.125 62/0.0625 60/0.0625 62/0.0625 60/0.0625 60/0.0625 70/0.0625 68/0.0625 66/0.0625 65/0.0625 66/0.0625 64/0.0625 62/0.0625 64/0.0625 66/0.0625 67/0.125 64/0.0625 65/0.0625 65/0.0625 64/0.0625 66/0.0625 65/0.0625 61/0.0625 69/0.0625 66/0.0625 65/0.0625 66/0.0625 67/0.0625 67/0.0625 69/0.0625 67/0.125 66/0.0625 65/0.0625 65/0.0625 67/0.0625 66/0.0625 65/0.0625 65/0.0625 63/0.0625 63/0.0625 65/0.0625 65/0.0625 67/0.0625 67/0.0625 67/0.0625 66/0.0625 66/0.125 65/0.0625 63/0.0625 66/0.0625 68/0.0625 69/0.0625 68/0.0625 67/0.0625 69/0.0625 69/0.0625 69/0.0625 62/0.0625 63/0.0625 62/0.0625 "
-
-                )
+                "67/0.0625 57/0.6875 R/0.0625 67/0.125 72/0.0625 74/0.125 67/0.0625 57/0.25 67/0.125 R/0.0625 74/0.125 62/0.0625 59/0.125 62/0.0625 69/0.125 72/0.0625 62/0.25 72/0.125 60/0.0625 57/0.125 60/0.0625 72/0.125 69/0.0625 60/0.125 65/0.0625 69/0.25 72/0.125 72/0.0625 69/0.125 65/0.0625 69/0.125 72/0.0625 "
+        )
                 .setTempo(90)
                 .setInstrument("Piano")
                 .setVoice(1);
@@ -43,14 +41,14 @@ public class JFugeSandbox {
 
 //        player.play(chords);
         Pattern music = new Pattern().add(chords).add(mel);
-//        player.play(music);
+        player.play(music);
 
 
 //                String folderName = "";
 //        String fileName = "";
 //        String folderName = "descendingAscending/";
-        String folderName = "stepSkip/";
-        String fileName = "A_MAJOR_I, IV, ii, V_max";
+        String folderName = "";
+        String fileName = "F_MAJOR_I, IV, ii, V_max";
 
         try {
             File filePath = new File("../Visualization/midi/" + folderName + fileName +".mid");

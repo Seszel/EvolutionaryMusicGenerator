@@ -30,14 +30,14 @@ public class ComplicatedAndEnigmatic extends Objective {
         Pair<Double, Double> nonChordToneFitness = NonChordToneObjective.evaluate(individual, pack);
         Pair<Double, Double> skipMotionFitness = SkipMotionObjective.evaluate(individual, pack);
         Pair<Double, Double> ascendingMelodyLineFitness = AscendingMelodyLineObjective.evaluate(individual, pack);
-        Pair<Double, Double> nonPerfectIntervalFitness = NonPerfectIntervalObjective.evaluate(individual, pack);
+//        Pair<Double, Double> nonPerfectIntervalFitness = NonPerfectIntervalObjective.evaluate(individual, pack);
         Pair<Double, Double> complicatedRhythmFitness = ComplicatedRhythmObjective.evaluate(individual,pack);
         Pair<Double, Double> undesirablePropertiesMelodyFitness = UndesirablePropertiesMelodyObjective.evaluate(individual,pack);
 
         fitness += weights.get("NON_CHORD_TONE") * nonChordToneFitness.getKey()
                 + weights.get("SKIP_MOTION") * skipMotionFitness.getKey()
                 + weights.get("ASCENDING_MELODY_LINE") * ascendingMelodyLineFitness.getKey()
-                + weights.get("NON_PERFECT_INTERVAL") * nonPerfectIntervalFitness.getKey()
+//                + weights.get("NON_PERFECT_INTERVAL") * nonPerfectIntervalFitness.getKey()
                 + weights.get("COMPLICATED_RHYTHM") * complicatedRhythmFitness.getKey()
                 + weights.get("UNDESIRABLE_PROPERTIES_MELODY") * undesirablePropertiesMelodyFitness.getKey();
 

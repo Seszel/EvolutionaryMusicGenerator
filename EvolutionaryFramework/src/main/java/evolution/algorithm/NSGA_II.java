@@ -81,7 +81,7 @@ public class NSGA_II extends AEvolutionaryAlgorithm {
         for (Integer g : ProgressBar.wrap(generations, "Iteration: " + (numberOfIteration + 1))) {
 
             var matingPool = MatingPoolSelection.tournament(
-                    (int)(0.5*popSize), popSize, population
+                    (int)(1.0*popSize), popSize, population
             );
             population.createOffsprings(matingPool, representation,
                     getCrossoverProbability(), getCrossoverType(),

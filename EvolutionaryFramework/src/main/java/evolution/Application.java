@@ -32,15 +32,15 @@ public class Application {
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
-        put("STEP_MOTION", 3.0);
-        put("SKIP_MOTION", 3.0);
-        put("DESCENDING_MELODY_LINE", 1.0);
-        put("ASCENDING_MELODY_LINE", 1.0);
-        put("PERFECT_INTERVAL", 2.0);
-        put("NON_PERFECT_INTERVAL", 2.0);
-        put("SIMPLE_RHYTHM", 5.0);
-        put("COMPLICATED_RHYTHM", 5.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
+        put("STEP_MOTION", 6.0);
+        put("SKIP_MOTION", 6.0);
+        put("DESCENDING_MELODY_LINE", 3.0);
+        put("ASCENDING_MELODY_LINE", 3.0);
+//        put("PERFECT_INTERVAL", 2.0);
+//        put("NON_PERFECT_INTERVAL", 2.0);
+        put("SIMPLE_RHYTHM", 6.0);
+        put("COMPLICATED_RHYTHM", 6.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 25.0);
     }
     };
     private static final double CROSSOVER_PROBABILITY = 0.8;
@@ -65,8 +65,7 @@ public class Application {
     private static final int NUMBER_OF_GENERATIONS = 250;
     private static final int NUMBER_OF_ITERATIONS = 1;
 //    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
-//    private static final List<String> CRITERIA = List.of("CHORD_TONE");
-    private static final List<String> CRITERIA = List.of("NON_CHORD_TONE");
+    private static final List<String> CRITERIA = List.of("UNDESIRABLE_PROPERTIES_MELODY");
 
 
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
@@ -84,8 +83,8 @@ public class Application {
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,42.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,42.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,50.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,50.0));
     }};
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(false, 1);
     private static final int NUMBER_OF_NEIGHBOURS = 10;
