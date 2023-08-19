@@ -17,14 +17,13 @@ public class ExpNSGA_PopGen {
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
-            List.of("I", "V", "vi", "IV"),
-            List.of("i", "iv", "VI", "V")
+            List.of("I", "V", "vi", "IV")
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
-            new ImmutablePair<>("C", "MAJOR"),
-            new ImmutablePair<>("A", "MINOR")
+            new ImmutablePair<>("C", "MAJOR")
     );
-    private static final List<Integer> POP_SIZE = List.of(25, 50, 75, 100, 150, 250, 500, 1000);
+//    private static final List<Integer> POP_SIZE = List.of(25, 50, 75, 100, 150, 250, 500, 1000);
+    private static final List<Integer> POP_SIZE = List.of(1000);
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
@@ -39,7 +38,7 @@ public class ExpNSGA_PopGen {
         put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
     }
     };
-    private static final double CROSSOVER_PROBABILITY = 0.7;
+    private static final double CROSSOVER_PROBABILITY = 0.99;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 2.0),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 1.0),
@@ -58,8 +57,9 @@ public class ExpNSGA_PopGen {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(50, 75, 100, 150, 250, 500, 1000);
-    private static final int NUMBER_OF_ITERATIONS = 20;
+//    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(50, 75, 100, 150, 250, 500, 1000);
+    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(1000);
+    private static final int NUMBER_OF_ITERATIONS = 5;
 
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 

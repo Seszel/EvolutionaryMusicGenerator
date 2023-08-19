@@ -1,5 +1,6 @@
 package evolution.experiments.official;
 
+import evolution.algorithm.MOEA_D;
 import evolution.algorithm.NSGA_II;
 import evolution.stats.Stats;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -10,9 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExpNSGA {
+public class ExpMOEAD {
 
-    private static final String ALGORITHM = "NSGA_II";
+    private static final String ALGORITHM = "MOEA_D";
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
@@ -122,6 +123,7 @@ public class ExpNSGA {
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 250;
     private static final int NUMBER_OF_ITERATIONS = 20;
+    private static final Integer NUMBER_OF_NEIGHBOURS = 10;
 
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 
@@ -158,22 +160,22 @@ public class ExpNSGA {
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH:mm:ss");
-        String folderName = "ExpNSGA/" + dtf.format(now);
+        String folderName = dtf.format(now);
 
 
         switch (ALGORITHM) {
-            case "NSGA_II":
+            case "MOEA_D":
                 if (SAVE_TO_JSON.getLeft()){
-                    folderName = "NSGA_II/" + folderName;
+                    folderName = "MOEA_D/" + folderName;
                     Stats.createDirectory(folderName);
                 }
-                NSGA_II[] algorithms = new NSGA_II[NUMBER_OF_ITERATIONS];
+                MOEA_D[] algorithms = new MOEA_D[NUMBER_OF_ITERATIONS];
                 Thread[] threads = new Thread[NUMBER_OF_ITERATIONS];
 
                 for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
-                    algorithms[i] = new NSGA_II(
+                    algorithms[i] = new MOEA_D(
                             POP_SIZE,
-                            parameters.getKey().size(),
+                            NUMBER_OF_BARS,
                             MAX_NUMBER_OF_NOTES,
                             REPRESENTATION_TYPE,
                             parameters.getKey(),
@@ -191,11 +193,12 @@ public class ExpNSGA {
                             CRITERIA_RANGES,
                             SAVE_TO_JSON,
                             folderName,
-                            PLAY
+                            PLAY,
+                            NUMBER_OF_NEIGHBOURS
                     );
-
                     threads[i] = new Thread(algorithms[i]);
                     threads[i].start();
+
                 }
 
                 // Wait for all threads to complete

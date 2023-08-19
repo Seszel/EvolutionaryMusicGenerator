@@ -1,6 +1,6 @@
-package evolution.experiments;
+package evolution.experiments.official;
 
-import evolution.algorithm.NSGA_II;
+import evolution.algorithm.MOEA_D;
 import evolution.stats.Stats;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -10,86 +10,40 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExperimentMOEADForm {
+public class ExpMOEAD_Neig {
 
     private static final String ALGORITHM = "MOEA_D";
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
-            List.of("I", "V", "vi", "IV"),
-            List.of("I", "V", "vi", "IV"),
-
-            List.of("vi", "ii", "V", "I"),
-            List.of("vi", "ii", "V", "I"),
-
-            List.of("I", "vi", "ii", "V"),
-            List.of("I", "vi", "ii", "V"),
-
-            List.of("I", "IV", "ii", "V"),
-            List.of("I", "IV", "ii", "V"),
-
-            List.of("i", "iv", "VI", "V"),
-            List.of("i", "iv", "VI", "V"),
-
-            List.of("i", "iv", "III", "VI"),
-            List.of("i", "iv", "III", "VI"),
-
-            List.of("i", "VI", "III", "VII"),
-            List.of("i", "VI", "III", "VII"),
-
-            List.of("i", "VI", "III", "iv"),
-            List.of("i", "VI", "III", "iv")
-
+            List.of("I", "V", "vi", "IV")
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
-            new ImmutablePair<>("G", "MAJOR"),
-            new ImmutablePair<>("C", "MAJOR"),
-
-            new ImmutablePair<>("F#", "MAJOR"),
-            new ImmutablePair<>("E", "MAJOR"),
-
-            new ImmutablePair<>("D", "MAJOR"),
-            new ImmutablePair<>("B", "MAJOR"),
-
-            new ImmutablePair<>("A", "MAJOR"),
-            new ImmutablePair<>("F", "MAJOR"),
-
-
-            new ImmutablePair<>("D", "MINOR"),
-            new ImmutablePair<>("F#", "MINOR"),
-
-            new ImmutablePair<>("F", "MINOR"),
-            new ImmutablePair<>("A#", "MINOR"),
-
-            new ImmutablePair<>("A", "MINOR"),
-            new ImmutablePair<>("C#", "MINOR"),
-
-            new ImmutablePair<>("C", "MINOR"),
-            new ImmutablePair<>("D#", "MINOR")
+            new ImmutablePair<>("C", "MAJOR")
     );
-    private static final int POP_SIZE = 250;
+    private static final Integer POP_SIZE = 150;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
-        put("STEP_MOTION", 6.0);
-        put("SKIP_MOTION", 6.0);
-        put("DESCENDING_MELODY_LINE", 3.0);
-        put("ASCENDING_MELODY_LINE", 3.0);
+        put("STEP_MOTION", 4.0);
+        put("SKIP_MOTION", 4.0);
+        put("DESCENDING_MELODY_LINE", 2.0);
+        put("ASCENDING_MELODY_LINE", 2.0);
 //        put("PERFECT_INTERVAL", 2.0);
 //        put("NON_PERFECT_INTERVAL", 2.0);
-        put("SIMPLE_RHYTHM", 6.0);
-        put("COMPLICATED_RHYTHM", 6.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 25.0);
+        put("SIMPLE_RHYTHM", 5.0);
+        put("COMPLICATED_RHYTHM", 5.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
     }
     };
-    private static final Double CROSSOVER_PROBABILITY = 0.8;
+    private static final double CROSSOVER_PROBABILITY = 0.99;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 2.0),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 1.0),
             new ImmutablePair<>("MUSICAL_CONTEXT", 4.0)
     );
-    private static final Double MUTATION_PROBABILITY = 0.25;
+    private static final double MUTATION_PROBABILITY = 0.5;
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
 //            new ImmutablePair<>("BAR_ORDER", 0.0),
@@ -102,8 +56,9 @@ public class ExperimentMOEADForm {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 250;
-    private static final int NUMBER_OF_ITERATIONS = 10;
+    private static final Integer NUMBER_OF_GENERATIONS = 250;
+    private static final List<Integer> NUMBER_OF_NEIGHBOURS = List.of(3, 5, 10, 15, 20, 25, 50);
+    private static final int NUMBER_OF_ITERATIONS = 20;
 
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 
@@ -119,9 +74,9 @@ public class ExperimentMOEADForm {
         put("DESCENDING_MELODY_LINE", new ImmutablePair<>(0.0,1.0));
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
-        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-11.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,50.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,50.0));
+        put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-12.0,0.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,42.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,42.0));
     }};
 
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
@@ -129,18 +84,24 @@ public class ExperimentMOEADForm {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i< CHORD_PROGRESSION.size(); i++){
-            System.out.println("\nprogression: " + CHORD_PROGRESSION.get(i) + ", key: " + MELODY_KEY.get(i));
-            runAlgorithm(new ImmutablePair<>(CHORD_PROGRESSION.get(i), MELODY_KEY.get(i)));
-        }
 
+        for (int i = 0; i < CHORD_PROGRESSION.size(); i++) {
+            System.out.println("\nProgression: " + CHORD_PROGRESSION.get(i) + ", key: " + MELODY_KEY.get(i));
+            for (int n : NUMBER_OF_NEIGHBOURS) {
+                    System.out.println("\nNeighbours: " + n);
+                    runAlgorithm(
+                            new ImmutablePair<>(CHORD_PROGRESSION.get(i), MELODY_KEY.get(i)),
+                            n
+                    );
+            }
+        }
     }
 
-    public static void runAlgorithm(Pair<List<String>, Pair<String, String>> parameters) {
+    public static void runAlgorithm(Pair<List<String>, Pair<String, String>> parameters, Integer neighbour) {
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH:mm:ss");
-        String folderName = dtf.format(now);
+        String folderName = "ExpMOEAD_Neig/" + dtf.format(now);
 
 
         switch (ALGORITHM) {
@@ -149,13 +110,13 @@ public class ExperimentMOEADForm {
                     folderName = "MOEA_D/" + folderName;
                     Stats.createDirectory(folderName);
                 }
-                NSGA_II[] algorithms = new NSGA_II[NUMBER_OF_ITERATIONS];
+                MOEA_D[] algorithms = new MOEA_D[NUMBER_OF_ITERATIONS];
                 Thread[] threads = new Thread[NUMBER_OF_ITERATIONS];
 
                 for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
-                    algorithms[i] = new NSGA_II(
+                    algorithms[i] = new MOEA_D(
                             POP_SIZE,
-                            parameters.getKey().size(),
+                            NUMBER_OF_BARS,
                             MAX_NUMBER_OF_NOTES,
                             REPRESENTATION_TYPE,
                             parameters.getKey(),
@@ -173,11 +134,12 @@ public class ExperimentMOEADForm {
                             CRITERIA_RANGES,
                             SAVE_TO_JSON,
                             folderName,
-                            PLAY
+                            PLAY,
+                            neighbour
                     );
-
                     threads[i] = new Thread(algorithms[i]);
                     threads[i].start();
+
                 }
 
                 // Wait for all threads to complete
