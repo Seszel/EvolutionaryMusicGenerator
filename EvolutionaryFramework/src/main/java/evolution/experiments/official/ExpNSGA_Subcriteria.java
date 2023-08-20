@@ -1,6 +1,5 @@
 package evolution.experiments.official;
 
-import evolution.algorithm.MOEA_D;
 import evolution.algorithm.NSGA_II;
 import evolution.stats.Stats;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -11,48 +10,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExpMOEAD {
+public class ExpNSGA_Subcriteria {
 
-    private static final String ALGORITHM = "MOEA_D";
+    private static final String ALGORITHM = "NSGA_II";
     private static final int NUMBER_OF_BARS = 4;
     private static final int MAX_NUMBER_OF_NOTES = 16;
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
-            List.of("I", "V", "vi", "IV"),
-
-            List.of("vi", "ii", "V", "I"),
-
-            List.of("I", "vi", "ii", "V"),
-
-            List.of("I", "IV", "ii", "V"),
-
-
-            List.of("i", "iv", "VI", "V"),
-
-            List.of("i", "iv", "III", "VI"),
-
-            List.of("i", "VI", "III", "VII"),
-
-            List.of("i", "VI", "III", "iv")
+            List.of("I", "V", "vi", "IV")
 
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
-            new ImmutablePair<>("C", "MAJOR"),
-
-            new ImmutablePair<>("A", "MAJOR"),
-
-            new ImmutablePair<>("G", "MAJOR"),
-
-            new ImmutablePair<>("D", "MAJOR"),
-
-
-            new ImmutablePair<>("A", "MINOR"),
-
-            new ImmutablePair<>("F#", "MINOR"),
-
-            new ImmutablePair<>("E", "MINOR"),
-
-            new ImmutablePair<>("B", "MINOR")
+            new ImmutablePair<>("C", "MAJOR")
 
     );
     private static final int POP_SIZE = 250;
@@ -90,10 +59,9 @@ public class ExpMOEAD {
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
     private static final int NUMBER_OF_GENERATIONS = 150;
-    private static final int NUMBER_OF_ITERATIONS = 10;
-    private static final Integer NUMBER_OF_NEIGHBOURS = 5;
+    private static final int NUMBER_OF_ITERATIONS = 20;
 
-    private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
+    private static final List<String> CRITERIA = List.of("PERFECT_INTERVAL", "NON_PERFECT_INTERVAL");
 
     private static final HashMap<String,Pair<Double, Double>> CRITERIA_RANGES = new HashMap<>()
     {{
@@ -128,22 +96,22 @@ public class ExpMOEAD {
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH:mm:ss");
-        String folderName = "ExpMOEA_D/" + dtf.format(now);
+        String folderName = "ExpSubcriteria/" + dtf.format(now);
 
 
         switch (ALGORITHM) {
-            case "MOEA_D":
+            case "NSGA_II":
                 if (SAVE_TO_JSON.getLeft()){
-                    folderName = "MOEA_D/" + folderName;
+                    folderName = "NSGA_II/" + folderName;
                     Stats.createDirectory(folderName);
                 }
-                MOEA_D[] algorithms = new MOEA_D[NUMBER_OF_ITERATIONS];
+                NSGA_II[] algorithms = new NSGA_II[NUMBER_OF_ITERATIONS];
                 Thread[] threads = new Thread[NUMBER_OF_ITERATIONS];
 
                 for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
-                    algorithms[i] = new MOEA_D(
+                    algorithms[i] = new NSGA_II(
                             POP_SIZE,
-                            NUMBER_OF_BARS,
+                            parameters.getKey().size(),
                             MAX_NUMBER_OF_NOTES,
                             REPRESENTATION_TYPE,
                             parameters.getKey(),
@@ -161,12 +129,11 @@ public class ExpMOEAD {
                             CRITERIA_RANGES,
                             SAVE_TO_JSON,
                             folderName,
-                            PLAY,
-                            NUMBER_OF_NEIGHBOURS
+                            PLAY
                     );
+
                     threads[i] = new Thread(algorithms[i]);
                     threads[i].start();
-
                 }
 
                 // Wait for all threads to complete

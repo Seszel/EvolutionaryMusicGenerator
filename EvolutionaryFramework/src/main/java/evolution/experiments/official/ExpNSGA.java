@@ -18,75 +18,43 @@ public class ExpNSGA {
     private static final String REPRESENTATION_TYPE = "f1";
     private static final List<List<String>> CHORD_PROGRESSION = List.of(
             List.of("I", "V", "vi", "IV"),
-            List.of("I", "V", "vi", "IV"),
-            List.of("I", "V", "vi", "IV"),
 
-            List.of("vi", "ii", "V", "I"),
-            List.of("vi", "ii", "V", "I"),
             List.of("vi", "ii", "V", "I"),
 
             List.of("I", "vi", "ii", "V"),
-            List.of("I", "vi", "ii", "V"),
-            List.of("I", "vi", "ii", "V"),
 
-            List.of("I", "IV", "ii", "V"),
-            List.of("I", "IV", "ii", "V"),
             List.of("I", "IV", "ii", "V"),
 
 
             List.of("i", "iv", "VI", "V"),
-            List.of("i", "iv", "VI", "V"),
-            List.of("i", "iv", "VI", "V"),
 
-            List.of("i", "iv", "III", "VI"),
-            List.of("i", "iv", "III", "VI"),
             List.of("i", "iv", "III", "VI"),
 
             List.of("i", "VI", "III", "VII"),
-            List.of("i", "VI", "III", "VII"),
-            List.of("i", "VI", "III", "VII"),
 
-            List.of("i", "VI", "III", "iv"),
-            List.of("i", "VI", "III", "iv"),
             List.of("i", "VI", "III", "iv")
 
     );
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
             new ImmutablePair<>("C", "MAJOR"),
-            new ImmutablePair<>("G", "MAJOR"),
-            new ImmutablePair<>("D", "MAJOR"),
 
             new ImmutablePair<>("A", "MAJOR"),
-            new ImmutablePair<>("E", "MAJOR"),
-            new ImmutablePair<>("H", "MAJOR"),
 
-            new ImmutablePair<>("F#", "MAJOR"),
-            new ImmutablePair<>("C#", "MAJOR"),
-            new ImmutablePair<>("G#", "MAJOR"),
+            new ImmutablePair<>("G", "MAJOR"),
 
-            new ImmutablePair<>("D#", "MAJOR"),
-            new ImmutablePair<>("A#", "MAJOR"),
-            new ImmutablePair<>("F", "MAJOR"),
+            new ImmutablePair<>("D", "MAJOR"),
 
 
             new ImmutablePair<>("A", "MINOR"),
-            new ImmutablePair<>("E", "MINOR"),
-            new ImmutablePair<>("H", "MINOR"),
 
             new ImmutablePair<>("F#", "MINOR"),
-            new ImmutablePair<>("C#", "MINOR"),
-            new ImmutablePair<>("G#", "MINOR"),
 
-            new ImmutablePair<>("D#", "MINOR"),
-            new ImmutablePair<>("A#", "MINOR"),
-            new ImmutablePair<>("F", "MINOR"),
+            new ImmutablePair<>("E", "MINOR"),
 
-            new ImmutablePair<>("C", "MINOR"),
-            new ImmutablePair<>("G", "MINOR"),
-            new ImmutablePair<>("D", "MINOR")
+            new ImmutablePair<>("B", "MINOR")
 
     );
-    private static final int POP_SIZE = 150;
+    private static final int POP_SIZE = 250;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
@@ -101,7 +69,7 @@ public class ExpNSGA {
         put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
     }
     };
-    private static final Double CROSSOVER_PROBABILITY = 0.65;
+    private static final Double CROSSOVER_PROBABILITY = 0.99;
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 2.0),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 1.0),
@@ -120,8 +88,8 @@ public class ExpNSGA {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 250;
-    private static final int NUMBER_OF_ITERATIONS = 20;
+    private static final int NUMBER_OF_GENERATIONS = 150;
+    private static final int NUMBER_OF_ITERATIONS = 10;
 
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 

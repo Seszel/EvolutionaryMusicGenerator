@@ -1,7 +1,6 @@
 package evolution.experiments.official;
 
 import evolution.algorithm.MOEA_D;
-import evolution.algorithm.NSGA_II;
 import evolution.stats.Stats;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -11,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExpMOEAD {
+public class ExpMOEAD_Penalty {
 
     private static final String ALGORITHM = "MOEA_D";
     private static final int NUMBER_OF_BARS = 4;
@@ -67,7 +66,7 @@ public class ExpMOEAD {
 //        put("NON_PERFECT_INTERVAL", 2.0);
         put("SIMPLE_RHYTHM", 5.0);
         put("COMPLICATED_RHYTHM", 5.0);
-        put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
+        put("UNDESIRABLE_PROPERTIES_MELODY", 189.0);
     }
     };
     private static final Double CROSSOVER_PROBABILITY = 0.99;
@@ -108,8 +107,8 @@ public class ExpMOEAD {
         put("SIMPLE_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("COMPLICATED_RHYTHM", new ImmutablePair<>(0.0,1.0));
         put("UNDESIRABLE_PROPERTIES_MELODY", new ImmutablePair<>(-12.0,0.0));
-        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,42.0));
-        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,42.0));
+        put("SIMPLE_AND_OBVIOUS", new ImmutablePair<>(0.0,210.0));
+        put("COMPLICATED_AND_ENIGMATIC", new ImmutablePair<>(0.0,210.0));
     }};
 
     private static final Pair<Boolean, Integer> SAVE_TO_JSON = new ImmutablePair<>(true, 1);
@@ -128,7 +127,7 @@ public class ExpMOEAD {
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH:mm:ss");
-        String folderName = "ExpMOEA_D/" + dtf.format(now);
+        String folderName = "ExpMOEA_D_Penalty/" + dtf.format(now);
 
 
         switch (ALGORITHM) {

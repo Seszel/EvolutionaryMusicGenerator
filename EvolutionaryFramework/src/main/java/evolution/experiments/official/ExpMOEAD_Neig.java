@@ -22,7 +22,7 @@ public class ExpMOEAD_Neig {
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
             new ImmutablePair<>("C", "MAJOR")
     );
-    private static final Integer POP_SIZE = 150;
+    private static final Integer POP_SIZE = 250;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
@@ -56,7 +56,7 @@ public class ExpMOEAD_Neig {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final Integer NUMBER_OF_GENERATIONS = 250;
+    private static final Integer NUMBER_OF_GENERATIONS = 150;
     private static final List<Integer> NUMBER_OF_NEIGHBOURS = List.of(3, 5, 10, 15, 20, 25, 50);
     private static final int NUMBER_OF_ITERATIONS = 20;
 
