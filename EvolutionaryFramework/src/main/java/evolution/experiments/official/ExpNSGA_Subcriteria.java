@@ -24,7 +24,7 @@ public class ExpNSGA_Subcriteria {
             new ImmutablePair<>("C", "MAJOR")
 
     );
-    private static final int POP_SIZE = 250;
+    private static final int POP_SIZE = 500;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
@@ -58,8 +58,8 @@ public class ExpNSGA_Subcriteria {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 150;
-    private static final int NUMBER_OF_ITERATIONS = 20;
+    private static final int NUMBER_OF_GENERATIONS = 250;
+    private static final int NUMBER_OF_ITERATIONS = 10;
 
     private static final List<String> CRITERIA = List.of("PERFECT_INTERVAL", "NON_PERFECT_INTERVAL");
 

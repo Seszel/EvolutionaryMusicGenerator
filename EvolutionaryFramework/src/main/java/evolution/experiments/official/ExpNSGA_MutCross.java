@@ -22,7 +22,7 @@ public class ExpNSGA_MutCross {
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
             new ImmutablePair<>("C", "MAJOR")
     );
-    private static final int POP_SIZE = 250;
+    private static final int POP_SIZE = 500;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
@@ -37,13 +37,13 @@ public class ExpNSGA_MutCross {
         put("UNDESIRABLE_PROPERTIES_MELODY", 21.0);
     }
     };
-    private static final List<Double> CROSSOVER_PROBABILITY = List.of(0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 0.99);
+    private static final List<Double> CROSSOVER_PROBABILITY = List.of(0.5, 0.6, 0.7, 0.8, 0.9, 0.99);
     private static final List<Pair<String, Double>> CROSSOVER_TYPE = List.of(
             new ImmutablePair<>("ONE_POINT_CROSSOVER", 2.0),
             new ImmutablePair<>("TWO_POINT_CROSSOVER", 1.0),
             new ImmutablePair<>("MUSICAL_CONTEXT", 4.0)
     );
-    private static final List<Double> MUTATION_PROBABILITY = List.of(0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.45, 0.5, 0.55, 0.6);
+    private static final List<Double> MUTATION_PROBABILITY = List.of(0.1, 0.2, 0.3, 0.4, 0.5, 0.6);
     private static final List<Pair<String, Double>> MUTATION_TYPE = List.of(
             new ImmutablePair<>("SIMPLE", 2.0),
 //            new ImmutablePair<>("BAR_ORDER", 0.0),

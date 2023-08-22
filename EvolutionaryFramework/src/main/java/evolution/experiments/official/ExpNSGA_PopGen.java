@@ -22,7 +22,7 @@ public class ExpNSGA_PopGen {
     private static final List<Pair<String, String>> MELODY_KEY = List.of(
             new ImmutablePair<>("C", "MAJOR")
     );
-//    private static final List<Integer> POP_SIZE = List.of(25, 50, 75, 100, 150, 250, 500, 1000);
+//    private static final List<Integer> POP_SIZE = List.of(50, 75, 100, 150, 200, 250, 500, 1000);
     private static final List<Integer> POP_SIZE = List.of(1000);
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
@@ -57,9 +57,9 @@ public class ExpNSGA_PopGen {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-//    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(50, 75, 100, 150, 250, 500, 1000);
-    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(1000);
-    private static final int NUMBER_OF_ITERATIONS = 5;
+    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(50, 75, 100, 150, 200, 250, 500, 1000);
+//    private static final List<Integer> NUMBER_OF_GENERATIONS = List.of(1000);
+    private static final int NUMBER_OF_ITERATIONS = 20;
 
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 

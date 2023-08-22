@@ -55,7 +55,7 @@ public class ExpMOEAD {
             new ImmutablePair<>("B", "MINOR")
 
     );
-    private static final int POP_SIZE = 250;
+    private static final int POP_SIZE = 500;
     private static final HashMap<String, Double> WEIGHTS = new HashMap<>(){{
         put("CHORD_TONE", 10.0);
         put("NON_CHORD_TONE", 10.0);
@@ -89,9 +89,9 @@ public class ExpMOEAD {
     );
     private static final String SELECTION_TYPE = "";
     private static final String MATING_POOL_SELECTION_TYPE = "";
-    private static final int NUMBER_OF_GENERATIONS = 150;
+    private static final int NUMBER_OF_GENERATIONS = 250;
     private static final int NUMBER_OF_ITERATIONS = 10;
-    private static final Integer NUMBER_OF_NEIGHBOURS = 5;
+    private static final Integer NUMBER_OF_NEIGHBOURS = 3;
 
     private static final List<String> CRITERIA = List.of("SIMPLE_AND_OBVIOUS", "COMPLICATED_AND_ENIGMATIC");
 
