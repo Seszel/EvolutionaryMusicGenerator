@@ -5,5 +5,5 @@ Framework in Java for automated music generation using evolutionary multi-object
 
 [![Watch the video](https://img.youtube.com/vi/CdhHcE_rY6U?si=O8NocQeLpgALggCs/hqdefault.jpg)](https://www.youtube.com/embed/CdhHcE_rY6U?si=O8NocQeLpgALggCs)
 
-[<img src="https://img.youtube.com/vi/APOPm01BVrk/hqdefault.jpg" width="600" height="300"
+[<img src="https://img.youtube.com/vi/CdhHcE_rY6U?si=O8NocQeLpgALggCs/hqdefault.jpg" width="600" height="300"
 />](https://www.youtube.com/embed/CdhHcE_rY6U?si=O8NocQeLpgALggCs)
