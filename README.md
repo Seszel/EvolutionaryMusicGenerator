@@ -4,7 +4,7 @@ Framework in Java for automated music generation using evolutionary multi-object
 
 Example of generated melodies:
 
-- [![melody 1 - stability](https://img.youtube.com/vi/CdhHcE_rY6U?si=O8NocQeLpgALggCs/hqdefault.jpg)](https://www.youtube.com/embed/CdhHcE_rY6U?si=O8NocQeLpgALggCs),
+- [melody 1 - stability](https://www.youtube.com/embed/CdhHcE_rY6U?si=O8NocQeLpgALggCs),
 
 
-- [![melody 2 - tension](https://img.youtube.com/vi/cf694WNE51A?si=EguYB-G3Zw0eNSdG/hqdefault.jpg)](https://www.youtube.com/embed/cf694WNE51A?si=EguYB-G3Zw0eNSdG).
+- [melody 2 - tension](https://www.youtube.com/embed/cf694WNE51A?si=EguYB-G3Zw0eNSdG).
